@@ -16,3 +16,8 @@ data/processed/
 env/
 .venv/
 *.env
+
+tools/prometheus*
+*.tar.gz
+*.zip
+
