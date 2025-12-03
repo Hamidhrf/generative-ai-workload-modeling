@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisper-inference
+  labels:
+    app: whisper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whisper
+  template:
+    metadata:
+      labels:
+        app: whisper
+    spec:
+      containers:
+        - name: whisper
+          image: hamidhrf/whisper-inference:latest
+          imagePullPolicy: Always
+          # resources:      # Optional — add if/when you want to constrain resources
+          #  requests:
+          #    cpu: "2"
+          #    memory: "4Gi"
+          #    # If you want GPU, add nvidia.com/gpu: 1
+          #  limits:
+          #    cpu: "4"
+          #    memory: "8Gi"
+          #    # nvidia.com/gpu: 1
+          env:
+            - name: TRANSCRIBE_LANGUAGE
+              value: "en"
+          # If your inference script writes output files (e.g. mp3/wav), 
+          # and you want them persisted or shared, add a volume mount here.
+      restartPolicy: Always

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resnet50-inference
+  labels:
+    app: resnet50
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resnet50
+  template:
+    metadata:
+      labels:
+        app: resnet50
+    spec:
+      containers:
+        - name: resnet50
+          image: hamidhrf/resnet50-inference:latest
+          # resources:
+          #   requests:
+          #     cpu: "2"
+          #     memory: "4Gi"
+          #     nvidia.com/gpu: 1
+          #   limits:
+          #     cpu: "4"
+          #     memory: "8Gi"
+          #     nvidia.com/gpu: 1

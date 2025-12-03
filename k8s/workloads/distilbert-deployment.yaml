@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distilbert-inference
+  labels:
+    app: distilbert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: distilbert
+  template:
+    metadata:
+      labels:
+        app: distilbert
+    spec:
+      containers:
+        - name: distilbert
+          image: hamidhrf/distilbert-inference:latest
+          # no resource limits/requests for now — free resource usage

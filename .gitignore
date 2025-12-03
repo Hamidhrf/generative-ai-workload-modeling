@@ -1,23 +1,92 @@
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Jupyter
 .ipynb_checkpoints/
+*.ipynb_checkpoints
 
 # Data
 data/raw/
 data/processed/
+data/experiments/
 *.csv
 *.npz
 *.log
+*.pkl
+*.h5
+*.hdf5
 
 # Environment
 env/
 .venv/
+venv/
 *.env
+.env.local
 
+# Kubernetes secrets and sensitive configs
+*.kubeconfig
+admin.conf
+*.key
+*.crt
+*-ca.crt
+*-token
+secrets.yaml
+secret-*.yaml
+
+# Tools - Monitoring stack downloads
 tools/prometheus*
-*.tar.gz
-*.zip
+tools/grafana*
+tools/*.tar.gz
+tools/*.zip
+tools/alertmanager*
 
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI Model files (if large)
+models/*.pth
+models/*.pt
+models/*.ckpt
+models/*.safetensors
+# Keep model configs
+!models/*.yaml
+!models/*.json
+!models/README.md
+
+# Monitoring data
+dashboards/data/
+prometheus/data/
+grafana/data/
+
+# Performance test results (keep summaries, exclude raw data)
+data/benchmarks/*.json
+!data/benchmarks/summary*.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
