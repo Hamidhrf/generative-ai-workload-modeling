@@ -1,0 +1,217 @@
+{
+  "dashboard": {
+    "title": "GPU Performance - Thesis Data Collection",
+    "uid": "thesis-gpu-performance",
+    "tags": ["thesis", "gpu", "nvidia"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "type": "graph",
+        "title": "GPU Utilization",
+        "targets": [
+          {
+            "expr": "dcgm_gpu_utilization{gpu=\"0\"}",
+            "legendFormat": "GPU {{gpu}} Utilization",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "min": 0, "max": 100},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "alert": {
+          "name": "High GPU Utilization",
+          "conditions": [
+            {
+              "evaluator": {"params": [90], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "graph",
+        "title": "GPU Memory Usage",
+        "targets": [
+          {
+            "expr": "dcgm_fb_used_bytes{gpu=\"0\"}",
+            "legendFormat": "Used Memory",
+            "refId": "A"
+          },
+          {
+            "expr": "dcgm_fb_total_bytes{gpu=\"0\"}",
+            "legendFormat": "Total Memory",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "bytes"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "type": "graph",
+        "title": "GPU Memory Utilization (%)",
+        "targets": [
+          {
+            "expr": "(dcgm_fb_used_bytes{gpu=\"0\"} / dcgm_fb_total_bytes{gpu=\"0\"}) * 100",
+            "legendFormat": "Memory Usage (%)",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "min": 0, "max": 100},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "type": "graph",
+        "title": "GPU Temperature",
+        "targets": [
+          {
+            "expr": "dcgm_gpu_temp{gpu=\"0\"}",
+            "legendFormat": "Temperature (C)",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "celsius", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "celsius"
+          }
+        },
+        "alert": {
+          "name": "High GPU Temperature",
+          "conditions": [
+            {
+              "evaluator": {"params": [80], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ]
+        }
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "graph",
+        "title": "GPU Power Usage",
+        "targets": [
+          {
+            "expr": "dcgm_power_usage_watts{gpu=\"0\"}",
+            "legendFormat": "Power (W)",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "watt", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "watt"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "type": "graph",
+        "title": "GPU Clock Speeds",
+        "targets": [
+          {
+            "expr": "dcgm_sm_clock{gpu=\"0\"}",
+            "legendFormat": "SM Clock (MHz)",
+            "refId": "A"
+          },
+          {
+            "expr": "dcgm_mem_clock{gpu=\"0\"}",
+            "legendFormat": "Memory Clock (MHz)",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "hertz", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "hertz"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 24},
+        "type": "graph",
+        "title": "GPU Performance Over Time (Composite)",
+        "targets": [
+          {
+            "expr": "dcgm_gpu_utilization{gpu=\"0\"}",
+            "legendFormat": "GPU Util (%)",
+            "refId": "A"
+          },
+          {
+            "expr": "(dcgm_fb_used_bytes{gpu=\"0\"} / dcgm_fb_total_bytes{gpu=\"0\"}) * 100",
+            "legendFormat": "Memory Util (%)",
+            "refId": "B"
+          },
+          {
+            "expr": "dcgm_power_usage_watts{gpu=\"0\"} / 62 * 100",
+            "legendFormat": "Power Util (% of 62W TDP)",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "min": 0, "max": 100},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        }
+      }
+    ]
+  }
+}

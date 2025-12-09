@@ -1,0 +1,185 @@
+{
+  "dashboard": {
+    "title": "Container Metrics - Thesis Data Collection",
+    "uid": "thesis-container-metrics",
+    "tags": ["thesis", "containers", "pods"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "type": "graph",
+        "title": "Pod CPU Usage (AI Workloads)",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\",container!=\"\",container!=\"POD\"}[5m])",
+            "legendFormat": "{{pod}} - {{container}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 2
+          }
+        }
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "graph",
+        "title": "Pod Memory Usage (AI Workloads)",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\",container!=\"\",container!=\"POD\"}",
+            "legendFormat": "{{pod}} - {{container}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "bytes"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "type": "graph",
+        "title": "All Pod CPU Usage",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{container!=\"\",container!=\"POD\"}[5m])",
+            "legendFormat": "{{namespace}}/{{pod}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 2
+          }
+        }
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "type": "graph",
+        "title": "All Pod Memory Usage",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{container!=\"\",container!=\"POD\"}",
+            "legendFormat": "{{namespace}}/{{pod}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "bytes"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "graph",
+        "title": "Pod Network I/O",
+        "targets": [
+          {
+            "expr": "rate(container_network_receive_bytes_total{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\"}[5m])",
+            "legendFormat": "RX - {{pod}}",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(container_network_transmit_bytes_total{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\"}[5m])",
+            "legendFormat": "TX - {{pod}}",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "Bps"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "type": "graph",
+        "title": "Pod Filesystem Usage",
+        "targets": [
+          {
+            "expr": "container_fs_usage_bytes{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\",container!=\"\",container!=\"POD\"}",
+            "legendFormat": "{{pod}} - {{device}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "bytes"},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 6, "w": 24, "x": 0, "y": 24},
+        "type": "table",
+        "title": "Pod Status Summary",
+        "targets": [
+          {
+            "expr": "kube_pod_status_phase{namespace=\"default\"}",
+            "legendFormat": "",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {"Time": true},
+              "indexByName": {},
+              "renameByName": {
+                "pod": "Pod Name",
+                "phase": "Status",
+                "namespace": "Namespace"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

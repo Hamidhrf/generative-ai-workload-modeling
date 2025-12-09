@@ -1,0 +1,217 @@
+{
+  "dashboard": {
+    "title": "System Pressure (PSI) - Thesis Load Detection",
+    "uid": "thesis-system-pressure",
+    "tags": ["thesis", "psi", "load", "pressure"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "type": "graph",
+        "title": "CPU Pressure (PSI)",
+        "targets": [
+          {
+            "expr": "rate(node_pressure_cpu_waiting_seconds_total[5m])",
+            "legendFormat": "CPU Waiting Time",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Time spent waiting for CPU resources. Higher values indicate CPU contention."
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "graph",
+        "title": "Memory Pressure (PSI)",
+        "targets": [
+          {
+            "expr": "rate(node_pressure_memory_waiting_seconds_total[5m])",
+            "legendFormat": "Some - Waiting Time",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(node_pressure_memory_stalled_seconds_total[5m])",
+            "legendFormat": "Full - Stalled Time",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Time spent waiting for memory resources. Some = at least one task waiting. Full = all tasks stalled."
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "type": "graph",
+        "title": "I/O Pressure (PSI)",
+        "targets": [
+          {
+            "expr": "rate(node_pressure_io_waiting_seconds_total[5m])",
+            "legendFormat": "Some - Waiting Time",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(node_pressure_io_stalled_seconds_total[5m])",
+            "legendFormat": "Full - Stalled Time",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Time spent waiting for I/O resources. Indicates disk/network bottlenecks."
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "type": "graph",
+        "title": "Load State Classification",
+        "targets": [
+          {
+            "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "legendFormat": "CPU Utilization (%)",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(node_pressure_cpu_waiting_seconds_total[5m]) * 100",
+            "legendFormat": "CPU Pressure (normalized)",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "min": 0, "max": 100},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent"
+          }
+        },
+        "description": "Combined view for determining load state: Empty (<10%), Modest (40-60%), High (70-90%)"
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "stat",
+        "title": "Current Load State",
+        "targets": [
+          {
+            "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 40, "color": "yellow"},
+                {"value": 70, "color": "orange"},
+                {"value": 90, "color": "red"}
+              ]
+            }
+          }
+        },
+        "options": {
+          "graphMode": "area",
+          "colorMode": "background"
+        },
+        "description": "Current CPU utilization for load state determination"
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "type": "stat",
+        "title": "System Pressure Score",
+        "targets": [
+          {
+            "expr": "(rate(node_pressure_cpu_waiting_seconds_total[5m]) + rate(node_pressure_memory_waiting_seconds_total[5m]) + rate(node_pressure_io_waiting_seconds_total[5m])) * 100",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "none",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 5, "color": "yellow"},
+                {"value": 10, "color": "orange"},
+                {"value": 20, "color": "red"}
+              ]
+            }
+          }
+        },
+        "options": {
+          "graphMode": "area",
+          "colorMode": "background"
+        },
+        "description": "Composite pressure score. >10 indicates high system stress."
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 24},
+        "type": "graph",
+        "title": "Historical Load Pattern",
+        "targets": [
+          {
+            "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "legendFormat": "CPU Utilization",
+            "refId": "A"
+          },
+          {
+            "expr": "dcgm_gpu_utilization{gpu=\"0\"}",
+            "legendFormat": "GPU Utilization",
+            "refId": "B"
+          },
+          {
+            "expr": "100 - ((node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100)",
+            "legendFormat": "Memory Utilization",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "min": 0, "max": 100},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "description": "Overall system utilization for thesis load state tracking"
+      }
+    ]
+  }
+}

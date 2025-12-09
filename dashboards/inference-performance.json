@@ -1,0 +1,274 @@
+{
+  "dashboard": {
+    "title": "Inference Performance - Thesis QoS Metrics",
+    "uid": "thesis-inference-performance",
+    "tags": ["thesis", "inference", "qos", "latency"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "type": "graph",
+        "title": "ResNet50 Inference Latency",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(inference_latency_seconds_bucket{app=\"resnet50\"}[5m]))",
+            "legendFormat": "p50 (median)",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(inference_latency_seconds_bucket{app=\"resnet50\"}[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(inference_latency_seconds_bucket{app=\"resnet50\"}[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Inference latency distribution for ResNet50 image classification"
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "graph",
+        "title": "DistilBERT Inference Latency",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(inference_latency_seconds_bucket{app=\"distilbert\"}[5m]))",
+            "legendFormat": "p50 (median)",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(inference_latency_seconds_bucket{app=\"distilbert\"}[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(inference_latency_seconds_bucket{app=\"distilbert\"}[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Inference latency distribution for DistilBERT NLP tasks"
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "type": "graph",
+        "title": "Whisper Inference Latency",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(inference_latency_seconds_bucket{app=\"whisper\"}[5m]))",
+            "legendFormat": "p50 (median)",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(inference_latency_seconds_bucket{app=\"whisper\"}[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(inference_latency_seconds_bucket{app=\"whisper\"}[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Inference latency distribution for Whisper speech-to-text"
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "type": "graph",
+        "title": "Comparative Latency (All Models)",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(inference_latency_seconds_bucket[5m]))",
+            "legendFormat": "{{app}} - p50",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "description": "Median latency comparison across all AI models"
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "graph",
+        "title": "Request Throughput",
+        "targets": [
+          {
+            "expr": "rate(inference_requests_total{app=\"resnet50\"}[5m])",
+            "legendFormat": "ResNet50",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(inference_requests_total{app=\"distilbert\"}[5m])",
+            "legendFormat": "DistilBERT",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(inference_requests_total{app=\"whisper\"}[5m])",
+            "legendFormat": "Whisper",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "reqps", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps"
+          }
+        },
+        "description": "Requests per second for each AI model"
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "type": "graph",
+        "title": "Queue Depth",
+        "targets": [
+          {
+            "expr": "inference_queue_depth{app=\"resnet50\"}",
+            "legendFormat": "ResNet50",
+            "refId": "A"
+          },
+          {
+            "expr": "inference_queue_depth{app=\"distilbert\"}",
+            "legendFormat": "DistilBERT",
+            "refId": "B"
+          },
+          {
+            "expr": "inference_queue_depth{app=\"whisper\"}",
+            "legendFormat": "Whisper",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "min": 0},
+          {"format": "short"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        },
+        "description": "Number of pending inference requests in queue"
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 6, "w": 24, "x": 0, "y": 24},
+        "type": "table",
+        "title": "Inference Statistics Summary",
+        "targets": [
+          {
+            "expr": "avg(rate(inference_latency_seconds_sum[5m]) / rate(inference_latency_seconds_count[5m]))",
+            "legendFormat": "",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {"Time": true},
+              "indexByName": {},
+              "renameByName": {
+                "app": "Application",
+                "Value": "Avg Latency (s)"
+              }
+            }
+          }
+        ],
+        "description": "Summary table of inference performance metrics"
+      },
+      {
+        "id": 8,
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 30},
+        "type": "graph",
+        "title": "Latency Under Different Load States",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(inference_latency_seconds_bucket[5m]))",
+            "legendFormat": "{{app}} - Latency p50",
+            "refId": "A"
+          },
+          {
+            "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+            "legendFormat": "CPU Utilization (%)",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "min": 0},
+          {"format": "percent"}
+        ],
+        "fieldConfig": {
+          "defaults": {}
+        },
+        "description": "Correlation between system load and inference latency for thesis analysis"
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "changes(kube_pod_info{namespace=\"default\",pod=~\"resnet50.*|distilbert.*|whisper.*\"}[5m]) > 0",
+          "iconColor": "blue",
+          "name": "Pod Restarts",
+          "tagKeys": "pod",
+          "textFormat": "{{pod}} restarted",
+          "titleFormat": "Pod Event"
+        }
+      ]
+    }
+  }
+}
