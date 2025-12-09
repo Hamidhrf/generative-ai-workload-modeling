@@ -88,6 +88,11 @@ else
     echo "✓ All pods are running"
 fi
 
+# Check monitoring stack
+echo "[7/7] Checking monitoring stack..."
+kubectl get pods -n monitoring 2>/dev/null || echo "⚠ Monitoring namespace not found (might still be starting)"
+echo ""
+
 echo ""
 echo "=========================================="
 echo "Recovery Complete!"

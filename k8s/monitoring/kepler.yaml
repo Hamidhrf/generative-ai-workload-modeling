@@ -1,0 +1,126 @@
+# Kepler - Kubernetes-based Efficient Power Level Exporter
+# Provides power consumption metrics per pod
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kepler
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kepler
+rules:
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - pods
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kepler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kepler
+subjects:
+  - kind: ServiceAccount
+    name: kepler
+    namespace: monitoring
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kepler
+  namespace: monitoring
+  labels:
+    app: kepler
+spec:
+  selector:
+    matchLabels:
+      app: kepler
+  template:
+    metadata:
+      labels:
+        app: kepler
+    spec:
+      serviceAccountName: kepler
+      hostNetwork: true
+      hostPID: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: kepler
+          image: quay.io/sustainable_computing_io/kepler:latest
+          env:
+            - name: ENABLE_EBPF_CGROUPID
+              value: "true"
+            - name: ENABLE_GPU
+              value: "true"
+            - name: ENABLE_PROCESS_METRICS
+              value: "false"
+            - name: MODEL_SERVER_ENABLE
+              value: "true"
+            - name: ESTIMATOR
+              value: "true"
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          ports:
+            - containerPort: 9102
+              name: metrics
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: lib-modules
+              mountPath: /lib/modules
+              readOnly: true
+            - name: sys
+              mountPath: /sys
+            - name: tracing
+              mountPath: /sys/kernel/debug/tracing
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+            type: Directory
+        - name: sys
+          hostPath:
+            path: /sys
+            type: Directory
+        - name: tracing
+          hostPath:
+            path: /sys/kernel/debug/tracing
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kepler
+  namespace: monitoring
+  labels:
+    app: kepler
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9102
+      targetPort: 9102
+      protocol: TCP
+      name: metrics
+  selector:
+    app: kepler
