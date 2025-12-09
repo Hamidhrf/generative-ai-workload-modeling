@@ -880,3 +880,257 @@ The setup is now ready for the deployment and analysis of AI inference workloads
 **Total Setup Time**: ~8 hours (including troubleshooting and documentation)  
 **Final Status**: Production Ready  
 **Date Completed**: December 3, 2025
+
+
+
+---
+
+## December 9, 2025 - Monitoring Stack Deployment
+
+### Objective
+Deploy production-ready monitoring infrastructure for collecting AI workload performance metrics (Phase 1 of thesis).
+
+### Work Completed
+
+#### 1. Monitoring Stack Components Deployed
+**Core Infrastructure:**
+- **Prometheus** (v2.48.0)
+  - 50GB persistent storage
+  - 30-day data retention
+  - 15-second scrape interval
+  - NodePort access: 30090
+
+- **Grafana** (v10.2.2)
+  - 10GB persistent storage
+  - Auto-configured Prometheus datasource
+  - NodePort access: 30030
+  - Default credentials: admin/admin
+
+**Metrics Exporters:**
+- **Node Exporter** (v1.7.0)
+  - Host-level metrics: CPU, RAM, disk, network
+  - PSI (Pressure Stall Information) enabled for load detection
+  - DaemonSet deployment (runs on all nodes)
+
+- **DCGM Exporter** (v3.3.5)
+  - GPU metrics: utilization, memory, temperature, power
+  - NVIDIA A16 GPU monitoring
+  - Requires `nvidia.com/gpu=true` node label
+
+- **kube-state-metrics** (v2.10.1)
+  - Kubernetes object state metrics
+  - Pod, deployment, node status tracking
+
+- **kubelet/cAdvisor** (built-in)
+  - Container-level resource usage
+  - Per-pod CPU, RAM, network metrics
+  - Auto-scraped by Prometheus
+
+#### 2. Storage Infrastructure
+**Problem Encountered:**
+- Initial deployment failed - Prometheus and Grafana pods stuck in "Pending"
+- Root cause: No storage provisioner available for PersistentVolumeClaims
+
+**Solution Implemented:**
+- Installed Rancher local-path-provisioner (v0.0.24)
+- Set as default StorageClass
+- Created 50GB PVC for Prometheus data
+- Created 10GB PVC for Grafana data
+- Storage location: `/opt/local-path-provisioner/`
+
+**Reboot Safety:**
+- Storage provisioner auto-starts (DaemonSet)
+- PVCs automatically rebind to existing volumes
+- All data persists across reboots
+
+#### 3. GPU Monitoring Configuration
+**Issue #1: DCGM Exporter Not Scheduling**
+- DaemonSet required `nvidia.com/gpu=true` node label
+- Node only had GPU capacity, not label
+- Result: "Desired Number of Nodes Scheduled: 0"
+
+**Solution:**
+```bash
+kubectl label nodes controlplane nvidia.com/gpu=true
+```
+
+**Issue #2: Missing RuntimeClass**
+- DCGM Exporter needs GPU runtime access
+- Added `runtimeClassName: nvidia` to pod spec
+- Enabled privileged mode for device access
+
+#### 4. Kepler Power Monitoring (Skipped)
+**Attempted Deployment:**
+- Kepler v0.7.10 for power consumption metrics
+- Required RAPL (Running Average Power Limit) zones
+
+**Failure Analysis:**
+```
+Error: "failed to initialize service rapl: no RAPL zones found"
+```
+
+**Root Cause:**
+- AMD EPYC 7643 CPU
+- Kernel module `amd_energy` not available in kernel 6.14.0-36
+- `/sys/class/powercap/` empty
+
+**Decision:**
+- Skipped Kepler deployment
+- Power metrics are optional in thesis requirements
+- Can revisit later if needed
+- Core metrics (CPU, RAM, GPU) sufficient for Phase 1
+
+#### 5. Deployment Script Enhancements
+**Updated `scripts/monitoring/deploy-monitoring-stack.sh`:**
+
+**New Step 0: Storage Provisioner Check**
+```bash
+if ! kubectl get storageclass local-path &>/dev/null; then
+    # Install local-path-provisioner
+    # Set as default
+fi
+```
+
+**New Step 3.5: GPU Label Verification**
+```bash
+GPU_NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+if ! kubectl get node $GPU_NODE -o jsonpath='{.metadata.labels.nvidia\.com/gpu}' | grep -q "true"; then
+    kubectl label nodes $GPU_NODE nvidia.com/gpu=true
+fi
+```
+
+**Fixed Typo:**
+- Line 68: `bectl wait` → `kubectl wait`
+
+#### 6. System Configuration
+**fstab Cleanup:**
+- Removed duplicate swap entries
+- Added debugfs mount for eBPF support: `debugfs /sys/kernel/debug debugfs defaults 0 0`
+- Persists across reboots
+
+### Technical Decisions
+
+#### Why Local-Path Provisioner?
+-  Lightweight, perfect for single-node clusters
+-  No external dependencies
+-  Simple local storage on host filesystem
+-  Sufficient for research/development workloads
+
+#### Why Skip Kepler?
+-  RAPL unavailable on current kernel/CPU combination
+-  Power metrics are optional per thesis requirements
+-  Core metrics (CPU, RAM, GPU, latency) are sufficient
+-  Can implement power estimation later if needed
+
+#### Node Label vs Removing nodeSelector?
+-  Kept nodeSelector in DCGM YAML (proper approach)
+-  Added GPU label to node (Kubernetes best practice)
+-  Allows future multi-node expansion
+-  Clear separation of GPU vs non-GPU nodes
+
+### Verification
+
+#### All Pods Running:
+```
+NAME                                  READY   STATUS    RESTARTS   AGE
+dcgm-exporter-xxxxx                   1/1     Running   0          Xm
+grafana-xxxxx                         1/1     Running   0          Xm
+kube-state-metrics-xxxxx              1/1     Running   0          Xm
+node-exporter-xxxxx                   1/1     Running   0          Xm
+prometheus-xxxxx                      1/1     Running   0          Xm
+```
+
+#### Prometheus Targets (All UP):
+-  prometheus (self-monitoring)
+-  node-exporter
+-  dcgm-exporter
+-  kube-state-metrics
+-  kubelet
+-  kubelet-cadvisor
+
+#### Access URLs:
+- Prometheus: http://172.22.174.58:30090
+- Grafana: http://172.22.174.58:30030
+
+### Metrics Available for Thesis
+
+#### Resource Consumption:
+| Metric | Source | Query Example |
+|--------|--------|---------------|
+| CPU utilization | Node Exporter | `node_cpu_seconds_total` |
+| RAM consumption | Node Exporter | `node_memory_MemAvailable_bytes` |
+| GPU utilization | DCGM Exporter | `dcgm_gpu_utilization` |
+| GPU memory | DCGM Exporter | `dcgm_fb_used_bytes` |
+| Container CPU | kubelet/cAdvisor | `container_cpu_usage_seconds_total` |
+| Container RAM | kubelet/cAdvisor | `container_memory_usage_bytes` |
+
+#### System State:
+| Metric | Source | Query Example |
+|--------|--------|---------------|
+| Load detection (PSI) | Node Exporter | `node_pressure_cpu_waiting_seconds_total` |
+| Pod status | kube-state-metrics | `kube_pod_status_phase` |
+| Node capacity | kube-state-metrics | `kube_node_status_capacity` |
+
+#### QoS Metrics (To Be Implemented):
+- Application latency (custom metrics from inference apps)
+- Request throughput
+- Queue depth
+
+### Reboot Stability Verification
+
+**Components that auto-recover:**
+-  Kubernetes cluster (systemd services)
+-  Storage provisioner (DaemonSet)
+-  All monitoring pods (Deployments/DaemonSets)
+-  Persistent volumes (data on disk)
+-  Node labels (stored in etcd)
+
+**Post-reboot checklist:**
+```bash
+kubectl get nodes                    # Should be Ready
+kubectl get pods -n monitoring       # All Running
+kubectl get pvc -n monitoring        # All Bound
+kubectl get storageclass             # local-path exists
+```
+
+### Lessons Learned
+
+1. **Storage provisioner is essential** - Always deploy before stateful applications
+2. **Node labels vs capacity** - GPU capacity doesn't equal GPU label
+3. **RAPL availability varies** - AMD/Intel, kernel version dependent
+4. **Test end-to-end** - Delete namespace and redeploy to verify scripts
+5. **Persistent configuration** - Labels and storage bindings survive reboots
+
+### Next Steps
+
+**Immediate (Tomorrow):**
+1. Create Grafana dashboards for thesis metrics
+2. Verify Prometheus is collecting all target metrics
+3. Test data export capabilities
+
+**Phase 1 Continuation:**
+1. Deploy AI inference workloads (ResNet50, DistilBERT, Whisper)
+2. Instrument applications with latency metrics
+3. Collect baseline performance data (uncontended state)
+4. Generate load scenarios (modest, high)
+5. Export time-series data for model training
+
+**Optional:**
+- Revisit Kepler if power metrics become critical
+- Add alerting rules (Alertmanager)
+- Implement deep observability (Pixie) if needed
+
+### Status
+
+**Phase 1: Workload Setup**
+-  Kubernetes cluster operational
+-  GPU support enabled
+-  Monitoring infrastructure deployed ← **COMPLETED TODAY**
+-  AI workloads deployment (next)
+-  Data collection experiments (after workloads)
+
+**Infrastructure Maturity:** Production-ready for research workload analysis
+
+---
+```
+
