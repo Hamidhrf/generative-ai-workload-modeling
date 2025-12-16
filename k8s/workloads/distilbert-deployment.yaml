@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: distilbert-inference
+  namespace: default
   labels:
     app: distilbert
+    workload: ai-inference
 spec:
   replicas: 1
   selector:
@@ -13,8 +15,43 @@ spec:
     metadata:
       labels:
         app: distilbert
+        workload: ai-inference
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
     spec:
+      runtimeClassName: nvidia
       containers:
-        - name: distilbert
-          image: hamidhrf/distilbert-inference:latest
-          # no resource limits/requests for now — free resource usage
+      - name: distilbert
+        image: hamidhrf/distilbert-inference:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+          # No CPU/Memory limits - allow workload to use resources freely
+  
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distilbert-inference
+  namespace: default
+  labels:
+    app: distilbert
+spec:
+  type: ClusterIP
+  selector:
+    app: distilbert
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: metrics

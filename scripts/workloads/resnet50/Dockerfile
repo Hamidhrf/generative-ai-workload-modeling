@@ -1,15 +1,18 @@
 FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
 
 WORKDIR /app
-RUN pip install torchvision pillow
 
+# Install dependencies
+RUN pip install --no-cache-dir \
+    torchvision \
+    pillow \
+    prometheus_client
+
+# Copy inference script
 COPY inference.py .
 
-# # Create a folder for images (you’ll mount data or copy sample images)
-# RUN mkdir -p /data/images
+# Expose Prometheus metrics port
+EXPOSE 8000
 
-# # Set an environment variable for image directory
-# ENV IMAGE_DIR=/data/images
-
-# Entry point
+# Run inference
 CMD ["python", "inference.py"]
