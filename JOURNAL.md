@@ -2078,3 +2078,273 @@ Docker Images:   Will auto-pull from DockerHub
 **Ready to begin Phase 1 experiments.**
 
 ---
+
+
+---
+
+## January 5, 2026: GPU Time-Slicing Implementation and Workload Optimization
+
+### Objective
+Implement GPU time-slicing to enable multi-pod GPU sharing and optimize inference workloads for Phase 1 data collection experiments.
+
+### Context
+After 20-day break from thesis work, resumed with goal of preparing infrastructure for Phase 1 data collection. Previous setup had single GPU exclusive allocation, preventing replica scaling experiments required by thesis methodology.
+
+---
+
+### Challenge 1: GPU Exclusive Allocation Limitation
+
+**Problem**: Kubernetes treats GPUs as exclusive resources by default. Only one pod could access the NVIDIA A16 GPU at a time, preventing the replica scaling experiments (1→3→8 pods) required for measuring system contention effects on latency.
+
+**Solution**: Implemented NVIDIA GPU time-slicing
+
+**Technical Implementation**:
+
+1. **Created Time-Slicing ConfigMap** (`k8s/gpu/gpu-time-slicing-config.yaml`)
+   - Configured NVIDIA device plugin to create 10 virtual GPU slices
+   - Used `timeSlicing.replicas: 10` configuration
+   - Specified resource name: `nvidia.com/gpu`
+
+2. **Updated Device Plugin DaemonSet** (`k8s/gpu/nvidia-device-plugin-with-timeslicing.yaml`)
+   - Added ConfigMap volume mount at `/config`
+   - Set `CONFIG_FILE` environment variable to `/config/config.yaml`
+   - Maintained existing NVML discovery strategy
+   - Kept `runtimeClassName: nvidia` for GPU access
+
+3. **Verification**:
+```
+   kubectl describe node | grep nvidia.com/gpu
+   # Before: nvidia.com/gpu: 1
+   # After:  nvidia.com/gpu: 10
+```
+
+**Result**: Successfully increased GPU capacity from 1 to 10 virtual slices. Deployed 8 ResNet50 pods simultaneously, all sharing the single NVIDIA A16 GPU through time-slicing.
+
+**Key Learning**: GPU time-slicing enables realistic multi-pod experiments while maintaining reasonable performance. Each pod gets fair time-sliced access to GPU compute resources.
+
+---
+
+### Challenge 2: Low GPU Utilization with Sleep-Based Inference
+
+**Problem**: All inference scripts had `time.sleep(1)` between inferences, resulting in:
+- ~1 request/second throughput
+- 99.5% idle time (5ms inference + 1000ms sleep)
+- ~0-2% GPU utilization
+- No meaningful system contention even with 8 replicas
+
+**Analysis**: With 1-second sleep, workloads were essentially idle processes that occasionally used GPU. This didn't create realistic contention needed for thesis experiments measuring latency degradation under load.
+
+**Solution**: Implemented configurable sleep time with continuous inference as default
+
+**Technical Implementation**:
+
+1. **Added Environment Variable Configuration**:
+```python
+   INFERENCE_SLEEP = float(os.getenv('INFERENCE_SLEEP', '0.0'))
+```
+
+2. **Modified Inference Loops**:
+```python
+   while True:
+       # inference code
+       if INFERENCE_SLEEP > 0:
+           time.sleep(INFERENCE_SLEEP)
+```
+
+3. **Deployment Configuration**:
+```yaml
+   env:
+   - name: INFERENCE_SLEEP
+     value: "0.0"  # Continuous inference (no sleep)
+```
+
+**Performance Impact**:
+
+| Workload | Before (1s sleep) | After (no sleep) | Improvement |
+|----------|-------------------|------------------|-------------|
+| ResNet50 | ~1 req/s | ~173 req/s | 173x |
+| DistilBERT | ~1 req/s | ~285 req/s | 285x |
+| Whisper | ~1 req/s | ~8 req/s | 8x |
+
+**Latency Baseline (1 Replica, No Contention)**:
+- ResNet50: 5-6ms
+- DistilBERT: 3ms
+- Whisper: 110-140ms (varies by audio length)
+
+**Result**: Workloads now generate continuous inference load, creating realistic GPU/CPU/memory contention when multiple replicas share resources.
+
+**Design Decision**: Made sleep time configurable via environment variable rather than hardcoded. This allows testing different scenarios (continuous load, moderate load, light load) without rebuilding Docker images.
+
+---
+
+### Challenge 3: Grafana Dashboard Metric Query Errors
+
+**Problem**: Inference Performance dashboard showed "No data" for all panels despite Prometheus successfully scraping metrics. GPU Performance dashboard showed incorrect metric names.
+
+**Root Cause Analysis**:
+1. **Label Mismatch**: Queries used `app="resnet50"` label filter, but actual metrics only had `pod` label
+2. **Incorrect Metric Names**: Used `dcgm_*` metric names instead of actual `DCGM_FI_DEV_*` names from exporter
+
+**Solution**: Updated Prometheus queries with correct label filters and metric names
+
+**Changes Made**:
+
+1. **Label Filters**:
+```
+   # Before: app="resnet50"
+   # After:  pod=~"resnet50.*"
+```
+
+2. **GPU Metrics**:
+```
+   # Before: dcgm_gpu_utilization
+   # After:  DCGM_FI_DEV_GPU_UTIL
+   
+   # Before: dcgm_fb_used_bytes
+   # After:  DCGM_FI_DEV_FB_USED (in MiB, not bytes)
+```
+
+**Result**: All dashboard panels now display data correctly. Can observe real-time metrics for all running pods including latency histograms (P95, P99), throughput, and GPU utilization.
+
+---
+
+### Infrastructure Verification
+
+**All Three Workloads Validated**:
+
+1. **ResNet50** (Image Classification):
+   - Throughput: 173 req/s
+   - Latency: 5-6ms
+   - GPU: Shares time-sliced allocation
+   - Status: Verified, then deleted for sequential testing
+
+2. **DistilBERT** (NLP):
+   - Throughput: 285 req/s (fastest)
+   - Latency: 3ms
+   - GPU: Shares time-sliced allocation
+   - Status: Running
+
+3. **Whisper** (Speech-to-Text):
+   - Throughput: 8 req/s (slowest, audio processing intensive)
+   - Latency: 110-140ms (varies by audio duration: 3s/5s/7s)
+   - GPU: Shares time-sliced allocation
+   - Status: Running
+
+**Monitoring Stack**: All dashboards operational
+- GPU Performance: Temperature, power, memory, utilization
+- System Resources: CPU, memory, disk, network
+- System Pressure (PSI): CPU, memory, I/O contention indicators
+- Container Metrics: Per-pod resource usage
+- Inference Performance: Latency, throughput, queue depth
+
+---
+
+### Experimental Design Decision: Sequential vs. Mixed Workload Testing
+
+**Options Considered**:
+
+**Option A: Sequential Testing** (Run one workload at a time)
+- Day 1: ResNet50 (1→3→8 replicas, 60 min each)
+- Day 2: DistilBERT (1→3→8 replicas, 60 min each)
+- Day 3: Whisper (1→3→8 replicas, 60 min each)
+
+Advantages:
+- Clean data with clear resource attribution
+- No interference between workloads
+- Easier to analyze latency degradation per workload
+- Matches thesis requirement to measure individual workload behavior
+
+**Option B: Mixed Workload Testing** (Run all three together)
+- Tests realistic multi-workload scenarios
+- More complex analysis
+- Harder to attribute resource usage to specific workload
+
+**Decision**: Deferred to next session. Will likely choose Option A (sequential) as it better aligns with thesis objective of modeling individual workload behavior under different contention levels.
+
+---
+
+### Technical Architecture Summary
+
+**GPU Time-Slicing Stack**:
+```
+NVIDIA A16 GPU (Physical)
+    ↓
+NVIDIA Container Toolkit
+    ↓
+CRI-O Runtime (nvidia handler)
+    ↓
+NVIDIA Device Plugin (with time-slicing config)
+    ↓
+Kubernetes (advertises 10x nvidia.com/gpu)
+    ↓
+Pods (each requests 1 GPU slice = 1/10th of A16)
+```
+
+**Workload Configuration**:
+- Runtime: `nvidia` (enables GPU hardware access)
+- GPU allocation: `1` slice per pod
+- CPU/Memory: No limits (capture actual consumption)
+- Inference mode: Continuous (INFERENCE_SLEEP=0.0)
+- Metrics: Prometheus on port 8000
+
+---
+
+### Next Steps
+
+**Immediate**:
+1. Commit and push all changes to GitHub
+2. Update README.md with current status
+3. Document GPU time-slicing setup in docs/
+
+**Phase 1 Data Collection Preparation**:
+1. Decide between sequential vs. mixed workload testing
+2. Clear Prometheus historical data or adjust time ranges
+3. Plan data export strategy from Grafana
+4. Prepare experiment schedule and duration
+
+**Future Experiments**:
+1. Baseline measurements (1 replica per workload)
+2. Modest load tests (3 replicas per workload)
+3. High load tests (8 replicas per workload)
+4. Measure latency degradation under GPU/CPU/memory contention
+5. Correlate with PSI metrics for system pressure indicators
+
+---
+
+### Files Modified
+
+**New Files**:
+- `k8s/gpu/gpu-time-slicing-config.yaml`
+- `k8s/gpu/nvidia-device-plugin-with-timeslicing.yaml`
+
+**Updated Files**:
+- `scripts/workloads/resnet50/inference.py` (v3)
+- `scripts/workloads/distilbert/inference.py` (v3)
+- `scripts/workloads/whisper/inference.py` (v3)
+- `k8s/workloads/resnet50-deployment.yaml`
+- `k8s/workloads/distilbert-deployment.yaml`
+- `k8s/workloads/whisper-deployment.yaml`
+- `dashboards/inference-performance.json`
+- `dashboards/gpu-performance.json`
+
+**Docker Images Built**:
+- `hamidhrf/resnet50-inference:v3`
+- `hamidhrf/distilbert-inference:v3`
+- `hamidhrf/whisper-inference:v3`
+
+---
+
+### Conclusion
+
+Successfully implemented GPU time-slicing and optimized inference workloads for Phase 1 data collection. Infrastructure now supports:
+- Multi-pod GPU sharing (up to 10 concurrent pods)
+- Continuous inference mode creating realistic contention
+- Comprehensive monitoring with corrected dashboards
+- Flexible experimental configuration via environment variables
+
+System is ready for Phase 1 experiments measuring latency degradation under varying system contention levels (1→3→8 replicas).
+
+**Total Time**: ~3 hours (implementation + verification)
+**Status**: Infrastructure ready for data collection
+
+---
