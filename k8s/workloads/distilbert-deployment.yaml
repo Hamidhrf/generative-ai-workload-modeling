@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: distilbert
-        image: hamidhrf/distilbert-inference:v2
+        image: hamidhrf/distilbert-inference:v3
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -38,6 +38,8 @@ spec:
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
+        - name: INFERENCE_SLEEP
+          value: "0.0"  # Continuous inference (no sleep)
 ---
 apiVersion: v1
 kind: Service

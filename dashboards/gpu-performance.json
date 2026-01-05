@@ -5,7 +5,7 @@
     "tags": ["thesis", "gpu", "nvidia"],
     "timezone": "browser",
     "schemaVersion": 16,
-    "version": 1,
+    "version": 2,
     "refresh": "5s",
     "panels": [
       {
@@ -15,7 +15,7 @@
         "title": "GPU Utilization",
         "targets": [
           {
-            "expr": "dcgm_gpu_utilization{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"}",
             "legendFormat": "GPU {{gpu}} Utilization",
             "refId": "A"
           }
@@ -23,26 +23,7 @@
         "yaxes": [
           {"format": "percent", "min": 0, "max": 100},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "percent",
-            "min": 0,
-            "max": 100
-          }
-        },
-        "alert": {
-          "name": "High GPU Utilization",
-          "conditions": [
-            {
-              "evaluator": {"params": [90], "type": "gt"},
-              "operator": {"type": "and"},
-              "query": {"params": ["A", "5m", "now"]},
-              "reducer": {"params": [], "type": "avg"},
-              "type": "query"
-            }
-          ]
-        }
+        ]
       },
       {
         "id": 2,
@@ -51,25 +32,20 @@
         "title": "GPU Memory Usage",
         "targets": [
           {
-            "expr": "dcgm_fb_used_bytes{gpu=\"0\"}",
-            "legendFormat": "Used Memory",
+            "expr": "DCGM_FI_DEV_FB_USED{gpu=\"0\"}",
+            "legendFormat": "Used Memory (MiB)",
             "refId": "A"
           },
           {
-            "expr": "dcgm_fb_total_bytes{gpu=\"0\"}",
-            "legendFormat": "Total Memory",
+            "expr": "DCGM_FI_DEV_FB_FREE{gpu=\"0\"}",
+            "legendFormat": "Free Memory (MiB)",
             "refId": "B"
           }
         ],
         "yaxes": [
-          {"format": "bytes"},
+          {"format": "mbytes"},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "bytes"
-          }
-        }
+        ]
       },
       {
         "id": 3,
@@ -78,7 +54,7 @@
         "title": "GPU Memory Utilization (%)",
         "targets": [
           {
-            "expr": "(dcgm_fb_used_bytes{gpu=\"0\"} / dcgm_fb_total_bytes{gpu=\"0\"}) * 100",
+            "expr": "(DCGM_FI_DEV_FB_USED{gpu=\"0\"} / (DCGM_FI_DEV_FB_USED{gpu=\"0\"} + DCGM_FI_DEV_FB_FREE{gpu=\"0\"})) * 100",
             "legendFormat": "Memory Usage (%)",
             "refId": "A"
           }
@@ -86,14 +62,7 @@
         "yaxes": [
           {"format": "percent", "min": 0, "max": 100},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "percent",
-            "min": 0,
-            "max": 100
-          }
-        }
+        ]
       },
       {
         "id": 4,
@@ -102,7 +71,7 @@
         "title": "GPU Temperature",
         "targets": [
           {
-            "expr": "dcgm_gpu_temp{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_GPU_TEMP{gpu=\"0\"}",
             "legendFormat": "Temperature (C)",
             "refId": "A"
           }
@@ -110,24 +79,7 @@
         "yaxes": [
           {"format": "celsius", "min": 0},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "celsius"
-          }
-        },
-        "alert": {
-          "name": "High GPU Temperature",
-          "conditions": [
-            {
-              "evaluator": {"params": [80], "type": "gt"},
-              "operator": {"type": "and"},
-              "query": {"params": ["A", "5m", "now"]},
-              "reducer": {"params": [], "type": "avg"},
-              "type": "query"
-            }
-          ]
-        }
+        ]
       },
       {
         "id": 5,
@@ -136,7 +88,7 @@
         "title": "GPU Power Usage",
         "targets": [
           {
-            "expr": "dcgm_power_usage_watts{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_POWER_USAGE{gpu=\"0\"}",
             "legendFormat": "Power (W)",
             "refId": "A"
           }
@@ -144,12 +96,7 @@
         "yaxes": [
           {"format": "watt", "min": 0},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "watt"
-          }
-        }
+        ]
       },
       {
         "id": 6,
@@ -158,25 +105,20 @@
         "title": "GPU Clock Speeds",
         "targets": [
           {
-            "expr": "dcgm_sm_clock{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_SM_CLOCK{gpu=\"0\"}",
             "legendFormat": "SM Clock (MHz)",
             "refId": "A"
           },
           {
-            "expr": "dcgm_mem_clock{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_MEM_CLOCK{gpu=\"0\"}",
             "legendFormat": "Memory Clock (MHz)",
             "refId": "B"
           }
         ],
         "yaxes": [
-          {"format": "hertz", "min": 0},
+          {"format": "MHz", "min": 0},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "hertz"
-          }
-        }
+        ]
       },
       {
         "id": 7,
@@ -185,17 +127,17 @@
         "title": "GPU Performance Over Time (Composite)",
         "targets": [
           {
-            "expr": "dcgm_gpu_utilization{gpu=\"0\"}",
+            "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"}",
             "legendFormat": "GPU Util (%)",
             "refId": "A"
           },
           {
-            "expr": "(dcgm_fb_used_bytes{gpu=\"0\"} / dcgm_fb_total_bytes{gpu=\"0\"}) * 100",
+            "expr": "(DCGM_FI_DEV_FB_USED{gpu=\"0\"} / (DCGM_FI_DEV_FB_USED{gpu=\"0\"} + DCGM_FI_DEV_FB_FREE{gpu=\"0\"})) * 100",
             "legendFormat": "Memory Util (%)",
             "refId": "B"
           },
           {
-            "expr": "dcgm_power_usage_watts{gpu=\"0\"} / 62 * 100",
+            "expr": "DCGM_FI_DEV_POWER_USAGE{gpu=\"0\"} / 62 * 100",
             "legendFormat": "Power Util (% of 62W TDP)",
             "refId": "C"
           }
@@ -203,14 +145,7 @@
         "yaxes": [
           {"format": "percent", "min": 0, "max": 100},
           {"format": "short"}
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "percent",
-            "min": 0,
-            "max": 100
-          }
-        }
+        ]
       }
     ]
   }
