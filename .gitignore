@@ -90,3 +90,5 @@ data/benchmarks/*.json
 .DS_Store
 Thumbs.db
 desktop.ini
+# Monitoring backups
+k8s/monitoring/*-backup.yaml

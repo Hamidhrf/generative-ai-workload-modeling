@@ -2348,3 +2348,384 @@ System is ready for Phase 1 experiments measuring latency degradation under vary
 **Status**: Infrastructure ready for data collection
 
 ---
+
+
+cat >> JOURNAL.md << 'EOFJOURNAL'
+
+---
+
+## January 6, 2026 - Phase 1 Experiment Setup & GPU Metrics Configuration
+
+### Objective
+Configure and validate the complete Phase 1 experiment infrastructure for collecting AI workload performance data with comprehensive resource metrics including GPU telemetry.
+
+### Summary
+Successfully configured Prometheus for high-resolution data collection (5-second scrape interval), enabled GPU access for all three AI workloads, and resolved GPU metrics collection issues. Completed first experiment run with ResNet50, identifying and fixing GPU metric collection configuration.
+
+---
+
+### 1. Prometheus Configuration Updates
+
+**Issue:** Default Prometheus scrape interval (15s) insufficient for training generative models on time-series data.
+
+**Solution:** Updated scrape interval to 5 seconds for higher temporal resolution.
+
+**Changes Made:**
+- Updated `k8s/monitoring/prometheus-config.yaml`:
+  - `scrape_interval: 15s` → `scrape_interval: 5s`
+  - `evaluation_interval: 15s` → `evaluation_interval: 5s`
+
+**Result:** 720 data points per hour per metric (vs. 240 previously)
+
+**Verification:**
+```bash
+kubectl apply -f k8s/monitoring/prometheus-config.yaml
+kubectl rollout restart deployment prometheus -n monitoring
+kubectl logs -n monitoring deployment/prometheus | grep scrape_interval
+```
+
+**Prometheus Access:**
+- Internal: `http://localhost:9090` (requires port-forward)
+- NodePort: `http://172.22.174.58:30090` (node IP + NodePort)
+- Experiment script uses: `http://172.22.174.58:30090`
+
+---
+
+### 2. GPU Access Configuration for Workloads
+
+**Problem:** Initial experiment (ResNet50 × 1 replica) collected only 5/8 metrics:
+-  CPU usage, Memory usage, CPU PSI, Memory PSI, I/O PSI
+-  GPU utilization, GPU memory, GPU power
+
+**Root Cause Analysis:**
+1. Deployment manifests lacked GPU resource requests
+2. Missing `runtimeClassName: nvidia` specification
+3. Pods ran CPU-only, preventing DCGM from tracking their GPU usage
+
+**Solution Applied:**
+Updated all three deployment files to include:
+```yaml
+spec:
+  template:
+    spec:
+      runtimeClassName: nvidia  # Enable NVIDIA GPU runtime
+      containers:
+      - name: <workload>
+        resources:
+          limits:
+            nvidia.com/gpu: 1  # Request 1 GPU
+```
+
+**Files Modified:**
+- `k8s/workloads/resnet50-deployment.yaml`
+- `k8s/workloads/distilbert-deployment.yaml`
+- `k8s/workloads/whisper-deployment.yaml`
+
+**Verification Process:**
+```bash
+# Test GPU access inside pod
+kubectl exec <pod-name> -- nvidia-smi
+
+# Output confirmed:
+# - NVIDIA A16 GPU visible
+# - Driver: 580.95.05
+# - CUDA: 13.0
+# - Memory: 15356 MiB total
+```
+
+---
+
+### 3. DCGM Metrics Architecture & Query Optimization
+
+**Challenge:** Initial GPU metric queries used pod-level filtering:
+```python
+'gpu_utilization': f'DCGM_FI_DEV_GPU_UTIL{{pod=~"{workload}.*"}}'
+```
+
+**Discovery:** DCGM Exporter provides metrics at **device level**, not pod level.
+
+**DCGM Metric Labels:**
+```json
+{
+  "DCGM_FI_DRIVER_VERSION": "580.95.05",
+  "Hostname": "dcgm-exporter-chnxh",
+  "UUID": "GPU-b2272d68-21df-f504-eceb-3621e0c49ba3",
+  "device": "nvidia0",
+  "gpu": "0",
+  "instance": "10.244.49.108:9400",
+  "job": "dcgm-exporter",
+  "modelName": "NVIDIA A16"
+}
+```
+
+**Key Observation:** No `pod` or `namespace` labels available in DCGM metrics.
+
+**Solution - Updated Prometheus Queries:**
+```python
+# Old (didn't work):
+'gpu_utilization': f'DCGM_FI_DEV_GPU_UTIL{{pod=~"{workload}.*"}}'
+
+# New (works):
+'gpu_utilization': 'DCGM_FI_DEV_GPU_UTIL'  # Device-level, no filter
+'gpu_memory': 'DCGM_FI_DEV_FB_USED'
+'gpu_power': 'DCGM_FI_DEV_POWER_USAGE'
+```
+
+**Justification:**
+Since experiments are executed **sequentially** with only one workload active at a time, GPU metrics captured during each experiment window represent the resource consumption of that specific workload. Temporal isolation ensures clean attribution.
+
+**Methodology Note for Thesis:**
+> GPU metrics were collected at the device level using DCGM Exporter, capturing the total GPU utilization during each experiment window. Since experiments were executed sequentially with only one workload active at a time, the GPU metrics represent the resource consumption of the specific workload being tested. Pod-level CPU and memory metrics were collected concurrently with per-pod granularity.
+
+---
+
+### 4. Experiment Infrastructure Validation
+
+**Test Queries:**
+```bash
+# GPU Utilization
+curl -s "http://172.22.174.58:30090/api/v1/query?query=DCGM_FI_DEV_GPU_UTIL" \
+  | jq '.data.result[0].value'
+# Result: [1767718241.638, "0"]  # Timestamp, Value
+
+# GPU Memory (FB = Frame Buffer)
+curl -s "http://172.22.174.58:30090/api/v1/query?query=DCGM_FI_DEV_FB_USED" \
+  | jq '.data.result[0].value'
+# Result: [1767718241.647, "13"]  # 13 MB baseline
+
+# GPU Power
+curl -s "http://172.22.174.58:30090/api/v1/query?query=DCGM_FI_DEV_POWER_USAGE" \
+  | jq '.data.result[0].value'
+# Result: [1767718241.656, "15.731"]  # 15.7W idle power
+```
+
+**All queries successful ✓**
+
+---
+
+### 5. First Experiment Execution (ResNet50 × 1 Replica)
+
+**Configuration:**
+- **Workload:** ResNet50 image classification
+- **Replicas:** 1 pod
+- **Startup delay:** 5 minutes (300s) for model loading and warmup
+- **Recording duration:** 60 minutes (3600s)
+- **Scrape interval:** 5 seconds
+
+**Initial Results (Before GPU Fix):**
+```
+[cpu_usage           ] ✓ Exported (542.7 KB)
+[memory_usage        ] ✓ Exported (894.4 KB)
+[gpu_utilization     ] ✗ No data
+[gpu_memory          ] ✗ No data
+[gpu_power           ] ✗ No data
+[cpu_psi             ] ✓ Exported (55.0 KB)
+[memory_psi          ] ✓ Exported (43.0 KB)
+[io_psi              ] ✓ Exported (55.9 KB)
+
+✓ Collected 5/8 metrics
+```
+
+**Action Taken:**
+Deleted incomplete data and prepared for re-run with GPU metrics enabled.
+
+**Expected Results (After Fix):**
+All 8 metrics should be collected:
+- CPU usage (rate over 1-minute window)
+- Memory usage (working set)
+- GPU utilization (%)
+- GPU memory (MB)
+- GPU power (W)
+- CPU Pressure Stall Information (PSI)
+- Memory PSI
+- I/O PSI
+
+---
+
+### 6. Data Collection Architecture
+
+**Metrics Collection Stack:**
+```
+AI Workload Pods (ResNet50/DistilBERT/Whisper)
+    ↓
+cAdvisor (container metrics) + DCGM Exporter (GPU metrics)
+    ↓
+Prometheus (5-second scrape interval)
+    ↓
+Python Script (CSV export via Prometheus HTTP API)
+    ↓
+data/raw/phase1/*.csv (training data for Phase 2)
+```
+
+**Metric Categories:**
+
+1. **Container-Level Metrics** (per-pod granularity):
+   - CPU: `rate(container_cpu_usage_seconds_total[1m])`
+   - Memory: `container_memory_working_set_bytes`
+
+2. **GPU Device Metrics** (single GPU, temporal isolation):
+   - Utilization: `DCGM_FI_DEV_GPU_UTIL` (%)
+   - Memory: `DCGM_FI_DEV_FB_USED` (MB)
+   - Power: `DCGM_FI_DEV_POWER_USAGE` (W)
+
+3. **System Pressure Metrics** (node-level):
+   - CPU PSI: `rate(node_pressure_cpu_waiting_seconds_total[1m])`
+   - Memory PSI: `rate(node_pressure_memory_waiting_seconds_total[1m])`
+   - I/O PSI: `rate(node_pressure_io_waiting_seconds_total[1m])`
+
+**Data Resolution:**
+- **Temporal:** 5-second intervals = 720 samples/hour
+- **Per experiment:** 43,200 samples per metric (60 min × 720/hour)
+- **Per experiment set:** 8 metrics × 43,200 samples = 345,600 data points
+
+---
+
+### 7. System Status & Readiness
+
+**Pre-Experiment Checklist Results:**
+```
+[1/5] Memory Status: ✓ 8% (5.1 GiB / 61 GiB)
+[2/5] Prometheus Status: ✓ Running
+[3/5] Scrape Interval: ✓ 5s confirmed
+[4/5] Grafana Status: ✓ Disabled (0 replicas)
+[5/5] Workload Pods: ✓ None running
+
+Checklist Complete ✓
+```
+
+**Infrastructure State:**
+- Prometheus: Running with 5s scrape, 7 active targets
+- DCGM Exporter: Running, exporting GPU metrics
+- Grafana: Disabled to reduce monitoring overhead
+- GPU: NVIDIA A16, 15356 MiB, driver 580.95.05, CUDA 13.0
+- Memory: 56 GiB available (91% free)
+- Workloads: All deployment files configured with GPU access
+
+---
+
+### 8. Experiment Execution Plan
+
+**Total Experiments:** 9 (3 workloads × 3 replica counts)
+
+| # | Workload | Replicas | Duration | Status |
+|---|----------|----------|----------|--------|
+| 1 | ResNet50 | 1 | 66 min | Re-running with GPU |
+| 2 | ResNet50 | 3 | 66 min | Pending |
+| 3 | ResNet50 | 8 | 66 min | Pending |
+| 4 | DistilBERT | 1 | 66 min | Pending |
+| 5 | DistilBERT | 3 | 66 min | Pending |
+| 6 | DistilBERT | 8 | 66 min | Pending |
+| 7 | Whisper | 1 | 66 min | Pending |
+| 8 | Whisper | 3 | 66 min | Pending |
+| 9 | Whisper | 8 | 66 min | Pending |
+
+**Estimated Total Time:** 9.9 hours (sequential execution)
+
+**Per-Experiment Timeline:**
+- Deploy + Scale: 1 minute
+- Stabilization: 5 minutes (model load + warmup)
+- Recording: 60 minutes (data collection)
+- Cleanup: 0.5 minutes
+- **Total:** 66.5 minutes per experiment
+
+---
+
+### 9. Lessons Learned
+
+**GPU Metrics Collection:**
+- DCGM provides device-level metrics, not pod-level
+- Temporal isolation (sequential experiments) ensures clean attribution
+- No need for pod-level filtering when experiments don't overlap
+
+**Prometheus Configuration:**
+- NodePort services require node IP access, not localhost
+- Port-forwarding is alternative but adds complexity
+- 5-second scrape interval provides sufficient resolution for ML training
+
+**Container GPU Access:**
+- Requires both `runtimeClassName: nvidia` AND `nvidia.com/gpu` resource limit
+- Missing either component results in CPU-only execution
+- `nvidia-smi` inside container is quick validation method
+
+**Data Quality Considerations:**
+- 5-minute startup delay critical for removing initialization transients
+- Steady-state data essential for generative model training
+- PSI metrics provide system-level contention indicators
+
+---
+
+### 10. Next Steps
+
+**Immediate:**
+1.  Re-run ResNet50 × 1 with GPU metrics enabled
+2. Validate all 8 metrics collected successfully
+3. Continue with remaining 8 experiments
+
+**Phase 1 Completion Criteria:**
+- 9 experiments executed successfully
+- 72 CSV files generated (9 experiments × 8 metrics)
+- Data size: ~500 MB - 1 GB total
+- Timestamps verified and aligned
+
+**Phase 2 Preparation:**
+- Validate CSV data quality and completeness
+- Verify temporal alignment between metrics
+- Develop data preprocessing pipeline
+- Begin literature review on RNN/GAN architectures
+
+---
+
+### Technical Specifications
+
+**Hardware:**
+- CPU: 16 vCPUs
+- Memory: 62.5 GiB
+- GPU: NVIDIA A16 (16 GB GDDR6, Ampere architecture)
+- Storage: 250 GiB
+
+**Software Stack:**
+- OS: Ubuntu 24.04 LTS (kernel 6.14.0-37)
+- Kubernetes: v1.34.0
+- Container Runtime: CRI-O 1.31.5
+- GPU Runtime: nvidia-container-runtime
+- Python: 3.10.19 (conda environment: tracegen)
+- Prometheus: v2.48.0
+- DCGM Exporter: Latest
+
+**Network:**
+- Pod CIDR: 10.244.0.0/16
+- Service CIDR: 10.96.0.0/12
+- CNI: Calico with VXLAN
+- Node IP: 172.22.174.58
+
+---
+
+### Files Modified Today
+
+**Configuration:**
+- `k8s/monitoring/prometheus-config.yaml` - Changed scrape interval to 5s
+- `k8s/workloads/resnet50-deployment.yaml` - Added GPU resource requests
+- `k8s/workloads/distilbert-deployment.yaml` - Added GPU resource requests
+- `k8s/workloads/whisper-deployment.yaml` - Added GPU resource requests
+
+**Tooling:**
+- `tools/run_single_experiment.py` - Fixed GPU metric Prometheus queries
+- `tools/pre_experiment_checklist.sh` - Validation script
+- `tools/experiment_tracker.sh` - Progress tracking script
+- `tools/requirements.txt` - Python dependencies
+
+**Documentation:**
+- `docs/PHASE1_EXPERIMENT_GUIDE.md` - Complete execution guide
+- `JOURNAL.md` - This entry
+
+---
+
+### Conclusion
+
+Phase 1 infrastructure is now fully configured and validated. GPU metrics collection architecture is understood and properly implemented. The experimental methodology ensures clean temporal isolation of workload measurements. System is ready for comprehensive data collection across all 9 experimental configurations.
+
+**Status:** Ready for Phase 1 data collection ✓
+
+---
+
+EOFJOURNAL

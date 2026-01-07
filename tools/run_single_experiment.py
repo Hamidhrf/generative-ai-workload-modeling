@@ -58,14 +58,46 @@ class SingleExperimentRunner:
         
         # Metrics to collect
         self.metrics = {
-            'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod=~"{workload}.*"}}[1m])',
-            'memory_usage': f'container_memory_working_set_bytes{{pod=~"{workload}.*"}}',
-            'gpu_utilization': f'DCGM_FI_DEV_GPU_UTIL{{pod=~"{workload}.*"}}',
-            'gpu_memory': f'DCGM_FI_DEV_FB_USED{{pod=~"{workload}.*"}}',
-            'gpu_power': f'DCGM_FI_DEV_POWER_USAGE{{pod=~"{workload}.*"}}',
-            'cpu_psi': 'rate(node_pressure_cpu_waiting_seconds_total[1m])',
-            'memory_psi': 'rate(node_pressure_memory_waiting_seconds_total[1m])',
-            'io_psi': 'rate(node_pressure_io_waiting_seconds_total[1m])',
+            # Per-pod resource metrics
+            'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod="{workload}-inference.*"}}[1m])',
+            'memory_usage': f'container_memory_working_set_bytes{{pod="{workload}-inference.*"}}',
+            
+            # Device-level GPU metrics (shared across all pods with time-slicing)
+            'gpu_utilization': 'DCGM_FI_DEV_GPU_UTIL',
+            'gpu_memory': 'DCGM_FI_DEV_FB_USED',
+            'gpu_power': 'DCGM_FI_DEV_POWER_USAGE',
+            'gpu_temperature': 'DCGM_FI_DEV_GPU_TEMP',
+            
+            # Per-pod pressure metrics (contention indicators)
+            'cpu_psi': f'rate(container_pressure_cpu_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
+            'memory_psi': f'rate(container_pressure_memory_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
+            'io_psi': f'rate(container_pressure_io_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
+            
+            # Application-level inference metrics (per-pod)
+            # Simple average
+            'inference_latency_avg': (
+                f'{workload}_inference_latency_seconds_sum / '
+                f'{workload}_inference_latency_seconds_count'
+            ),
+            # P50 (median) latency
+            'inference_latency_p50': (
+                f'histogram_quantile(0.50, '
+                f'rate({workload}_inference_latency_seconds_bucket[1m]))'
+            ),
+            # P95 latency
+            'inference_latency_p95': (
+                f'histogram_quantile(0.95, '
+                f'rate({workload}_inference_latency_seconds_bucket[1m]))'
+            ),
+            # P99 latency
+            'inference_latency_p99': (
+                f'histogram_quantile(0.99, '
+                f'rate({workload}_inference_latency_seconds_bucket[1m]))'
+            ),
+            # Inference throughput (requests per second)
+            'inference_throughput': f'rate({workload}_inference_total[1m])',
+            # Total inference count (cumulative)
+            'inference_total': f'{workload}_inference_total',
         }
     
     def run_cmd(self, cmd, check=True):
