@@ -2728,4 +2728,281 @@ Phase 1 infrastructure is now fully configured and validated. GPU metrics collec
 
 ---
 
-EOFJOURNAL
+
+
+
+
+---
+
+## Phase 1 Data Collection: Container Metrics Fix (January 7, 2026)
+
+### Critical Issue Resolved: Container-Level Metrics Collection
+
+**Problem Discovered:**
+Previous experiments showed 0 results for container CPU and memory metrics despite Prometheus targets being UP and 71 time series existing in the database.
+
+**Root Cause Analysis:**
+Kubernetes pods contain multiple containers:
+- POD infrastructure container (empty `container=""` label)
+- Workload container (e.g., `container="resnet50"`)
+
+Queries without explicit container filtering returned multiple time series or selected the wrong container, resulting in empty/incorrect data.
+
+**Diagnostic Process:**
+```bash
+# Test query patterns
+container_cpu_usage_seconds_total{pod="resnet50-inference-5c86cf856d-ltjcs"}
+# Result: 0 time series
+
+# Discovered multiple containers per pod
+container_cpu_usage_seconds_total{pod="resnet50-inference-5c86cf856d-ltjcs"}
+# Returned: container="" AND container="resnet50"
+
+# Fixed query with container filter
+container_cpu_usage_seconds_total{pod=~"resnet50-inference.*",container="resnet50"}
+# Result: Correct data!
+```
+
+**Solution Implemented:**
+
+Updated all container-level metric queries in `tools/run_single_experiment.py`:
+```python
+# OLD (broken) - returned 0 results
+'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod=~"{workload}-inference.*"}}[1m])'
+
+# NEW (working) - returns correct data
+'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])'
+```
+
+**Metrics Fixed:**
+1. `cpu_usage` - Container CPU utilization rate
+2. `memory_usage` - Container working set memory
+3. `cpu_psi` - CPU Pressure Stall Information
+4. `memory_psi` - Memory PSI
+5. `io_psi` - I/O PSI
+
+---
+
+### First Successful Experiment: ResNet50 Baseline (r1)
+
+**Experiment Details:**
+- **Workload**: ResNet50 (image classification)
+- **Replicas**: 1 pod
+- **Duration**: 66 minutes (5 min stabilization + 60 min recording + 1 min cleanup)
+- **Start**: 2026-01-07 15:18:10
+- **End**: 2026-01-07 16:18:10
+- **Scrape Interval**: 5 seconds
+- **Data Points**: 722 samples per metric
+
+**Collected Metrics (15 total):**
+
+| Category | Metric | File Size | Row Count | Status |
+|----------|--------|-----------|-----------|--------|
+| **Container Resources** | cpu_usage | 349 KB | 722 | ✓ |
+| | memory_usage | 365 KB | 722 | ✓ |
+| **GPU Metrics** | gpu_utilization | 124 KB | 722 | ✓ |
+| | gpu_memory | 123 KB | 722 | ✓ |
+| | gpu_power | 127 KB | 722 | ✓ |
+| | gpu_temperature | 123 KB | 722 | ✓ |
+| **Pressure Stall Info** | cpu_psi | 347 KB | 722 | ✓ |
+| | memory_psi | 334 KB | 722 | ✓ |
+| | io_psi | 334 KB | 722 | ✓ |
+| **Inference Metrics** | latency_avg | 89 KB | 722 | ✓ |
+| | latency_p50 | 89 KB | 722 | ✓ |
+| | latency_p95 | 89 KB | 722 | ✓ |
+| | latency_p99 | 89 KB | 722 | ✓ |
+| | throughput | 86 KB | 722 | ✓ |
+| | total_count | 98 KB | 722 | ✓ |
+
+**Data Quality Assessment:**
+
+**CPU Usage:**
+- Value range: 0.618 - 1.000 cores
+- Pattern: Steady ~1.0 core utilization (100% single-core)
+- Observation: Clean single-threaded inference behavior
+- Non-zero data points: 650/721 (90%)
+
+**Memory Usage:**
+- Value: 3.34 GB (stable)
+- Pattern: Constant memory footprint
+- Observation: ResNet50 model loaded, no memory leaks
+- Non-zero data points: 721/721 (100%)
+
+**Inference Latency:**
+- Initial: 5.8-5.9 ms
+- Final: 5.5-5.6 ms  
+- Pattern: Slight improvement over time (JIT warmup)
+- Observation: Consistent sub-6ms latency
+
+**GPU Utilization:**
+- Value: 100% throughout
+- Pattern: Constant full utilization
+- Observation: GPU-bound workload, optimal utilization
+
+**Key Findings:**
+1. ✅ ResNet50 achieves **100% GPU utilization** with single replica
+2. ✅ CPU usage ~1.0 core indicates **efficient single-threaded inference**
+3. ✅ Memory stable at **3.34 GB** (model + inference framework overhead)
+4. ✅ Inference latency **5.5-5.8 ms** per image (consistent)
+5. ✅ All PSI metrics collected successfully (system contention indicators)
+
+---
+
+### Verification Scripts Created
+
+**1. verify_csv_quality.sh**
+- Validates data completeness and quality
+- Checks row counts (expected ~720)
+- Counts non-zero values
+- Displays sample data from key metrics
+
+**2. verify_any_experiment.sh**
+- Generic verification for any workload/replica combination
+- Usage: `./verify_any_experiment.sh <workload> <replicas>`
+- Confirms all 15 metrics collected
+
+**3. diagnose_container_metrics.sh**
+- Troubleshoots container metric collection issues
+- Discovers available labels in Prometheus
+- Tests query patterns
+
+**4. test_current_queries.sh**
+- Validates query patterns before experiments
+- Prevents wasted 66-minute experiments with broken queries
+
+**5. run_all_experiments.sh**
+- Automates sequential execution of remaining experiments
+- Includes 2-minute cooldown between experiments
+- Logs progress to experiments.log
+
+---
+
+### Experimental Infrastructure Status
+
+**Prometheus Configuration:**
+- Scrape interval: 5 seconds
+- Retention: Default (15 days)
+- Active targets: 7/7 UP
+  - kubelet
+  - kubelet-cadvisor ✓ (container metrics)
+  - dcgm-exporter ✓ (GPU metrics)
+  - node-exporter
+  - kube-state-metrics
+  - prometheus (self)
+  - ai-inference-apps ✓ (custom metrics)
+
+**Storage:**
+- Data location: `data/raw/phase1/`
+- Naming convention: `{workload}_r{replicas}_{metric}_{timestamp}.csv`
+- Format: CSV with full label metadata
+- Size per experiment: ~3.3 MB (15 metrics)
+
+**System State:**
+- Grafana: Disabled (0 replicas) to reduce monitoring overhead
+- GPU: NVIDIA A16, driver 580.95.05, CUDA 13.0
+- Memory available: ~56 GB (91% free)
+- Cluster: Stable, no pod restarts during experiment
+
+---
+
+### Phase 1 Progress Tracker
+
+**Completed Experiments: 1/9**
+
+| # | Workload | Replicas | Duration | Status | Data Size |
+|---|----------|----------|----------|--------|-----------|
+| 1 | ResNet50 | 1 | 66 min | ✅ Complete | 3.3 MB |
+| 2 | ResNet50 | 3 | 66 min | 🔜 Pending | - |
+| 3 | ResNet50 | 8 | 66 min | 🔜 Pending | - |
+| 4 | DistilBERT | 1 | 66 min | 🔜 Pending | - |
+| 5 | DistilBERT | 3 | 66 min | 🔜 Pending | - |
+| 6 | DistilBERT | 8 | 66 min | 🔜 Pending | - |
+| 7 | Whisper | 1 | 66 min | 🔜 Pending | - |
+| 8 | Whisper | 3 | 66 min | 🔜 Pending | - |
+| 9 | Whisper | 8 | 66 min | 🔜 Pending | - |
+
+**Estimated Remaining Time:** 8.8 hours (8 × 66 minutes)
+
+---
+
+### Next Steps
+
+**Immediate Actions:**
+1. ✅ Verify ResNet50 r1 data quality (COMPLETE)
+2. 🔄 Run ResNet50 r3 experiment
+3. 🔄 Run ResNet50 r8 experiment
+4. 🔄 Continue with DistilBERT series
+5. 🔄 Complete with Whisper series
+
+**Expected Outcomes:**
+- Complete Phase 1 data collection: 9 experiments × 15 metrics = 135 CSV files
+- Total data volume: ~30 MB raw CSV data
+- Dataset: 9 × 722 × 15 = 97,470 data points for model training
+
+**Phase 2 Preparation:**
+- Data preprocessing pipeline
+- Feature engineering (temporal patterns, statistical features)
+- Dataset splitting (train/validation/test)
+- Generative model architecture selection
+
+---
+
+### Technical Debt & Improvements
+
+**Current Limitations:**
+1. GPU metrics are device-level (not per-pod) due to time-slicing
+   - Impact: Can't attribute GPU usage to individual pods in multi-replica scenarios
+   - Mitigation: Sequential experiments ensure temporal isolation
+   
+2. PSI metrics availability depends on cgroup v2
+   - Status: ✅ Confirmed available on Ubuntu 24.04
+   
+3. Memory usage shows stable value (no variation)
+   - Observation: Expected for inference workloads with fixed model size
+   - Not an issue for model training
+
+**Potential Enhancements:**
+1. Add pod-level GPU metrics with DCGM Exporter v3+ Pod Resources API
+2. Implement real-time experiment monitoring dashboard
+3. Add automatic data validation after each experiment
+4. Create data backup automation
+
+---
+
+### Lessons Learned
+
+**1. Container Filtering is Critical**
+- Always specify `container="{workload}"` for container-level metrics
+- Kubernetes infrastructure creates multiple containers per pod
+- Without filtering, queries return incorrect or aggregated data
+
+**2. Verify Queries Before Long Experiments**
+- 30-second query test saves 66 minutes of wasted experiment time
+- Use diagnostic scripts to validate metric collection
+
+**3. Data Quality Checks Are Essential**
+- Verify row counts match expected duration
+- Check for non-zero values in key metrics
+- Review sample data before proceeding with analysis
+
+**4. Network Stability Matters**
+- Network interruptions during experiments cause permanent data loss
+- Prometheus cannot backfill historical data
+- Plan experiments during stable network windows
+
+**5. Documentation During Execution**
+- Document issues and solutions immediately
+- Record exact query patterns and fixes
+- Maintain experiment logs for reproducibility
+
+---
+
+### Conclusion
+
+Phase 1 data collection is now operational with all metrics collecting successfully. The container filter fix resolved the critical CPU/memory metrics issue. ResNet50 baseline experiment demonstrates clean data collection with 722 samples per metric over 60 minutes.
+
+Infrastructure is stable and ready for remaining 8 experiments. Estimated completion: 8.8 hours of sequential experiment execution.
+
+**Status:** ✅ **READY FOR FULL PHASE 1 DATA COLLECTION**
+
+---

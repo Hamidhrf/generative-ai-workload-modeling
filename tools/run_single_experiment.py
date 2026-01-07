@@ -59,9 +59,9 @@ class SingleExperimentRunner:
         # Metrics to collect
         self.metrics = {
             # Per-pod resource metrics
-            'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod="{workload}-inference.*"}}[1m])',
-            'memory_usage': f'container_memory_working_set_bytes{{pod="{workload}-inference.*"}}',
-            
+            'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
+            'memory_usage': f'container_memory_working_set_bytes{{pod=~"{workload}-inference.*",container="{workload}"}}',
+    
             # Device-level GPU metrics (shared across all pods with time-slicing)
             'gpu_utilization': 'DCGM_FI_DEV_GPU_UTIL',
             'gpu_memory': 'DCGM_FI_DEV_FB_USED',
@@ -69,10 +69,10 @@ class SingleExperimentRunner:
             'gpu_temperature': 'DCGM_FI_DEV_GPU_TEMP',
             
             # Per-pod pressure metrics (contention indicators)
-            'cpu_psi': f'rate(container_pressure_cpu_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
-            'memory_psi': f'rate(container_pressure_memory_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
-            'io_psi': f'rate(container_pressure_io_waiting_seconds_total{{pod="{workload}-inference.*"}}[1m])',
-            
+            'cpu_psi': f'rate(container_pressure_cpu_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
+            'memory_psi': f'rate(container_pressure_memory_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
+            'io_psi': f'rate(container_pressure_io_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
+
             # Application-level inference metrics (per-pod)
             # Simple average
             'inference_latency_avg': (
