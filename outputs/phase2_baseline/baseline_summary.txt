@@ -1,0 +1,16 @@
+Date: 26.01.2026
+Normalized Test MSE: 0.006197
+Best Val Loss: 0.002613
+Training Time: 15 seconds
+Epochs: 196
+
+Key Performance (RMSE):
+- Latency: 0.07-0.25s (1-2.5% error)
+- CPU: 0.27 cores (3.3% error)
+- Memory: 197 MB (2% error)
+- GPU Utilization: 21.9% (challenging)
+- Throughput: 22.5 req/s (needs improvement)
+
+Target for TimeVAE/TimeGAN:
+- Overall MSE: < 0.005 (20% improvement)
+- GPU Utilization: < 17.5% (20% improvement)
