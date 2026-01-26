@@ -1,0 +1,65 @@
+# Current VM Configuration - Phase 1 Experiments
+# Date: January 23, 2026
+# This is the hardware used for all Phase 1 data collection
+
+vm_config:
+  # CPU Configuration
+  cpu:
+    cores_allocated: 16              # Virtual cores assigned to this VM
+    model: "AMD EPYC 7643"           # 48-Core Processor (host)
+    architecture: "x86_64"
+    
+  # Memory Configuration  
+  memory:
+    total_gb: 61                     # 61 GiB total
+    available_gb: 56                 # ~56 GiB available
+    type: "DDR4"                     # Assumed (EPYC 7003 series standard)
+    
+  # GPU Configuration
+  gpu:
+    model: "NVIDIA A16"
+    memory_mb: 15356                 # ~15 GB VRAM
+    memory_gb: 15.0                  # Rounded for conditioning
+    driver_version: "580.95.05"
+    cuda_version: "13.0"             # From previous outputs
+    compute_capability: "8.6"        # A16 = Ampere architecture
+    time_slicing_enabled: true
+    virtual_slices: 10               # 10 virtual GPUs via time-slicing
+    
+  # Storage
+  storage:
+    type: "Local SSD"                # Update if different
+    
+  # Network
+  network:
+    type: "University Network"       # FH Dortmund
+    
+# Normalized Features for Model Conditioning
+# (These will be used as input to TimeVAE/TimeGAN)
+normalized_features:
+  cpu_cores_norm: 0.25               # 16/64 (assuming max 64 cores)
+  gpu_memory_norm: 0.234375          # 15/64 (assuming max 64 GB)
+  total_memory_norm: 0.119140625     # 61/512 (assuming max 512 GB)
+  
+# For Model Input
+conditioning_vector:
+  # Simple encoding (3 features)
+  - cpu_cores: 16
+  - gpu_memory_gb: 15
+  - total_memory_gb: 61
+  
+# Metadata
+metadata:
+  collection_date: "2025-12-03 to 2026-01-15"
+  location: "Fachhochschule Dortmund"
+  purpose: "Master's Thesis - Phase 1 Data Collection"
+  experiments: 14
+  total_pods: 60
+  
+# Notes
+notes: |
+  - This VM is hosted on university infrastructure
+  - GPU time-slicing allows 10 concurrent pods to share GPU
+  - All Phase 1 experiments (14 total) ran on this configuration
+  - This config will be used as conditioning input during model training
+  - Model can later generate traces for different VM configs (e.g., AWS/Azure instances)
