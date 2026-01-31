@@ -1,0 +1,268 @@
+{
+  "1": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.12127786874771118,
+        "gen_std": 0.0017756527522578835,
+        "std_ratio": 0.01464119367301464,
+        "real_temporal_var": 0.0002723578072618693,
+        "gen_temporal_var": 3.1529416446574032e-06,
+        "temporal_var_ratio": 0.01157646905630827
+      },
+      "gpu_utilization": {
+        "real_std": 0.11914180219173431,
+        "gen_std": 0.0002869254385586828,
+        "std_ratio": 0.0024082683958113194,
+        "real_temporal_var": 0.006042066030204296,
+        "gen_temporal_var": 8.232619563841581e-08,
+        "temporal_var_ratio": 1.3625503925140947e-05
+      },
+      "memory_usage": {
+        "real_std": 0.016332443803548813,
+        "gen_std": 0.0005333177396096289,
+        "std_ratio": 0.03265388309955597,
+        "real_temporal_var": 3.9473949109414264e-10,
+        "gen_temporal_var": 2.844278412794665e-07,
+        "temporal_var_ratio": 720.5457153320312
+      },
+      "latency": {
+        "real_std": 0.011607985943555832,
+        "gen_std": 0.0003202397492714226,
+        "std_ratio": 0.027587881311774254,
+        "real_temporal_var": 4.230114591941003e-10,
+        "gen_temporal_var": 1.0255348570353817e-07,
+        "temporal_var_ratio": 242.43666076660156
+      }
+    },
+    "overall_temporal_var_ratio": 2.061183214187622,
+    "n_samples": 25
+  },
+  "2": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.2860904335975647,
+        "gen_std": 0.0014729349641129375,
+        "std_ratio": 0.005148494150489569,
+        "real_temporal_var": 0.0006355444202199578,
+        "gen_temporal_var": 2.1695357190765208e-06,
+        "temporal_var_ratio": 0.0034136648755520582
+      },
+      "gpu_utilization": {
+        "real_std": 0.23267091810703278,
+        "gen_std": 0.0002233486156910658,
+        "std_ratio": 0.000959933502599597,
+        "real_temporal_var": 0.01428244449198246,
+        "gen_temporal_var": 4.988459068044904e-08,
+        "temporal_var_ratio": 3.4927206797874533e-06
+      },
+      "memory_usage": {
+        "real_std": 0.027119968086481094,
+        "gen_std": 0.0005562187870964408,
+        "std_ratio": 0.020509567111730576,
+        "real_temporal_var": 4.044336208153254e-07,
+        "gen_temporal_var": 3.093793452535465e-07,
+        "temporal_var_ratio": 0.7649694085121155
+      },
+      "latency": {
+        "real_std": 0.020963694900274277,
+        "gen_std": 0.00032981543336063623,
+        "std_ratio": 0.015732696279883385,
+        "real_temporal_var": 8.537685558529517e-10,
+        "gen_temporal_var": 1.0877824507815603e-07,
+        "temporal_var_ratio": 127.4095230102539
+      }
+    },
+    "overall_temporal_var_ratio": 1.1541240215301514,
+    "n_samples": 53
+  },
+  "3": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.22713132202625275,
+        "gen_std": 0.0012069344520568848,
+        "std_ratio": 0.005313817877322435,
+        "real_temporal_var": 0.0005801112856715918,
+        "gen_temporal_var": 1.4566888921763166e-06,
+        "temporal_var_ratio": 0.002511050784960389
+      },
+      "gpu_utilization": {
+        "real_std": 0.26506471633911133,
+        "gen_std": 0.00017982734425459057,
+        "std_ratio": 0.0006784280994907022,
+        "real_temporal_var": 0.036793921142816544,
+        "gen_temporal_var": 3.233787282397316e-08,
+        "temporal_var_ratio": 8.788917398305784e-07
+      },
+      "memory_usage": {
+        "real_std": 0.040708500891923904,
+        "gen_std": 0.0005859481170773506,
+        "std_ratio": 0.014393753372132778,
+        "real_temporal_var": 3.9039133525875513e-07,
+        "gen_temporal_var": 3.4333521625740104e-07,
+        "temporal_var_ratio": 0.8794642090797424
+      },
+      "latency": {
+        "real_std": 0.04785490036010742,
+        "gen_std": 0.0003438342537265271,
+        "std_ratio": 0.007184932939708233,
+        "real_temporal_var": 1.8903200782460772e-08,
+        "gen_temporal_var": 1.1822199041944259e-07,
+        "temporal_var_ratio": 6.254072666168213
+      }
+    },
+    "overall_temporal_var_ratio": 1.310135006904602,
+    "n_samples": 45
+  },
+  "5": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.026885172352194786,
+        "gen_std": 0.0008085875306278467,
+        "std_ratio": 0.030075594782829285,
+        "real_temporal_var": 0.000643235573079437,
+        "gen_temporal_var": 6.53812094242312e-07,
+        "temporal_var_ratio": 0.0010164426639676094
+      },
+      "gpu_utilization": {
+        "real_std": 0.3506513237953186,
+        "gen_std": 0.00013061388744972646,
+        "std_ratio": 0.0003724893613252789,
+        "real_temporal_var": 0.10893048346042633,
+        "gen_temporal_var": 1.7059988977052853e-08,
+        "temporal_var_ratio": 1.566135381381173e-07
+      },
+      "memory_usage": {
+        "real_std": 0.00226198835298419,
+        "gen_std": 0.0006764548597857356,
+        "std_ratio": 0.2990531921386719,
+        "real_temporal_var": 4.419500328367576e-06,
+        "gen_temporal_var": 4.575911702886515e-07,
+        "temporal_var_ratio": 0.1035391166806221
+      },
+      "latency": {
+        "real_std": 0.0004134557966608554,
+        "gen_std": 0.0003900431329384446,
+        "std_ratio": 0.9433732628822327,
+        "real_temporal_var": 1.4171443751820334e-07,
+        "gen_temporal_var": 1.5213363724342344e-07,
+        "temporal_var_ratio": 1.0735224485397339
+      }
+    },
+    "overall_temporal_var_ratio": 3.0511045455932617,
+    "n_samples": 35
+  },
+  "6": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.006431198213249445,
+        "gen_std": 0.0006797226378694177,
+        "std_ratio": 0.10569144785404205,
+        "real_temporal_var": 4.093246388947591e-05,
+        "gen_temporal_var": 4.6202191583688546e-07,
+        "temporal_var_ratio": 0.011287420056760311
+      },
+      "gpu_utilization": {
+        "real_std": 0.002113708760589361,
+        "gen_std": 0.00011755708692362532,
+        "std_ratio": 0.05561650171875954,
+        "real_temporal_var": 2.3592817797180032e-06,
+        "gen_temporal_var": 1.381966718838612e-08,
+        "temporal_var_ratio": 0.005857573822140694
+      },
+      "memory_usage": {
+        "real_std": 0.005074616987258196,
+        "gen_std": 0.0007490180432796478,
+        "std_ratio": 0.1476009041070938,
+        "real_temporal_var": 1.0209793899207398e-08,
+        "gen_temporal_var": 5.610280027212866e-07,
+        "temporal_var_ratio": 54.949981689453125
+      },
+      "latency": {
+        "real_std": 0.0027952829841524363,
+        "gen_std": 0.0004298388375900686,
+        "std_ratio": 0.15377292037010193,
+        "real_temporal_var": 2.885376104710957e-10,
+        "gen_temporal_var": 1.8476140439815936e-07,
+        "temporal_var_ratio": 640.3373413085938
+      }
+    },
+    "overall_temporal_var_ratio": 0.9994851350784302,
+    "n_samples": 88
+  },
+  "8": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.01893451251089573,
+        "gen_std": 0.0007801734609529376,
+        "std_ratio": 0.041203778237104416,
+        "real_temporal_var": 0.000325146596878767,
+        "gen_temporal_var": 6.086689268158807e-07,
+        "temporal_var_ratio": 0.0018719830550253391
+      },
+      "gpu_utilization": {
+        "real_std": 0.36181411147117615,
+        "gen_std": 0.00010847367957467213,
+        "std_ratio": 0.0002998049894813448,
+        "real_temporal_var": 0.12449411302804947,
+        "gen_temporal_var": 1.1766529972589979e-08,
+        "temporal_var_ratio": 9.451475335708892e-08
+      },
+      "memory_usage": {
+        "real_std": 0.006289681885391474,
+        "gen_std": 0.0009149155230261385,
+        "std_ratio": 0.14546293020248413,
+        "real_temporal_var": 3.654098691185936e-05,
+        "gen_temporal_var": 8.37070388115535e-07,
+        "temporal_var_ratio": 0.022907711565494537
+      },
+      "latency": {
+        "real_std": 0.05320340394973755,
+        "gen_std": 0.0005225006025284529,
+        "std_ratio": 0.009820811450481415,
+        "real_temporal_var": 0.002426197286695242,
+        "gen_temporal_var": 2.730068899836624e-07,
+        "temporal_var_ratio": 0.00011252460535615683
+      }
+    },
+    "overall_temporal_var_ratio": 3.2785706520080566,
+    "n_samples": 78
+  },
+  "10": {
+    "per_metric": {
+      "cpu_usage": {
+        "real_std": 0.006806969176977873,
+        "gen_std": 0.0008961643325164914,
+        "std_ratio": 0.13165394961833954,
+        "real_temporal_var": 4.581929897540249e-05,
+        "gen_temporal_var": 8.031099127947527e-07,
+        "temporal_var_ratio": 0.017527764663100243
+      },
+      "gpu_utilization": {
+        "real_std": 0.0012401947751641273,
+        "gen_std": 3.75805284420494e-05,
+        "std_ratio": 0.03030211851000786,
+        "real_temporal_var": 7.905490519988234e-07,
+        "gen_temporal_var": 1.4122939484551011e-09,
+        "temporal_var_ratio": 0.001786472275853157
+      },
+      "memory_usage": {
+        "real_std": 0.0037831307854503393,
+        "gen_std": 0.0010448703542351723,
+        "std_ratio": 0.27619197964668274,
+        "real_temporal_var": 6.0020721726061765e-09,
+        "gen_temporal_var": 1.0917539157162537e-06,
+        "temporal_var_ratio": 181.8961639404297
+      },
+      "latency": {
+        "real_std": 0.0021233761217445135,
+        "gen_std": 0.0005907779559493065,
+        "std_ratio": 0.27822577953338623,
+        "real_temporal_var": 8.332093415219788e-08,
+        "gen_temporal_var": 3.490185633836518e-07,
+        "temporal_var_ratio": 4.188846111297607
+      }
+    },
+    "overall_temporal_var_ratio": 0.996564507484436,
+    "n_samples": 168
+  }
+}

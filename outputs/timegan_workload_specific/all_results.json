@@ -1,0 +1,305 @@
+{
+  "resnet50": {
+    "workload": "resnet50",
+    "per_metric": {
+      "cpu_psi": {
+        "real_std": 0.00012084017362212762,
+        "gen_std": 0.0014682335313409567,
+        "std_ratio": 12.1502103805542,
+        "correlation": -0.008076493014860176
+      },
+      "cpu_usage": {
+        "real_std": 0.006848482880741358,
+        "gen_std": 0.00910043716430664,
+        "std_ratio": 1.3288252353668213,
+        "correlation": -0.011308589516171882
+      },
+      "cpu_num": {
+        "real_std": 0.07311034947633743,
+        "gen_std": 0.005907130893319845,
+        "std_ratio": 0.0807974636554718,
+        "correlation": -2.391603968387826e-05
+      },
+      "cpu_temperature": {
+        "real_std": 0.003005445934832096,
+        "gen_std": 0.0022587471175938845,
+        "std_ratio": 0.7515513896942139,
+        "correlation": -0.004279927829267882
+      },
+      "gpu_power": {
+        "real_std": 0.006853255908936262,
+        "gen_std": 0.005217981990426779,
+        "std_ratio": 0.761387288570404,
+        "correlation": -0.0020049342666508285
+      },
+      "gpu_utilization": {
+        "real_std": 0.06300406157970428,
+        "gen_std": 0.005947004538029432,
+        "std_ratio": 0.09439080953598022,
+        "correlation": 0.0001437490481067761
+      },
+      "gpu_temperature": {
+        "real_std": 0.0036529172211885452,
+        "gen_std": 0.0025045149959623814,
+        "std_ratio": 0.6856205463409424,
+        "correlation": 0.0016567630496881992
+      },
+      "memory_usage": {
+        "real_std": 0.003641149727627635,
+        "gen_std": 0.002285619964823127,
+        "std_ratio": 0.6277192831039429,
+        "correlation": 0.0006031052155548058
+      },
+      "memory_psi": {
+        "real_std": 0.002638466889038682,
+        "gen_std": 0.0032220622524619102,
+        "std_ratio": 1.2211873531341553,
+        "correlation": 0.0012560067660249952
+      },
+      "latency": {
+        "real_std": 0.0020710958633571863,
+        "gen_std": 0.002138369483873248,
+        "std_ratio": 1.0324821472167969,
+        "correlation": 0.0002708780349907345
+      },
+      "latency_p50": {
+        "real_std": 0.14801442623138428,
+        "gen_std": 0.019605599343776703,
+        "std_ratio": 0.13245736062526703,
+        "correlation": 6.016088277781918e-05
+      },
+      "latency_p95": {
+        "real_std": 0.14801442623138428,
+        "gen_std": 0.02042282745242119,
+        "std_ratio": 0.13797862827777863,
+        "correlation": 6.0655509205613955e-05
+      },
+      "latency_p99": {
+        "real_std": 0.0,
+        "gen_std": 0.0014167027547955513,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "success_rate": {
+        "real_std": 0.0,
+        "gen_std": 0.0019578749779611826,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "throughput": {
+        "real_std": 0.07963932305574417,
+        "gen_std": 0.005402169190347195,
+        "std_ratio": 0.06783293932676315,
+        "correlation": 4.558291235454887e-05
+      }
+    },
+    "overall": {
+      "real_variance": 0.11199451982975006,
+      "generated_variance": 0.08638342469930649,
+      "variance_ratio": 0.7713183164596558,
+      "temporal_variance_ratio": 11.399187088012695
+    }
+  },
+  "distilbert": {
+    "workload": "distilbert",
+    "per_metric": {
+      "cpu_psi": {
+        "real_std": 0.00010712023504311219,
+        "gen_std": 0.0001042286166921258,
+        "std_ratio": 0.9730058908462524,
+        "correlation": 0.009591781139942916
+      },
+      "cpu_usage": {
+        "real_std": 0.006536730099469423,
+        "gen_std": 0.0003817045653704554,
+        "std_ratio": 0.05839380994439125,
+        "correlation": -0.01163503041315786
+      },
+      "cpu_num": {
+        "real_std": 0.08195100724697113,
+        "gen_std": 0.00030973798129707575,
+        "std_ratio": 0.0037795505486428738,
+        "correlation": -2.1322204892590724e-07
+      },
+      "cpu_temperature": {
+        "real_std": 0.0013257216196507215,
+        "gen_std": 4.069954957230948e-05,
+        "std_ratio": 0.030699921771883965,
+        "correlation": -0.019842567779844954
+      },
+      "gpu_power": {
+        "real_std": 0.004536195658147335,
+        "gen_std": 0.0003547585802152753,
+        "std_ratio": 0.07820618897676468,
+        "correlation": 0.02777786409183703
+      },
+      "gpu_utilization": {
+        "real_std": 0.0,
+        "gen_std": 0.00011147158511448652,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "gpu_temperature": {
+        "real_std": 0.003651510225608945,
+        "gen_std": 0.00045377053902484477,
+        "std_ratio": 0.1242692768573761,
+        "correlation": -1.0175210165926258e-05
+      },
+      "memory_usage": {
+        "real_std": 0.00343055441044271,
+        "gen_std": 0.00031788457999937236,
+        "std_ratio": 0.0926627442240715,
+        "correlation": -5.2818389336237505e-06
+      },
+      "memory_psi": {
+        "real_std": 0.0025308721233159304,
+        "gen_std": 0.0002895162033382803,
+        "std_ratio": 0.11439385265111923,
+        "correlation": -8.646351360936174e-07
+      },
+      "latency": {
+        "real_std": 0.0020522449631243944,
+        "gen_std": 0.00025689657195471227,
+        "std_ratio": 0.12517832219600677,
+        "correlation": -6.78528741475045e-07
+      },
+      "latency_p50": {
+        "real_std": 0.0002785483084153384,
+        "gen_std": 0.00022359786089509726,
+        "std_ratio": 0.802725613117218,
+        "correlation": -0.005191872021926063
+      },
+      "latency_p95": {
+        "real_std": 0.0002785483084153384,
+        "gen_std": 1.8255581380799413e-05,
+        "std_ratio": 0.06553829461336136,
+        "correlation": -0.0017944185503474047
+      },
+      "latency_p99": {
+        "real_std": 0.0,
+        "gen_std": 6.636627949774265e-05,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "success_rate": {
+        "real_std": 0.0,
+        "gen_std": 0.00012437612167559564,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "throughput": {
+        "real_std": 0.01425012294203043,
+        "gen_std": 0.00025408025248907506,
+        "std_ratio": 0.01783003844320774,
+        "correlation": -5.415416717693817e-06
+      }
+    },
+    "overall": {
+      "real_variance": 0.09016231447458267,
+      "generated_variance": 0.08910767734050751,
+      "variance_ratio": 0.9883028864860535,
+      "temporal_variance_ratio": 0.017879435792565346
+    }
+  },
+  "whisper": {
+    "workload": "whisper",
+    "per_metric": {
+      "cpu_psi": {
+        "real_std": 0.06923914700746536,
+        "gen_std": 0.0004896176396869123,
+        "std_ratio": 0.007071399129927158,
+        "correlation": 0.000551565748186842
+      },
+      "cpu_usage": {
+        "real_std": 0.16609753668308258,
+        "gen_std": 0.0003591779968701303,
+        "std_ratio": 0.002162452321499586,
+        "correlation": -0.00048335185692869936
+      },
+      "cpu_num": {
+        "real_std": 0.19108645617961884,
+        "gen_std": 0.0001313784741796553,
+        "std_ratio": 0.0006875342223793268,
+        "correlation": -1.7296412235149963e-06
+      },
+      "cpu_temperature": {
+        "real_std": 0.03206609934568405,
+        "gen_std": 6.40416401438415e-05,
+        "std_ratio": 0.001997175859287381,
+        "correlation": 0.00899460949481405
+      },
+      "gpu_power": {
+        "real_std": 0.019359253346920013,
+        "gen_std": 6.288506847340614e-05,
+        "std_ratio": 0.0032483208924531937,
+        "correlation": -0.004517635711093912
+      },
+      "gpu_utilization": {
+        "real_std": 0.33585628867149353,
+        "gen_std": 0.0003582943172659725,
+        "std_ratio": 0.0010668084723874927,
+        "correlation": -0.0007077790644404856
+      },
+      "gpu_temperature": {
+        "real_std": 0.08765480667352676,
+        "gen_std": 0.000347322755260393,
+        "std_ratio": 0.003962392453104258,
+        "correlation": -0.0001341424927268521
+      },
+      "memory_usage": {
+        "real_std": 0.09837011247873306,
+        "gen_std": 0.0007211021147668362,
+        "std_ratio": 0.007330500055104494,
+        "correlation": -0.00019014442097148383
+      },
+      "memory_psi": {
+        "real_std": 0.09738728404045105,
+        "gen_std": 0.000532870355527848,
+        "std_ratio": 0.0054716626182198524,
+        "correlation": -0.00046146246859401255
+      },
+      "latency": {
+        "real_std": 0.10663070529699326,
+        "gen_std": 1.832832640502602e-05,
+        "std_ratio": 0.0001718860148685053,
+        "correlation": -0.0027222108021013195
+      },
+      "latency_p50": {
+        "real_std": 0.0010002508061006665,
+        "gen_std": 0.0006961860926821828,
+        "std_ratio": 0.6960115432739258,
+        "correlation": 0.000250258848836584
+      },
+      "latency_p95": {
+        "real_std": 0.0010002508061006665,
+        "gen_std": 0.0005785062676295638,
+        "std_ratio": 0.5783612132072449,
+        "correlation": 0.00025055343078897013
+      },
+      "latency_p99": {
+        "real_std": 0.0,
+        "gen_std": 0.00013826995564159006,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "success_rate": {
+        "real_std": 0.0,
+        "gen_std": 9.448915807297453e-05,
+        "std_ratio": 0,
+        "correlation": 0.0
+      },
+      "throughput": {
+        "real_std": 0.012008369900286198,
+        "gen_std": 0.00046322180423885584,
+        "std_ratio": 0.038574911653995514,
+        "correlation": 0.0001737175319514923
+      }
+    },
+    "overall": {
+      "real_variance": 0.061690326780080795,
+      "generated_variance": 0.04697431996464729,
+      "variance_ratio": 0.7614535689353943,
+      "temporal_variance_ratio": 2.3441172743332572e-05
+    }
+  }
+}

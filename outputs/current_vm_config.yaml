@@ -1,0 +1,5 @@
+cpu_cores: 16
+cpu_model: AMD EPYC 7643
+gpu_memory_gb: 15
+gpu_model: NVIDIA A16
+total_memory_gb: 61
