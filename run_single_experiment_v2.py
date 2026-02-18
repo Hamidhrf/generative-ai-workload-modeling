@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """
-Single Experiment Runner - Phase 1 (v1.1 - ALL ISSUES FIXED)
+Single Experiment Runner - Phase 1 v2 (Variable Load)
 Run one experiment at a time with full control
 
-FIXES APPLIED:
-1. inference_latency_avg: Uses rate() properly ✓
-2. Histogram quantiles: Aggregate across pods with sum by (le) ✓
-3. inference_total: Now uses rate() for consistency ✓
-4. Query window: 30s buffer for scrape lag ✓
+CHANGES FROM v1.1:
+- Output directory: data/raw/phase1_v2/
+- Uses v4 Docker images with variable load profile
+- Same metrics collection (unchanged)
+- Same 60-minute duration (needed for load pattern)
+
+VARIABLE LOAD PROFILE - "Business Day" pattern:
+  Time (min):   0-8     8-15    15-25   25-35   35-50   50-60
+  Rate (req/s): 0.3     2.0     4.0     1.5     5.0     1.0
+  Sleep (s):    3.0     0.5     0.25    0.67    0.2     1.0
+  Phase:        night   ramp    morning lunch   peak    evening
 """
 
 import subprocess
@@ -18,27 +24,37 @@ import pandas as pd
 from datetime import datetime, timedelta
 from pathlib import Path
 
-class SingleExperimentRunner:
+class SingleExperimentRunnerV2:
     def __init__(self, workload, replicas, prometheus_url="http://172.22.174.58:30090"):
         self.workload = workload
         self.replicas = replicas
         self.prometheus_url = prometheus_url
         
-        # Configuration
+        # Configuration - uses v4 images with variable load
         self.workloads = {
             "resnet50": {
-                "deployment": "k8s/workloads/resnet50-deployment.yaml",
+                "deployment": "k8s/workloads/resnet50-deployment-v4.yaml",
                 "app_label": "resnet50",
                 "namespace": "default"
             },
             "distilbert": {
-                "deployment": "k8s/workloads/distilbert-deployment.yaml",
+                "deployment": "k8s/workloads/distilbert-deployment-v4.yaml",
                 "app_label": "distilbert",
                 "namespace": "default"
             },
             "whisper": {
-                "deployment": "k8s/workloads/whisper-deployment.yaml",
+                "deployment": "k8s/workloads/whisper-deployment-v4.yaml",
                 "app_label": "whisper",
+                "namespace": "default"
+            },
+            "yolo": {
+                "deployment": "k8s/workloads/yolo-deployment.yaml",
+                "app_label": "yolo",
+                "namespace": "default"
+            },
+            "gpt2": {
+                "deployment": "k8s/workloads/gpt2-deployment.yaml",
+                "app_label": "gpt2",
                 "namespace": "default"
             }
         }
@@ -49,42 +65,41 @@ class SingleExperimentRunner:
             sys.exit(1)
         
         # Timing configuration
-        self.startup_delay = 300  # 5 minutes for safety
-        self.experiment_duration = 3600  # 60 minutes
+        self.startup_delay = 300  # 5 minutes for model loading + warmup
+        self.experiment_duration = 3600  # 60 minutes (required for full load pattern)
         self.cleanup_delay = 30  # 30 seconds
         
-        # Output directory
-        self.data_dir = Path("data/raw/phase1")
+        # Output directory - Phase 1 v2
+        self.data_dir = Path("data/raw/phase1_v2")
         self.data_dir.mkdir(parents=True, exist_ok=True)
         
-        # Metrics to collect (ALL ISSUES FIXED)
+        # Metrics to collect (SAME AS v1.1 - all issues already fixed)
         self.metrics = {
-            # Per-pod resource metrics (cAdvisor)
+            # Per-pod resource metrics (cAdvisor) - HAS POD LABEL
             'cpu_usage': f'rate(container_cpu_usage_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
             'memory_usage': f'container_memory_working_set_bytes{{pod=~"{workload}-inference.*",container="{workload}"}}',
     
             # Device-level GPU metrics (DCGM Exporter)
-            # NOTE: These are device-level and reflect aggregate GPU usage across ALL pods
-            # With GPU time-slicing, all pods share the same GPU device
+            # NOTE: These are device-level (NO pod label) - all pods share GPU via time-slicing
+            # For pod-level modeling, these will be replicated to all pods
             'gpu_utilization': 'DCGM_FI_DEV_GPU_UTIL{gpu="0"}',
             'gpu_memory': 'DCGM_FI_DEV_FB_USED{gpu="0"}',
             'gpu_power': 'DCGM_FI_DEV_POWER_USAGE{gpu="0"}',
             'gpu_temperature': 'DCGM_FI_DEV_GPU_TEMP{gpu="0"}',
             
-            # Per-pod pressure metrics (PSI - requires cgroup v2)
+            # Per-pod pressure metrics (PSI) - HAS POD LABEL
             'cpu_psi': f'rate(container_pressure_cpu_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
             'memory_psi': f'rate(container_pressure_memory_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
             'io_psi': f'rate(container_pressure_io_waiting_seconds_total{{pod=~"{workload}-inference.*",container="{workload}"}}[1m])',
 
-            # Application-level inference metrics (ALL FIXED!)
-            
-            # FIX 1: Average latency - uses rate() properly
+            # Application-level inference metrics
+            # Per-pod latency average - HAS POD LABEL
             'inference_latency_avg': (
                 f'rate({workload}_inference_latency_seconds_sum[1m]) / '
                 f'rate({workload}_inference_latency_seconds_count[1m])'
             ),
             
-            # FIX 2: Histogram quantiles - aggregate across pods
+            # Aggregated histogram quantiles - SYSTEM LEVEL (no pod label)
             'inference_latency_p50': (
                 f'histogram_quantile(0.50, '
                 f'sum by (le) (rate({workload}_inference_latency_seconds_bucket[1m])))'
@@ -98,9 +113,9 @@ class SingleExperimentRunner:
                 f'sum by (le) (rate({workload}_inference_latency_seconds_bucket[1m])))'
             ),
             
-            # FIX 3: Throughput and total both use rate() for consistency
+            # Aggregated throughput - SYSTEM LEVEL
             'inference_throughput': f'sum(rate({workload}_inference_total[1m]))',
-            'inference_total': f'sum(rate({workload}_inference_total[1m]))',  # Rate, not raw counter
+            'inference_total': f'sum(rate({workload}_inference_total[1m]))',
         }
     
     def run_cmd(self, cmd, check=True):
@@ -126,7 +141,7 @@ class SingleExperimentRunner:
         try:
             response = requests.get(f"{self.prometheus_url}/-/healthy", timeout=5)
             if response.status_code == 200:
-                print("✓ Prometheus is healthy")
+                print("[OK] Prometheus is healthy")
             else:
                 issues.append("Prometheus not responding correctly")
         except Exception as e:
@@ -134,11 +149,11 @@ class SingleExperimentRunner:
         
         # Check no workload pods running
         output = self.run_cmd(
-            f"kubectl get pods -l 'app in (resnet50,distilbert,whisper)' --no-headers",
+            f"kubectl get pods -l 'app in (resnet50,distilbert,whisper,yolo,gpt2)' --no-headers",
             check=False
         )
         if output:
-            print(f"⚠ Warning: Found existing workload pods:")
+            print(f"[WARN] Found existing workload pods:")
             print(output)
             response = input("\nDelete them and continue? (yes/no): ")
             if response.lower() == 'yes':
@@ -146,7 +161,7 @@ class SingleExperimentRunner:
             else:
                 issues.append("Existing workload pods must be removed first")
         else:
-            print("✓ No existing workload pods")
+            print("[OK] No existing workload pods")
         
         # Check memory
         output = self.run_cmd("kubectl top node --no-headers", check=False)
@@ -157,15 +172,24 @@ class SingleExperimentRunner:
                 if memory_pct > 85:
                     issues.append(f"Node memory at {memory_pct}% - too high")
                 else:
-                    print(f"✓ Node memory OK ({memory_pct}%)")
+                    print(f"[OK] Node memory OK ({memory_pct}%)")
+        
+        # Check deployment YAML exists
+        config = self.workloads[self.workload]
+        deployment_path = Path(config['deployment'])
+        if not deployment_path.exists():
+            issues.append(f"Deployment YAML not found: {config['deployment']}")
+            print(f"[FAIL] Deployment YAML missing: {config['deployment']}")
+        else:
+            print(f"[OK] Deployment YAML exists: {config['deployment']}")
         
         if issues:
-            print(f"\n❌ Cannot proceed due to issues:")
+            print(f"\n[ERROR] Cannot proceed due to issues:")
             for issue in issues:
                 print(f"   - {issue}")
             return False
         
-        print("\n✓ All pre-checks passed!")
+        print("\n[OK] All pre-checks passed!")
         return True
     
     def cleanup_all_workloads(self):
@@ -180,7 +204,7 @@ class SingleExperimentRunner:
     
     def deploy(self):
         """Deploy workload with specified replica count"""
-        self.print_header(f"Deploying {self.workload} × {self.replicas} replicas")
+        self.print_header(f"Deploying {self.workload} x {self.replicas} replicas (v4 - Variable Load)")
         
         config = self.workloads[self.workload]
         
@@ -228,12 +252,12 @@ class SingleExperimentRunner:
             print(f"  Ready: {ready_count}/{self.replicas} pods", end='\r')
             
             if ready_count == self.replicas:
-                print(f"\n✓ All {self.replicas} pods are ready!")
+                print(f"\n[OK] All {self.replicas} pods are ready!")
                 return True
             
             time.sleep(5)
         
-        print(f"\n❌ Timeout waiting for pods")
+        print(f"\n[FAIL] Timeout waiting for pods")
         return False
     
     def startup_stabilization(self):
@@ -244,9 +268,10 @@ class SingleExperimentRunner:
         )
         
         print("Waiting for:")
-        print("  • Model loading into GPU memory")
-        print("  • Inference loop warmup")
-        print("  • Metrics reporting stabilization")
+        print("  - Model loading into GPU memory")
+        print("  - Inference loop warmup")
+        print("  - Metrics reporting stabilization")
+        print("  - Variable load profile starts AFTER this period")
         print()
         
         # Progress bar
@@ -256,16 +281,16 @@ class SingleExperimentRunner:
             progress = elapsed / self.startup_delay * 100
             bar_length = 40
             filled = int(bar_length * progress / 100)
-            bar = '█' * filled + '░' * (bar_length - filled)
+            bar = '#' * filled + '-' * (bar_length - filled)
             
             print(f"  [{bar}] {progress:5.1f}% - {remaining}s remaining", end='\r')
             time.sleep(interval)
         
-        print(f"  [{'█'*40}] 100.0% - Stabilization complete!  \n")
-        print("✓ Workload is now in steady state")
+        print(f"  [{'#'*40}] 100.0% - Stabilization complete!  \n")
+        print("[OK] Workload is now in steady state, variable load recording begins")
     
     def record_experiment(self):
-        """Record 60-minute experiment"""
+        """Record 60-minute experiment with variable load"""
         self.print_header(f"Recording Experiment ({self.experiment_duration//60} minutes)")
         
         # Record start time
@@ -275,6 +300,16 @@ class SingleExperimentRunner:
         print(f"Start time:  {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"End time:    {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"Duration:    {self.experiment_duration}s ({self.experiment_duration//60} minutes)")
+        print()
+        
+        # Show expected load pattern
+        print("Expected load pattern during recording (Business Day):")
+        print("  0-8 min:   NIGHT   (0.3 req/s, sleep=3.0s)")
+        print("  8-15 min:  RAMP    (2.0 req/s, sleep=0.5s)")
+        print("  15-25 min: MORNING (4.0 req/s, sleep=0.25s)")
+        print("  25-35 min: LUNCH   (1.5 req/s, sleep=0.67s)")
+        print("  35-50 min: PEAK    (5.0 req/s, sleep=0.2s)")
+        print("  50-60 min: EVENING (1.0 req/s, sleep=1.0s)")
         print()
         
         # Create experiment-specific directory
@@ -293,37 +328,48 @@ class SingleExperimentRunner:
             f.write(f"Start: {start_time.isoformat()}\n")
             f.write(f"End: {end_time.isoformat()}\n")
             f.write(f"Duration: {self.experiment_duration}s\n")
+            f.write(f"Version: Phase 1 v2 (Variable Load)\n")
+            f.write(f"Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)\n")
         
         print(f"Timestamps saved to: {timestamp_file}\n")
         
-        # Progress updates every 5 minutes
+        # Progress updates every 5 minutes with load phase indicator
         interval = 300
+        load_phases = [
+            (8, "NIGHT"), (15, "RAMP"), (25, "MORNING"), 
+            (35, "LUNCH"), (50, "PEAK"), (60, "EVENING")
+        ]
+        
         for elapsed in range(0, self.experiment_duration, interval):
             remaining = self.experiment_duration - elapsed
             progress = elapsed / self.experiment_duration * 100
             minutes_elapsed = elapsed // 60
             minutes_remaining = remaining // 60
             
+            # Determine current load phase
+            current_phase = "EVENING"
+            for phase_end, phase_name in load_phases:
+                if minutes_elapsed < phase_end:
+                    current_phase = phase_name
+                    break
+            
             print(
                 f"  Progress: {progress:5.1f}% | "
                 f"Elapsed: {minutes_elapsed:2d} min | "
-                f"Remaining: {minutes_remaining:2d} min"
+                f"Remaining: {minutes_remaining:2d} min | "
+                f"Load: {current_phase}"
             )
             
             time.sleep(interval)
         
         print(f"  Progress: 100.0% | Elapsed: {self.experiment_duration//60} min | "
-              f"Remaining:  0 min")
-        print("\n✓ Recording complete!")
+              f"Remaining:  0 min | Load: EVENING")
+        print("\n[OK] Recording complete!")
         
         return start_time, end_time
     
     def query_prometheus(self, query, start, end):
-        """
-        Query Prometheus for time range
-        
-        FIX 4: Applies 30-second buffer to end time to account for scrape lag
-        """
+        """Query Prometheus for time range with 30s buffer for scrape lag"""
         # Apply temporal buffer to avoid missing tail samples
         buffered_end = end - timedelta(seconds=30)
         
@@ -331,8 +377,8 @@ class SingleExperimentRunner:
         params = {
             'query': query,
             'start': start.timestamp(),
-            'end': buffered_end.timestamp(),  # Use buffered end time
-            'step': '5s'  # 5-second resolution
+            'end': buffered_end.timestamp(),
+            'step': '5s'  # 5-second resolution (matches scrape interval)
         }
         
         try:
@@ -340,7 +386,7 @@ class SingleExperimentRunner:
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            print(f"  ✗ Query failed: {e}")
+            print(f"  [FAIL] Query failed: {e}")
             return None
     
     def export_to_csv(self, data, filename):
@@ -383,7 +429,7 @@ class SingleExperimentRunner:
         total_count = len(self.metrics)
         
         for metric_name, query in self.metrics.items():
-            print(f"  [{metric_name:20s}] ", end='', flush=True)
+            print(f"  [{metric_name:25s}] ", end='', flush=True)
             
             data = self.query_prometheus(query, start_time, end_time)
             
@@ -395,14 +441,14 @@ class SingleExperimentRunner:
                 
                 if self.export_to_csv(data, filename):
                     file_size = filename.stat().st_size / 1024  # KB
-                    print(f"✓ Exported ({file_size:.1f} KB)")
+                    print(f"[OK] Exported ({file_size:.1f} KB)")
                     success_count += 1
                 else:
-                    print(f"✗ No data")
+                    print(f"[WARN] No data")
             else:
-                print(f"✗ Query failed")
+                print(f"[FAIL] Query failed")
         
-        print(f"\n✓ Collected {success_count}/{total_count} metrics")
+        print(f"\n[OK] Collected {success_count}/{total_count} metrics")
         print(f"\nData saved to: {exp_dir}")
     
     def cleanup(self):
@@ -418,12 +464,12 @@ class SingleExperimentRunner:
         print(f"Waiting {self.cleanup_delay}s for cleanup...")
         time.sleep(self.cleanup_delay)
         
-        print("✓ Cleanup complete")
+        print("[OK] Cleanup complete")
     
     def run(self):
         """Run complete experiment"""
         print("\n" + "="*70)
-        print(f"  PHASE 1 EXPERIMENT (v1.1)")
+        print(f"  PHASE 1 v2 EXPERIMENT (Variable Load)")
         print(f"  Workload: {self.workload}")
         print(f"  Replicas: {self.replicas}")
         print("="*70)
@@ -435,7 +481,10 @@ class SingleExperimentRunner:
             self.cleanup_delay + 
             120  # Estimate for metric collection
         )
-        print(f"\nEstimated duration: {total_time//60} minutes\n")
+        print(f"\nEstimated duration: {total_time//60} minutes (~{total_time//3600}h {(total_time%3600)//60}m)\n")
+        
+        print("Load profile: NIGHT -> RAMP -> MORNING -> LUNCH -> PEAK -> EVENING (Business Day)")
+        print("This creates realistic traffic patterns for model training.\n")
         
         # Confirm
         response = input("Start experiment? (yes/no): ")
@@ -450,7 +499,7 @@ class SingleExperimentRunner:
             
             # Deploy
             if not self.deploy():
-                print("❌ Deployment failed")
+                print("[FAIL] Deployment failed")
                 return
             
             # Stabilization
@@ -470,31 +519,35 @@ class SingleExperimentRunner:
             print(f"Workload: {self.workload}")
             print(f"Replicas: {self.replicas}")
             print(f"Data location: {self.data_dir / f'{self.workload}_r{self.replicas}'}")
-            print(f"\n✓ Experiment successful!")
+            print(f"\n[OK] Experiment successful!")
             
         except KeyboardInterrupt:
-            print("\n\n⚠ Experiment interrupted by user")
+            print("\n\n[WARN] Experiment interrupted by user")
             print("Cleaning up...")
             self.cleanup()
             sys.exit(1)
         except Exception as e:
-            print(f"\n❌ Error: {e}")
+            print(f"\n[FAIL] Error: {e}")
             self.cleanup()
             sys.exit(1)
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python3 tools/run_single_experiment.py <workload> <replicas>")
+        print("Usage: python3 tools/run_single_experiment_v2.py <workload> <replicas>")
+        print("\nPhase 1 v2 - Variable Load Experiments (Business Day Pattern)")
+        print("Creates realistic traffic patterns:")
+        print("  NIGHT -> RAMP -> MORNING -> LUNCH -> PEAK -> EVENING")
         print("\nExamples:")
-        print("  python3 tools/run_single_experiment.py resnet50 1")
-        print("  python3 tools/run_single_experiment.py distilbert 6")
-        print("  python3 tools/run_single_experiment.py whisper 3")
+        print("  python3 tools/run_single_experiment_v2.py resnet50 1")
+        print("  python3 tools/run_single_experiment_v2.py distilbert 3")
+        print("  python3 tools/run_single_experiment_v2.py whisper 5")
         print("\nAvailable workloads: resnet50, distilbert, whisper")
-        print("Replica counts: 1, 2, 3, 6, 8, 16")
+        print("Recommended replica counts: 1, 3, 5, 8")
         sys.exit(1)
     
     workload = sys.argv[1]
     replicas = int(sys.argv[2])
     
-    runner = SingleExperimentRunner(workload, replicas)
+    runner = SingleExperimentRunnerV2(workload, replicas)
     runner.run()

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: distilbert-inference
+  name: gpt2-inference
   namespace: default
   labels:
-    app: distilbert
+    app: gpt2
     workload: ai-inference
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
-      app: distilbert
+      app: gpt2
   template:
     metadata:
       labels:
-        app: distilbert
+        app: gpt2
         workload: ai-inference
       annotations:
         prometheus.io/scrape: "true"
@@ -23,9 +23,9 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
-      - name: distilbert
-        image: hamidhrf/distilbert-inference:v3
-        imagePullPolicy: Always
+      - name: gpt2
+        image: hamidhrf/gpt2-inference:v3.1
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
           name: metrics
@@ -33,25 +33,21 @@ spec:
         resources:
           limits:
             nvidia.com/gpu: 1
-          # No CPU/Memory limits - allow workload to use resources freely
-  
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
-        - name: INFERENCE_SLEEP
-          value: "0.0"  # Continuous inference (no sleep)
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: distilbert-inference
+  name: gpt2-inference
   namespace: default
   labels:
-    app: distilbert
+    app: gpt2
 spec:
   type: ClusterIP
   selector:
-    app: distilbert
+    app: gpt2
   ports:
   - port: 8000
     targetPort: 8000
