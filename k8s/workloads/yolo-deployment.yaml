@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: whisper-inference
+  name: yolo-inference
   namespace: default
   labels:
-    app: whisper
+    app: yolo
     workload: ai-inference
 spec:
   replicas: 0
   selector:
     matchLabels:
-      app: whisper
+      app: yolo
   template:
     metadata:
       labels:
-        app: whisper
+        app: yolo
         workload: ai-inference
       annotations:
         prometheus.io/scrape: "true"
@@ -23,8 +23,8 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
-      - name: whisper
-        image: hamidhrf/whisper-inference:v3
+      - name: yolo
+        image: hamidhrf/yolo-inference:v3.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
@@ -40,14 +40,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: whisper-inference
+  name: yolo-inference
   namespace: default
   labels:
-    app: whisper
+    app: yolo
 spec:
   type: ClusterIP
   selector:
-    app: whisper
+    app: yolo
   ports:
   - port: 8000
     targetPort: 8000

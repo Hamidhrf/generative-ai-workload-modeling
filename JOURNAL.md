@@ -4336,3 +4336,527 @@ LSTM achieves strong baseline performance on stable metrics
 GPU utilization (21.9%) and throughput (4.5%) indicate these
 metrics have complex temporal patterns that require more
 sophisticated generative models (TimeGAN, TimeVAE).
+
+
+# Phase 1 v3 Completion - Journal Entry
+
+**Date:** February 16, 2026  
+**Author:** Hamidreza Fathollahzadeh  
+**Milestone:** Phase 1 v3 Analysis Complete + Strategic Extension Planned
+
+---
+
+## Executive Summary
+
+Completed analysis of 25 experiments from Phase 1 v3 data collection. After evaluating dataset sufficiency for generative model training and addressing VM capacity limitations, decided to extend dataset with strategic intermediate replica counts (r=2, r=6). Selected **Approach A: Pod-Level Modeling** as the core methodology for handling scalability beyond measured VM capacity.
+
+**Key Decision:** Add 10 more experiments to achieve 35 total experiments with 7 replica counts per workload, resulting in ~176 pod-level training samples.
+
+---
+
+## Current Status: Phase 1 v3 Complete
+
+### Experiments Conducted: 25
+
+| Workload | Replica Counts | Experiments | Pod Traces | Status |
+|----------|---------------|-------------|------------|--------|
+| BERT | 1,3,5,8,10 | 5 | 27 | ✓ Complete |
+| GPT2 | 1,3,5,8,10 | 5 | 27 | ✓ Complete |
+| ResNet152 | 1,3,5,8,10 | 5 | 27 | ✓ Complete |
+| Whisper | 1,2,3,5,10 | 5 | 20* | ✓ Complete |
+| YOLO | 1,3,5,8,10 | 5 | 27 | ✓ Complete |
+
+*Whisper r=10: 1 pod crashed (CPU PSI=0.63), kept as evidence of system limits
+
+**Total Training Samples:** ~128 pod traces  
+**Data Quality:** 22/22 metrics collected (100%)  
+**Duration:** 60 minutes per experiment (715 timesteps at 5s intervals)
+
+---
+
+## Analysis Results
+
+### 1. Workload-Specific Scaling Patterns
+
+**GPU-Saturated Workload (GPT2):**
+- GPU utilization: 21% (r=1) → 98% (r=10)
+- Latency: 499ms (r=1) → 2019ms (r=10)
+- Pattern: Non-linear saturation with exponential latency growth
+
+**CPU-Intensive Workload (Whisper):**
+- CPU PSI: 0.01 (r=1) → 0.63 (r=10)
+- GPU utilization: 65% → 56% (drops under CPU pressure)
+- Pattern: CPU bottleneck, pod crashes at extreme contention
+- Evidence: 1/10 pods failed at r=10
+
+**Balanced Workloads (BERT, ResNet152, YOLO):**
+- Linear GPU scaling
+- Stable latency across replica counts
+- Significant headroom at r=10
+- Pattern: Well-behaved scaling characteristics
+
+### 2. Critical Gaps Identified
+
+**Large Replica Jumps:**
+- r=1 → r=3: Too large (e.g., GPT2: 21% → 72% GPU)
+- r=5 → r=8: Missing mid-range transition point
+
+**Impact on Model Training:**
+- Previous Phase 1 v1 failures likely due to these gaps
+- TimeGAN/TimeVAE need smoother progressions
+- Mode collapse risk with insufficient intermediate points
+
+### 3. Non-Linear Contention Dynamics
+
+**Evidence for r=2 Addition:**
+```
+GPT2 GPU utilization:
+r=1: 21%  (baseline)
+r=2: ???  (MISSING - critical transition point)
+r=3: 72%  (massive jump, saturation begins)
+```
+
+**Evidence for r=6 Addition:**
+```
+All workloads show gap between r=5 and r=8:
+r=5: Medium load (50% capacity)
+r=6: ???  (MISSING - mid-high transition)
+r=8: High load (80% capacity)
+```
+
+---
+
+## Critical Problem: VM Capacity Limitations
+
+### The Challenge
+
+**Our VM Configuration:**
+- 16 vCPU, 62.5 GB RAM
+- 1× NVIDIA A16 GPU (15GB, 10 time-slices)
+- Single-node Kubernetes cluster
+
+**Saturation at r=10:**
+- GPT2: 98% GPU (fully saturated)
+- Whisper: 99% CPU, 63% PSI (crashes)
+- BERT/ResNet152/YOLO: 27-36% GPU (headroom remains)
+
+**The Problem:**
+If we train on r=1-10 where r=10 shows saturation, how can the model generate realistic traces for r=70-100? Won't it just learn "high replica count = always saturated"?
+
+### Two Approaches Evaluated
+
+#### **Approach A: Pod-Level Modeling (SELECTED)**
+
+**Core Principle:** Model individual pod behavior, NOT system capacity
+
+**What We Measure:**
+- Per-pod CPU, memory, GPU usage over time
+- How each pod's metrics change as contention increases
+- Resource competition signatures (wait times, scheduling delays)
+
+**Training Sample:**
+```python
+{
+    'trace': (720, 15),      # Pod's time series
+    'replica_count': int,     # How many pods in system
+    'workload': str          # Which application
+}
+# NO capacity information
+```
+
+**Model Learns:**
+> "As replica count increases, each pod experiences:
+> - More GPU wait time (time-slicing)
+> - More CPU scheduling delays
+> - Increased latency variance
+> - Pattern of resource contention"
+
+**Generation for r=70:**
+- Model extrapolates: "At r=70, each pod experiences higher contention"
+- Per-pod traces reflect scaled contention patterns
+- Total system throughput = 70 × (per-pod throughput)
+
+**Assumption:**
+Infrastructure capacity scales proportionally with replicas
+- Could be: 70 pods across 7 nodes (10 pods each)
+- Could be: 70 pods on 1 node with 7 GPUs
+- Kwok simulation defines actual topology
+
+**Why This Works:**
+- We're modeling contention patterns (generalizable)
+- NOT modeling absolute capacity (environment-specific)
+- Pod-level traces transfer across different infrastructures
+
+#### **Approach B: Explicit Capacity Modeling (REJECTED)**
+
+**Core Principle:** Include capacity as model input
+
+**Training Sample:**
+```python
+{
+    'trace': (720, 15),
+    'replica_count': 10,
+    'total_gpu_slices': 10,      # Explicit capacity
+    'total_cpu_cores': 16,       # Explicit capacity
+    'utilization_ratio': 1.0     # r/capacity
+}
+```
+
+**Model Learns:**
+> "At 1:1 pod:GPU ratio, contention is X"
+
+**Generation for r=70:**
+- Must specify target capacity
+- Model scales both replicas and capacity
+- More complex, less flexible
+
+**Why Rejected:**
+- More complex implementation
+- Requires capacity metadata in every sample
+- Less generalizable (capacity tied to traces)
+- Not required by thesis proposal
+- Worse Kwok integration
+
+---
+
+## Decision: Approach A (Pod-Level Modeling)
+
+### Rationale
+
+**1. Matches Thesis Proposal:**
+> "generating traces for each application scaled to 10×-100× replicas **at the pod level**, facilitating its integration into **Kwok**"
+
+Focus is on pod-level traces for Kwok, not cluster capacity modeling.
+
+**2. Simpler Implementation:**
+- Model inputs: replica_count, workload only
+- No capacity tracking required
+- Cleaner data structure
+
+**3. Better Kwok Integration:**
+- Kwok defines cluster capacity separately
+- Our traces = pure pod behavior
+- Clean separation of concerns
+
+**4. More Generalizable:**
+- Same traces work for different cluster sizes
+- User decides deployment topology
+- Flexible infrastructure scaling
+
+**5. Easier Academic Defense:**
+- "We model workload behavior, not infrastructure"
+- Clear scope boundary
+- Standard practice in workload characterization
+
+### What This Means
+
+**We're NOT modeling:** "My VM's specific capacity"
+
+**We ARE modeling:** "How pods behave under resource contention"
+
+**Our traces contain:**
+- Contention signatures (generalizable)
+- Performance degradation patterns (transferable)
+- Workload characteristics (GPU-bound vs CPU-bound)
+- Resource competition dynamics (scheduling effects)
+
+**These patterns work on ANY infrastructure** with similar pod:resource ratios!
+
+---
+
+## Strategic Dataset Extension Plan
+
+### Additional Experiments Required
+
+**Add r=2 and r=6 to all workloads:**
+
+| Workload | Current | Add | Final Counts |
+|----------|---------|-----|--------------|
+| BERT | 1,3,5,8,10 | 2,6 | 1,2,3,5,6,8,10 |
+| GPT2 | 1,3,5,8,10 | 2,6 | 1,2,3,5,6,8,10 |
+| ResNet152 | 1,3,5,8,10 | 2,6 | 1,2,3,5,6,8,10 |
+| Whisper | 1,2,3,5,10 | 6 | 1,2,3,5,6,10 |
+| YOLO | 1,3,5,8,10 | 2,6 | 1,2,3,5,6,8,10 |
+
+**Total:** 10 new experiments (Whisper already has r=2)
+
+### Justification for r=2 and r=6
+
+**r=2 (Initial Contention):**
+- Captures transition from baseline (r=1) to first competition (r=3)
+- Critical for GPT2 (bridges 21% → 72% GPU jump)
+- Represents 20% capacity utilization
+- Shows early contention onset patterns
+
+**r=6 (Mid-High Transition):**
+- Fills gap between medium (r=5) and high (r=8) load
+- Represents 60% capacity utilization
+- Essential for smooth interpolation curve
+- Captures mid-range saturation dynamics
+
+### Academic Defense
+
+**Three-Level Load Framework:**
+- **Low:** r=1,2,3 (baseline → initial contention)
+- **Medium:** r=5,6 (moderate competition)
+- **High:** r=8,10 (approaching and at saturation)
+
+**Thesis Statement:**
+> "We sampled seven replica counts (r=1,2,3,5,6,8,10) spanning low, medium, and high system load states. This sampling strategy was designed to: (1) capture non-linear contention transitions observed in preliminary experiments, particularly GPU saturation in GPT2 (21%→72% between r=1-3), (2) provide sufficient training data for generative models (~176 pod-level traces), and (3) enable extrapolation to production scales (r=50-100) as required by the thesis objective."
+
+### Why NOT r>10?
+
+**Three reasons:**
+
+1. **Oversubscription = Broken System**
+   - r=12-15 would measure degraded/failing behavior
+   - Not useful for learning healthy patterns
+   - Would bias model toward failure modes
+
+2. **Saturation Already Captured**
+   - GPT2: 98% GPU at r=10 (fully saturated)
+   - Whisper: Crashes at r=10 (CPU limit reached)
+   - No new patterns beyond this point
+
+3. **Extrapolation Is The Goal**
+   - Thesis requires generating r=50-100 traces
+   - Model MUST extrapolate beyond measured range
+   - r=1-10 provides sufficient gradient for learning
+
+---
+
+## Final Dataset Configuration
+
+### After Extension (35 Experiments)
+
+**Per Workload:**
+- 7 replica counts: r=1,2,3,5,6,8,10
+- 7 experiments (6 for Whisper)
+- ~35 pod traces per workload
+
+**Total Dataset:**
+- 35 experiments
+- ~176 pod-level training samples
+- 2.9× increase from Phase 1 v1 (60 pods)
+- 100% metric coverage (22/22 metrics)
+- 715 timesteps per pod (60 minutes)
+
+**Coverage:**
+- 0% → 100% capacity utilization gradient
+- Low, medium, high load states
+- Transition dynamics captured
+- Sufficient density for interpolation
+
+---
+
+## Handling Data Anomalies
+
+### Whisper r=10 Pod Crashes
+
+**Observation:**
+- 9 out of 10 pods reported metrics
+- 1 pod crashed or became unstable
+- CPU PSI = 0.63 (63% time waiting for CPU)
+
+**Decision: KEEP ALL DATA**
+
+**Rationale:**
+1. **Realistic Behavior:** Pod crashes under extreme load are valid
+2. **System Limits:** Demonstrates CPU saturation threshold
+3. **Thesis Scope:** Analyzing contention effects includes failures
+4. **Data Value:** 9 valid traces still useful for training
+
+**Documentation:**
+> "At r=10, Whisper experienced pod instability (1/10 pods failed) due to extreme CPU contention (PSI=0.63), demonstrating realistic system limits under CPU-bound workloads."
+
+### Other Anomalies
+
+**BERT r=8:** Pod count mismatch in memory metrics
+- Action: Data cleaning required (remove incomplete pod)
+- Impact: Reduces from 8→7 valid pods
+
+---
+
+## Implementation Roadmap
+
+### Phase 1 v3 Extension (This Week)
+
+**Tasks:**
+1. Create experiment runner configs for r=2, r=6
+2. Execute 10 additional experiments (~10 hours)
+3. Validate data quality (715 timesteps, 22 metrics)
+4. Clean anomalies (BERT r=8, Whisper r=10 documentation)
+5. Prepare preprocessed dataset
+
+**Deliverable:**
+```
+data/processed/phase1_v3_pod_level.npz
+├── traces: (176, 720, 15)
+├── replica_counts: (176,)
+├── workload_labels: (176, 5)
+├── metadata: [...]
+└── normalization_params: {...}
+```
+
+### Phase 4: Model Training (3 Weeks)
+
+**Tasks:**
+1. Implement TimeGAN with conditioning
+2. Train on 176 pod traces
+3. Evaluate against LSTM baseline
+4. Hyperparameter tuning
+
+**Success Criteria:**
+- Variance ratio > 0.8
+- No mode collapse
+- Temporal coherence maintained
+- Contention patterns preserved
+
+### Phase 5: Kwok Integration (2 Weeks)
+
+**Tasks:**
+1. Generate 70 pod traces for each workload
+2. Create Kwok pod specifications
+3. Run simulation and validate
+4. Document results
+
+---
+
+## Key Assumptions (Make Explicit in Thesis)
+
+### Capacity Scaling Assumption
+
+**Statement:**
+> "Generated traces for r>10 assume infrastructure capacity scales proportionally with replica count. For a deployment of r replicas, required resources scale as: GPU slices ≈ r/10 × (measured capacity), CPU cores ≈ r/10 × (measured capacity)."
+
+**Valid For:**
+- Multi-node Kubernetes clusters (horizontal scaling)
+- Cloud auto-scaling environments
+- Simulation frameworks with configurable capacity
+
+**Our Model:**
+- Models workload behavior (independent of capacity)
+- Enables deployment flexibility (user defines topology)
+- Separates concerns (traces vs infrastructure)
+
+---
+
+## Academic Contributions
+
+### Novel Aspects
+
+1. **Pod-Level Digital Twin:**
+   - First work to model AI inference at pod granularity
+   - Enables synthetic trace generation for Kubernetes
+   - Separates workload from infrastructure
+
+2. **Contention Pattern Transfer:**
+   - Demonstrates patterns generalize across configurations
+   - Single-node measurements → multi-node deployments
+   - Validates transferability assumption
+
+3. **Generative Model for Kubernetes:**
+   - TimeGAN/TimeVAE adapted for pod traces
+   - Conditioning on replica count and workload
+   - Extrapolation to unseen scales (r=100)
+
+### Expected Impact
+
+**For Researchers:**
+- Methodology for workload characterization
+- Dataset of 176 pod traces (to be published)
+- Validation framework for synthetic traces
+
+**For Practitioners:**
+- Scalability testing without large clusters
+- Cost-effective capacity planning
+- Digital twin for AI workload deployment
+
+---
+
+## Timeline
+
+**Week 1 (Feb 16-23):** Complete Phase 1 v3 extension
+- Run 10 experiments (r=2, r=6)
+- Data cleaning and validation
+- Preprocessed dataset ready
+
+**Weeks 2-4 (Feb 24 - Mar 15):** Phase 4 model training
+- TimeGAN implementation
+- Training and evaluation
+- Hyperparameter optimization
+
+**Weeks 5-6 (Mar 16-31):** Phase 5 Kwok integration
+- Synthetic trace generation
+- Simulation and validation
+- Thesis writing
+
+---
+
+## Next Actions
+
+**Immediate (Today):**
+- [x] Document methodology and decisions ✓
+- [ ] Create experiment runner configs for r=2, r=6
+- [ ] Start first batch of experiments
+
+**This Week:**
+- [ ] Complete 10 additional experiments
+- [ ] Validate all 35 experiments (data quality check)
+- [ ] Clean data anomalies
+- [ ] Generate preprocessed dataset
+- [ ] Update thesis methodology section
+
+**Next Week:**
+- [ ] Begin Phase 4 implementation
+- [ ] Set up training pipeline
+- [ ] Implement TimeGAN with conditioning
+
+---
+
+## Confidence Assessment
+
+**Data Collection:** HIGH
+- Clear patterns observed
+- Quality metrics validated
+- Extension strategy justified
+
+**Modeling Approach:** HIGH
+- Approach A matches thesis requirements
+- Academic justification solid
+- Simpler than alternatives
+
+**Success Probability:** MEDIUM-HIGH
+- 176 samples should prevent mode collapse
+- 3× more data than Phase 1 v1
+- Smooth replica progression captured
+- Risk: Extrapolation to r=100 still uncertain
+
+---
+
+## References
+
+### Papers to Cite
+
+**Generative Models:**
+- Yoon et al. "Time-series Generative Adversarial Networks" (NeurIPS 2019)
+- Desai et al. "TimeVAE" (2021)
+
+**Workload Characterization:**
+- Reiss et al. "Google cluster-usage traces" (2011)
+- Ferdman et al. "Clearing the clouds" (ASPLOS 2012)
+
+**Digital Twins:**
+- Qi et al. "Digital Twin and Big Data" (IEEE 2018)
+- Glaessgen & Stargel "Digital Twin Paradigm" (2012)
+
+**Kubernetes:**
+- Tirmazi et al. "Borg: the next generation" (EuroSys 2020)
+- Burns et al. "Borg, Omega, and Kubernetes" (ACM Queue 2016)
+
+---
+
+**Entry Complete**  
+**Author:** Hamidreza Fathollahzadeh  
+**Date:** February 16, 2026  
+**Status:** Ready for Phase 1 v3 Extension
