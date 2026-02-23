@@ -1,0 +1,70 @@
+
+BERT:
+======================================================================
+pod_cpu_usage        min:     0.007178  max:     0.200613
+pod_memory_bytes     min: 792121344.000000  max: 1121558528.000000
+pod_psi_cpu          min:     0.000019  max:     0.001087
+pod_latency_avg      min:     0.007618  max:     0.009946
+pod_throughput       min:     0.309091  max:     4.236364
+gpu_utilization      min:     0.000000  max:    12.250000
+gpu_memory_used      min:   554.888889  max:   569.000000
+gpu_memory_total     min:  1496.200000  max: 14962.000000
+gpu_power_watts      min:     3.290900  max:    41.542000
+gpu_temperature      min:     6.400000  max:    66.000000
+
+
+GPT2:
+======================================================================
+pod_cpu_usage        min:     0.097635  max:     0.930401
+pod_memory_bytes     min: 1049264128.000000  max: 1484468224.000000
+pod_psi_cpu          min:     0.000025  max:     0.002019
+pod_latency_avg      min:     0.462616  max:     2.467054
+pod_throughput       min:     0.236364  max:     1.454545
+gpu_utilization      min:     0.000000  max:    50.000000
+gpu_memory_used      min:   632.888889  max:   649.000000
+gpu_memory_total     min:  1496.200000  max: 14962.000000
+gpu_power_watts      min:     4.392889  max:    45.446000
+gpu_temperature      min:     7.100000  max:    72.000000
+
+
+RESNET152:
+======================================================================
+pod_cpu_usage        min:     0.003874  max:     0.098440
+pod_memory_bytes     min: 2468319232.000000  max: 3407761408.000000
+pod_psi_cpu          min:     0.000012  max:     0.001483
+pod_latency_avg      min:     0.015198  max:     0.022748
+pod_throughput       min:     0.327273  max:     4.636364
+gpu_utilization      min:     0.000000  max:    43.500000
+gpu_memory_used      min:   546.888889  max:   561.000000
+gpu_memory_total     min:  1496.200000  max: 14962.000000
+gpu_power_watts      min:     3.316700  max:    37.767000
+gpu_temperature      min:     6.400000  max:    66.000000
+
+
+WHISPER:
+======================================================================
+pod_cpu_usage        min:     0.000000  max:     6.177960
+pod_memory_bytes     min:     0.000000  max: 6810484736.000000
+pod_psi_cpu          min:     0.000000  max:     0.619958
+pod_latency_avg      min:     0.000000  max:     2.013155
+pod_throughput       min:     0.000000  max:     7.381818
+gpu_utilization      min:     0.000000  max:    78.000000
+gpu_memory_used      min:  1424.800000  max:  1597.000000
+gpu_memory_total     min:  1496.200000  max: 14962.000000
+gpu_power_watts      min:     4.035200  max:    59.167000
+gpu_temperature      min:     6.800000  max:    75.000000
+
+
+YOLO:
+======================================================================
+pod_cpu_usage        min:     0.002448  max:     0.243292
+pod_memory_bytes     min: 2450132992.000000  max: 3351932928.000000
+pod_psi_cpu          min:     0.000018  max:     0.001529
+pod_latency_avg      min:     0.008249  max:     0.060796
+pod_throughput       min:     0.327273  max:     4.745455
+gpu_utilization      min:     0.000000  max:     7.000000
+gpu_memory_used      min:   416.888889  max:   431.000000
+gpu_memory_total     min:  1496.200000  max: 14962.000000
+gpu_power_watts      min:     3.283000  max:    34.739000
+gpu_temperature      min:     6.400000  max:    64.000000
+

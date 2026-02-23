@@ -1,0 +1,16 @@
+======================================================================
+PHASE 4: DATA VALIDATION (10 METRICS)
+======================================================================
+
+DATASET:
+  Workloads: 5
+  Total pods: 275
+  Train: 245
+  Val: 30
+  Timesteps: 715
+  Metrics: 10
+
+REMOVED: pod_psi_memory, pod_psi_io (zero variance)
+
+STATUS: READY FOR TRAINING
+======================================================================
