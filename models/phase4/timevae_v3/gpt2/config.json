@@ -1,0 +1,39 @@
+{
+  "enc_hidden_dim": 128,
+  "enc_num_layers": 2,
+  "latent_dim": 64,
+  "dropout": 0.1,
+  "r_embed_dim": 16,
+  "phase_embed_dim": 4,
+  "fc_hidden_dim": 256,
+  "batch_size": 16,
+  "epochs": 300,
+  "learning_rate": 0.001,
+  "weight_decay": 1e-05,
+  "patience": 25,
+  "min_delta": 1e-05,
+  "grad_clip": 1.0,
+  "seed": 42,
+  "beta_max": 0.5,
+  "warmup_epochs": 50,
+  "workload": "gpt2",
+  "kept_metrics": [
+    "pod_cpu_usage",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used"
+  ],
+  "n_metrics": 6,
+  "phase_boundaries": [
+    0,
+    96,
+    180,
+    300,
+    420,
+    600
+  ],
+  "seq_len": 715,
+  "decoder_type": "fc_shared_mlp"
+}
