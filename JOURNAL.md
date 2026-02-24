@@ -5486,4 +5486,148 @@ Phase 4a successfully completed with high-quality preprocessed dataset ready for
 - **Program:** Master's in Digital Transformation
 - **Project:** Generative AI Workload Modeling
 - **Phase:** 4a - Data Preprocessing & EDA
-- **Status:** Complete ✅
+- **Status:** Complete 
+
+
+
+
+
+Phase 4 Journal: LSTM Baseline and TimeVAE Experiments
+Date: February 24, 2026
+Status: Phase 4 LSTM + TimeVAE Complete — TimeGAN Next
+Outcome: MSE ceiling confirmed at mean VR=0.612 across all non-adversarial architectures
+
+Executive Summary
+Phase 4 began with implementing a phase-conditioned LSTM autoencoder as the baseline generative model, developed through six iterative versions. Three TimeVAE variants were then implemented to test whether a probabilistic latent space or alternative decoder architectures could improve on the LSTM ceiling.
+The key finding: all three architectures (LSTM, VAE with autoregressive decoder, VAE with FC decoder) converge to the same mean variance ratio of approximately 0.61 when trained with MSE loss. This is not a coincidence — it is a structural property of the loss function. MSE minimization converges to the conditional mean, which averages away impulsive events (GPU utilization spikes, PSI bursts). The ceiling cannot be broken without an adversarial discriminator. TimeGAN is the next step.
+
+Part 1: LSTM Baseline
+1.1 Motivation
+Before implementing a generative model, a deterministic LSTM autoencoder was built as the baseline. This served two purposes: establish a quantitative VR target for the VAE to beat, and validate the evaluation pipeline (variance ratio, autocorrelation difference, phase jump ratio) on a working model before using it on more complex architectures.
+1.2 Architecture (Final — v6)
+The LSTM autoencoder is a phase-conditioned, regime-aware sequence model.
+Encoder:
+
+Input: (T, M+1) where M is the metric count and +1 is a normalized phase index appended per timestep
+2-layer LSTM, hidden_dim=128
+Final hidden state projected to pod_latent (dim=32)
+
+Regime Latent:
+
+Pods from the same experiment share an experiment ID
+Pod latents within the same experiment are averaged and projected via a linear layer to regime_latent (dim=32)
+This captures shared contention environment — pods in the same experiment experienced the same GPU/CPU pressure
+
+Replica Embedding:
+
+Scalar r normalized to [0,1] via (r-1)/9
+Linear(1, 8) -> ReLU -> r_embed (dim=8)
+
+Decoder:
+
+Conditioning vector z = concat(regime_latent, pod_latent, r_embed), dim=72
+Phase-conditioned LSTM: at each timestep t, input = concat(z_broadcast, phase_embed[phase_t])
+Phase embedding: learnable lookup table, 6 phases x phase_embed_dim=4
+Hidden state initialized from z via learned linear layers h0, c0
+Output: Linear(128, M) -> tanh
+
+Hyperparameters:
+hidden_dim=128, num_layers=2, latent_dim=64
+regime_dim=32, pod_dim=32, replica_embed_dim=8, phase_embed_dim=4
+batch_size=16, epochs=200, lr=1e-3, patience=20, grad_clip=1.0
+1.3 Preprocessing
+Two normalization stages applied before training:
+Stage 1 — Min-max normalization:
+Per-metric, per-workload normalization to [0,1] across all pods. Normalization parameters saved to {workload}_normalization.json for denormalization at evaluation time.
+Stage 2 — Zero-mean normalization:
+Per-trace subtraction of each pod's temporal mean per metric. This converts absolute resource levels into fluctuation patterns. The model learns dynamics, not absolute values. At generation time, the per-r mean (mean of trace means for pods at that replica count) is added back to the decoder output before denormalization.
+Two refinements were necessary:
+
+Std-based clipping at 2.5 sigma: clips deviations beyond 2.5 standard deviations per metric. Preserves real latency spikes in the training signal while preventing extreme outliers from dominating the MSE gradient.
+Inverse-variance loss weighting: metrics with near-zero within-trace variance (e.g. gpu_power_watts after zero-mean) get proportionally higher loss weight so the model cannot ignore them.
+
+Metric selection:
+CategoryMetricsTreatmentGeneratedcpu_usage, psi_cpu, latency_avg, throughput, gpu_utilization, gpu_memory_used (GPT2 only)Model trains on thesePost-hocpod_memory_bytes, gpu_memory_used (non-GPT2), gpu_power_wattsLookup table or linear regressionDroppedgpu_temperature, gpu_memory_totalNo temporal dynamics
+gpu_power_watts is reconstructed via power = a * utilization + b fitted per workload from real data. pod_memory_bytes is constant per workload (model weights loaded at startup, not request-dependent).
+1.4 Iterative Development
+Six versions were implemented. Each fixed a specific failure mode observed in the previous run.
+VersionMean VRKey ChangeFailure Fixedv1~0.35Baseline, no phase conditioning—v2~0.42Phase index appended as input featureFlat traces across phasesv3~0.48Regime latent addedPoor inter-pod consistencyv4~0.52phase_embed_dim=8, inv-var weightingLow-variance metric collapsev5~0.55phase_embed_dim reduced 8->4, clip_stds=2.5Jump ratio explosion (12x)v60.612Matched-r evaluation, per-r mean reconstructionGrand-mean reconstruction collapsing r-level differences
+The jump ratio explosion (v4): With phase_embed_dim=8, the phase embedding dominated the decoder. The model learned to fire at every phase boundary regardless of latent content, producing synthetic traces with 12x larger phase transitions than real traces. Reducing to dim=4 dampened this while keeping phase awareness.
+The grand-mean reconstruction bug (v5->v6): Early evaluation added back the grand mean (mean across all replica counts) to the decoder output. This collapsed r-level differences — gpu_utilization was nearly identical for r=1 and r=10 synthetic traces because the mean was averaged across all r. Switching to per-r mean reconstruction (separate mean per replica count) fixed this and raised VR by approximately 0.06.
+1.5 Final LSTM Results
+WorkloadVR Meancpu_usagepsi_cpulatencythroughputgpu_utilJumpRatioBERT0.5940.700.480.610.700.461.1xGPT20.6760.970.891.041.000.661.2xResNet1520.6070.950.570.730.860.321.4xWhisper0.7480.810.740.85—0.711.3xYOLO0.4380.940.370.830.890.351.1xMEAN0.612~1.2x
+What worked well: Smooth metrics (cpu_usage, latency_avg, throughput) reached VR 0.7-1.04. Phase transitions were reproduced at correct amplitude (JumpRatio ~1.0-1.4x). Regime latent correctly grouped pods from the same experiment.
+Structural ceiling: gpu_utilization (VR 0.17-0.66) and psi_cpu (VR 0.37-0.89) scored consistently lower. Both are impulsive metrics — they spend most time near a baseline value with occasional sharp spikes. MSE loss minimization converges to the conditional mean, which suppresses spikes. This is not a model capacity problem; it is a training objective problem.
+YOLO VR=0.438: YOLO uses very light resources (GPU peak 15% at r=10, CPU 9%). The absolute variance is tiny, making the variance ratio unfavorable even when the model generates qualitatively correct traces. This is an artifact of the metric, not a failure of the model.
+
+Part 2: TimeVAE v1
+2.1 Motivation
+The LSTM autoencoder encodes a specific real trace and reconstructs it. It cannot generate novel samples from a continuous latent space. The VAE replaces the deterministic encoder with a probabilistic one (mu, log_var), enabling sampling from the learned latent distribution at generation time. The hypothesis was that the smoother, regularized latent space might also improve spike reproduction by encouraging the decoder to explore a wider range of outputs.
+2.2 Architecture
+Encoder: 2-layer BiLSTM (hidden_dim=128). Final hidden states (forward + backward) concatenated and projected to mu (dim=64) and log_var (dim=64). Reparameterization: z = mu + eps * exp(0.5 * log_var).
+Decoder: Autoregressive LSTM (2 layers, hidden_dim=128). At each timestep t:
+input_t = concat(z_broadcast, r_embed, phase_embed[phase_t], output_{t-1})
+Teacher forcing: during training, output_{t-1} is the real target with probability tf_ratio=1.0. Output: Linear(128, M) -> Sigmoid.
+Normalization: Changed from zero-mean to full min-max [0,1]. The Sigmoid output and [0,1] targets are directly compatible. No per-r mean reconstruction step needed.
+Loss: KL-annealed ELBO.
+loss = MSE_reconstruction + beta * KL_divergence
+beta: ramped from 0.01 to 0.5 over 50 epochs (KL annealing)
+KL = -0.5 * sum(1 + log_var - mu^2 - exp(log_var))
+KL annealing prevents posterior collapse early in training where the encoder would otherwise learn to ignore the input and output standard normal distributions.
+phase_embed_dim=8 (not yet fixed — this caused issues, see results).
+2.3 Results
+WorkloadVR v1VR LSTMDeltaJumpRatioBERT0.3880.594-0.20612.1xGPT20.7810.676+0.1053.6xResNet1520.5580.607-0.0492.7xWhisper0.7030.748-0.04511.1xYOLO0.6350.438+0.1973.7xMEAN0.6130.612+0.0016.6x
+Key finding: Mean VR=0.613 vs LSTM 0.612 — essentially identical. The probabilistic latent space provided zero measurable improvement. Both architectures converge to the same VR ceiling, which confirmed the bottleneck is the loss function, not architectural capacity.
+Phase jump explosion for BERT and Whisper: JumpRatio of 12.1x and 11.1x — synthetic traces had phase transitions 12x larger than real ones. Root cause: phase_embed_dim=8 gave the phase embedding too much influence over the decoder. The decoder learned to fire at every phase boundary regardless of z content, overriding the latent's signal entirely.
+
+Part 3: TimeVAE v2
+3.1 Motivation
+Two specific problems from v1 needed fixing:
+
+Phase jump explosion (phase_embed_dim=8)
+Autoregressive smoothing — tf_ratio=1.0 throughout training meant the decoder always received clean real targets, never learning to handle its own potentially noisy outputs. This was hypothesized to cause cascading smoothing errors at generation time when no real targets are available.
+
+3.2 Changes from v1
+
+phase_embed_dim: 8 -> 4. Directly dampens phase embedding influence.
+Scheduled sampling: tf_ratio decays linearly from 1.0 to 0.3 over 80 epochs. At tf_ratio=0.3, 70% of decoder timesteps receive the model's own previous output instead of the real target.
+Validation at tf_ratio=0.0: Teacher forcing fully disabled during validation to measure true generation quality.
+
+3.3 Results
+WorkloadVR v2VR v1VR LSTMJumpRatioBERT0.4580.3880.5942.4xGPT20.6450.7810.6763.2xResNet1520.4050.5580.6071.2xWhisper0.6790.7030.74811.2xYOLO0.3960.6350.4381.1xMEAN0.5170.6130.612~3.8x
+What improved: phase_embed_dim=4 worked exactly as intended. BERT jump 12.1x -> 2.4x, ResNet152 2.7x -> 1.2x, YOLO 3.7x -> 1.1x. This fix is confirmed and carried forward permanently.
+What regressed: Mean VR dropped to 0.517 — worse than both v1 and LSTM. Root cause: validation was performed at tf_ratio=0.0 (no teacher forcing) while training started at tf_ratio=1.0. The train/validation loss discrepancy was large enough to trigger early stopping at epochs 35-56, before the models had converged. v1 ran for 300 epochs. The scheduled sampling change itself was not wrong; the validation strategy killed training prematurely.
+Whisper still at 11.2x: Whisper's jump explosion has a different root cause than the embedding size. Whisper's GPU utilization signal is large and dominant. Even with dim=4, the decoder fires at the GPU utilization step change at phase boundaries. This requires a different fix (decoder architecture change), not embedding tuning.
+
+Part 4: TimeVAE v3
+4.1 Motivation
+TimeVAE v1 and v2 both use an autoregressive decoder. The hypothesis was that autoregression itself is the cause of the VR ceiling on impulsive metrics: the decoder receives its own smooth previous output at each step, conditions on it, and produces another smooth output. The smoothing cascades across time. Removing autoregression entirely tests this hypothesis.
+4.2 Architecture Change
+The autoregressive LSTM decoder was replaced with a fully-connected (FC) shared MLP.
+Each output timestep is computed independently:
+input per timestep: concat(z, r_embed, phase_embed[phase_id_t])
+reshape (B, T, input_dim) -> (B*T, input_dim)
+shared MLP: FC(input_dim, 256) -> LayerNorm -> GELU
+         -> FC(256, 256) -> LayerNorm -> GELU
+         -> FC(256, M) -> Sigmoid
+reshape back to (B, T, M)
+The same weights are applied identically to every timestep. No information flows between timesteps. Teacher forcing removed entirely (no longer applicable). phase_embed_dim=4 carried forward.
+4.3 Results
+WorkloadVR v3VR LSTMDeltaJumpRatioBERT0.1140.594-0.480~1.97 billion xGPT20.2550.676-0.421~2.49 billion xResNet1520.0660.607-0.541~1.10 billion xWhisper0.2100.748-0.538~3.79 billion xYOLO0.0960.438-0.342~1.68 billion xMEAN0.1480.612-0.464~2.4 billion x
+Training: epochs 35-56, early stopped. 5-8 seconds per workload.
+Root cause of flat traces: The FC decoder computes output_t = f(z, r, phase_id_t). Within any single phase, phase_id_t is constant. z is sampled once per trace and broadcast identically to all T timesteps. r_embed is constant. Every timestep in the same phase receives identical inputs to the MLP, producing identical outputs — a flat horizontal line.
+Real spikes (GPU utilization bursts, latency spikes) occur within phases, not only at phase boundaries. The FC architecture cannot represent within-phase variability because it has no per-timestep input that varies within a phase.
+Root cause of billion-x jump ratio: At phase boundaries the decoder transitions from outputting f(z, r, phase_id=k) to f(z, r, phase_id=k+1). The latent z was sampled randomly and is unrelated to real trace values, so the jump between phases is purely from the embedding table difference — a random discontinuity that has nothing to do with real phase transitions. This produces jump ratios in the billions.
+4.4 What This Proved
+The FC decoder result is decisive. Removing autoregression did not break the VR ceiling — it collapsed performance far below it. This proves:
+
+Autoregression is necessary for within-phase temporal structure. Even though the LSTM decoder has a smoothing bias, that smoothing still produces temporal variation within a phase. The FC decoder cannot.
+The VR ceiling (~0.61) is not caused by autoregressive smoothing. If it were, removing autoregression would have helped. Instead VR dropped from 0.61 to 0.15.
+The ceiling is caused by MSE loss. All three architectures — LSTM, VAE with LSTM decoder, VAE with FC decoder — converge to mean VR ~0.61 (LSTM, VAE v1) or fail below it (v2 undertrained, v3 no temporal memory). The common factor is MSE loss. MSE minimization produces the conditional mean of the output distribution. For impulsive metrics, the conditional mean is close to the baseline value with spikes averaged away. No amount of architectural change fixes this while MSE is the loss function.
+
+
+Summary and Decision
+ArchitectureMean VRKey Failure ModeLSTM v60.612MSE ceiling on impulsive metricsTimeVAE v10.613Phase jump explosion, identical ceiling to LSTMTimeVAE v20.517Undertrained (early stopping from validation strategy)TimeVAE v3 FC0.148No within-phase temporal dynamics
+Decision: Proceed to TimeGAN.
+The MSE ceiling requires a discriminative loss that directly penalizes the absence of realistic temporal dynamics. A TimeGAN discriminator is trained to distinguish real from synthetic sequences at the full-sequence level. When the discriminator detects that the synthetic traces are missing spike events, it provides gradient pressure through the adversarial loss to force the generator to reproduce them. This is precisely the mechanism MSE lacks.
+The LSTM v6 architecture serves as the TimeGAN generator backbone. The phase conditioning, regime latent, and replica embedding are all carried forward unchanged. Only the training objective changes: reconstruction MSE + adversarial loss from a sequence discriminator.
