@@ -1,0 +1,6 @@
+{
+  "pod_memory_bytes_mean": 2552226629.204396,
+  "gpu_memory_used_lookup": 418.0336734693877,
+  "power_regression_a": 0.5164545415721736,
+  "power_regression_b": 4.561320318166629
+}
