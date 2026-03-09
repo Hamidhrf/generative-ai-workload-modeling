@@ -1,0 +1,152 @@
+[
+  {
+    "workload": "bert",
+    "stage": "s6",
+    "gen_option": "a",
+    "disc_warmup": 20,
+    "var_ratio_mean": 0.2697419010341894,
+    "var_ratio_per_metric": [
+      0.3485197970721183,
+      0.3038681503417792,
+      0.1860261015487403,
+      0.3594872304344791,
+      0.15080822577383
+    ],
+    "autocorr_diff": 0.2511907353010623,
+    "phase_jump_ratio": 12.387426631038625,
+    "val_rec": 0.007943298667669296,
+    "n_epochs": 44,
+    "elapsed_s": 578.2914099693298,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "ref_lstm": 0.594,
+    "ref_s4": 0.117,
+    "ref_s5a_A": 0.141,
+    "ref_s5b_A": 0.107
+  },
+  {
+    "workload": "gpt2",
+    "stage": "s6",
+    "gen_option": "a",
+    "disc_warmup": 20,
+    "var_ratio_mean": 0.5681093902352451,
+    "var_ratio_per_metric": [
+      0.4462384399885172,
+      0.15946229277561064,
+      0.7630663781925356,
+      0.7418846973439925,
+      0.40035530927629415,
+      0.89764922383452
+    ],
+    "autocorr_diff": 0.19293300154082463,
+    "phase_jump_ratio": 9.054824742872453,
+    "val_rec": 0.001295266323722899,
+    "n_epochs": 44,
+    "elapsed_s": 578.2043762207031,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used"
+    ],
+    "ref_lstm": 0.676,
+    "ref_s4": 0.48,
+    "ref_s5a_A": 0.5,
+    "ref_s5b_A": 0.5
+  },
+  {
+    "workload": "resnet152",
+    "stage": "s6",
+    "gen_option": "a",
+    "disc_warmup": 20,
+    "var_ratio_mean": 0.2387922927251179,
+    "var_ratio_per_metric": [
+      0.3689505334314052,
+      0.18771276670332193,
+      0.10474725101999621,
+      0.28535120173935974,
+      0.2471997107315063
+    ],
+    "autocorr_diff": 0.33593590275912616,
+    "phase_jump_ratio": 5.948718112636014,
+    "val_rec": 0.0036724142264574766,
+    "n_epochs": 41,
+    "elapsed_s": 506.5084090232849,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "ref_lstm": 0.607,
+    "ref_s4": 0.102,
+    "ref_s5a_A": 0.113,
+    "ref_s5b_A": 0.145
+  },
+  {
+    "workload": "whisper",
+    "stage": "s6",
+    "gen_option": "a",
+    "disc_warmup": 20,
+    "var_ratio_mean": 0.7512060302238666,
+    "var_ratio_per_metric": [
+      0.9414877802478543,
+      0.6201698900197452,
+      0.7405215232626318,
+      0.7026449273652352
+    ],
+    "autocorr_diff": 0.095185556796178,
+    "phase_jump_ratio": 24.422394693545307,
+    "val_rec": 0.001304619130678475,
+    "n_epochs": 34,
+    "elapsed_s": 337.44317412376404,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization"
+    ],
+    "ref_lstm": 0.748,
+    "ref_s4": 0.785,
+    "ref_s5a_A": 1.187,
+    "ref_s5b_A": 0.782
+  },
+  {
+    "workload": "yolo",
+    "stage": "s6",
+    "gen_option": "a",
+    "disc_warmup": 20,
+    "var_ratio_mean": 0.261474678864874,
+    "var_ratio_per_metric": [
+      0.3474596097742561,
+      0.1598278225061506,
+      0.359069132019341,
+      0.3405887462308877,
+      0.10042808379373482
+    ],
+    "autocorr_diff": 0.25525556153053214,
+    "phase_jump_ratio": 11.091751599223027,
+    "val_rec": 0.005869701970368624,
+    "n_epochs": 40,
+    "elapsed_s": 479.32688331604004,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "ref_lstm": 0.438,
+    "ref_s4": 0.123,
+    "ref_s5a_A": 0.123,
+    "ref_s5b_A": 0.13
+  }
+]

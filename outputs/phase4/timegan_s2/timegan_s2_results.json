@@ -1,0 +1,142 @@
+[
+  {
+    "workload": "bert",
+    "stage": "s2_stabilization",
+    "var_ratio_mean": 0.25217165066558717,
+    "var_ratio_per_metric": [
+      0.179580243191061,
+      0.33372835195564515,
+      0.29415164432143653,
+      0.3965670412578297,
+      0.056830972601963355
+    ],
+    "autocorr_diff": 0.24039069327291704,
+    "phase_jump_ratio": 28.458267746673947,
+    "val_rec": 0.007469149772077799,
+    "n_epochs": 46,
+    "elapsed_s": 37.23482966423035,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lstm_baseline_vr": 0.594,
+    "s1_vr": 0.191
+  },
+  {
+    "workload": "gpt2",
+    "stage": "s2_stabilization",
+    "var_ratio_mean": 0.5520834616282212,
+    "var_ratio_per_metric": [
+      0.48927731602195457,
+      0.1050174959794273,
+      0.6954346258200342,
+      0.6988115452851503,
+      0.4083584700454231,
+      0.9156013166173378
+    ],
+    "autocorr_diff": 0.17193129077505406,
+    "phase_jump_ratio": 10.394710405127096,
+    "val_rec": 0.0014162224251776934,
+    "n_epochs": 46,
+    "elapsed_s": 35.7367889881134,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lstm_baseline_vr": 0.676,
+    "s1_vr": 0.532
+  },
+  {
+    "workload": "resnet152",
+    "stage": "s2_stabilization",
+    "var_ratio_mean": 0.30811274627880414,
+    "var_ratio_per_metric": [
+      0.5852535328658903,
+      0.20034641504085285,
+      0.13866407049941273,
+      0.4304879149076617,
+      0.18581179808020315
+    ],
+    "autocorr_diff": 0.30188895150913064,
+    "phase_jump_ratio": 16.7859896535586,
+    "val_rec": 0.0036934337113052607,
+    "n_epochs": 87,
+    "elapsed_s": 67.50559687614441,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lstm_baseline_vr": 0.607,
+    "s1_vr": 0.108
+  },
+  {
+    "workload": "whisper",
+    "stage": "s2_stabilization",
+    "var_ratio_mean": 0.7612407313772105,
+    "var_ratio_per_metric": [
+      0.9537283882284499,
+      0.6237417435423983,
+      0.7491065426437171,
+      0.7183862510942769
+    ],
+    "autocorr_diff": 0.09456232606251662,
+    "phase_jump_ratio": 16.216510580439653,
+    "val_rec": 0.0013159349327906966,
+    "n_epochs": 29,
+    "elapsed_s": 22.411263704299927,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lstm_baseline_vr": 0.748,
+    "s1_vr": 0.754
+  },
+  {
+    "workload": "yolo",
+    "stage": "s2_stabilization",
+    "var_ratio_mean": 0.6795814213355534,
+    "var_ratio_per_metric": [
+      0.9432163217328893,
+      0.3286386413717696,
+      0.74290597970317,
+      1.0213112383922884,
+      0.36183492547764956
+    ],
+    "autocorr_diff": 0.2770759327739772,
+    "phase_jump_ratio": 8.919934206617178,
+    "val_rec": 0.005455498117953539,
+    "n_epochs": 89,
+    "elapsed_s": 69.19017720222473,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lstm_baseline_vr": 0.438,
+    "s1_vr": 0.271
+  }
+]

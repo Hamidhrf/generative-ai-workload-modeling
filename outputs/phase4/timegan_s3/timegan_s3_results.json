@@ -1,0 +1,162 @@
+[
+  {
+    "workload": "bert",
+    "stage": "s3_feature_moment",
+    "var_ratio_mean": 0.275680234956425,
+    "var_ratio_per_metric": [
+      0.39465989718482614,
+      0.24024289772869628,
+      0.18425328824567705,
+      0.4443550737170369,
+      0.11489001790588874
+    ],
+    "autocorr_diff": 0.2446718989080717,
+    "phase_jump_ratio": 30.91184773410761,
+    "val_rec": 0.00804090965539217,
+    "n_epochs": 48,
+    "elapsed_s": 45.82129883766174,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.1,
+    "lambda_var": 0.5,
+    "lambda_auto": 0.1,
+    "lstm_baseline_vr": 0.594,
+    "s1_vr": 0.191,
+    "s2_vr": 0.252
+  },
+  {
+    "workload": "gpt2",
+    "stage": "s3_feature_moment",
+    "var_ratio_mean": 0.5388410746807275,
+    "var_ratio_per_metric": [
+      0.39827677380296633,
+      0.1275731187607931,
+      0.6910063051073266,
+      0.694787426681888,
+      0.40205186538257054,
+      0.9193509583488205
+    ],
+    "autocorr_diff": 0.18618268066405122,
+    "phase_jump_ratio": 13.588552072049893,
+    "val_rec": 0.0016689291223883629,
+    "n_epochs": 69,
+    "elapsed_s": 64.29902124404907,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.1,
+    "lambda_var": 0.5,
+    "lambda_auto": 0.1,
+    "lstm_baseline_vr": 0.676,
+    "s1_vr": 0.532,
+    "s2_vr": 0.552
+  },
+  {
+    "workload": "resnet152",
+    "stage": "s3_feature_moment",
+    "var_ratio_mean": 0.28816897322507873,
+    "var_ratio_per_metric": [
+      0.44371633516674475,
+      0.2500669777819856,
+      0.11476156448016818,
+      0.5478378410267241,
+      0.08446214766977109
+    ],
+    "autocorr_diff": 0.31994483845881094,
+    "phase_jump_ratio": 8.736554527770542,
+    "val_rec": 0.0036040018312633038,
+    "n_epochs": 48,
+    "elapsed_s": 44.63339304924011,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.1,
+    "lambda_var": 0.5,
+    "lambda_auto": 0.1,
+    "lstm_baseline_vr": 0.607,
+    "s1_vr": 0.108,
+    "s2_vr": 0.308
+  },
+  {
+    "workload": "whisper",
+    "stage": "s3_feature_moment",
+    "var_ratio_mean": 0.7462167802439577,
+    "var_ratio_per_metric": [
+      0.9155566771016111,
+      0.6073705691365076,
+      0.7774572002614898,
+      0.6844826744762218
+    ],
+    "autocorr_diff": 0.09430428140359681,
+    "phase_jump_ratio": 39.50263058400412,
+    "val_rec": 0.0014090542681515217,
+    "n_epochs": 49,
+    "elapsed_s": 45.448713541030884,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.1,
+    "lambda_var": 0.5,
+    "lambda_auto": 0.1,
+    "lstm_baseline_vr": 0.748,
+    "s1_vr": 0.754,
+    "s2_vr": 0.761
+  },
+  {
+    "workload": "yolo",
+    "stage": "s3_feature_moment",
+    "var_ratio_mean": 0.1899853797152712,
+    "var_ratio_per_metric": [
+      0.16428066484911946,
+      0.18209295750309892,
+      0.27056063834602806,
+      0.26820805064209474,
+      0.06478458723601484
+    ],
+    "autocorr_diff": 0.27061750470196605,
+    "phase_jump_ratio": 13.72948873320477,
+    "val_rec": 0.006433145608752966,
+    "n_epochs": 58,
+    "elapsed_s": 53.977683305740356,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.1,
+    "lambda_var": 0.5,
+    "lambda_auto": 0.1,
+    "lstm_baseline_vr": 0.438,
+    "s1_vr": 0.271,
+    "s2_vr": 0.68
+  }
+]
