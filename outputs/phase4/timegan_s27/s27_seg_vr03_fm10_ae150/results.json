@@ -1,0 +1,167 @@
+[
+  {
+    "workload": "bert",
+    "stage": "s27",
+    "architecture": "GeneratorSeg",
+    "run_tag": "s27_seg_vr03_fm10_ae150",
+    "n_metrics": 7,
+    "var_ratio_mean": 0.8856297068976791,
+    "var_ratio_per_metric": [
+      0.8132533797547333,
+      0.5937908142896363,
+      1.0279464326508263,
+      0.9834474326879717,
+      0.5979450867229662,
+      0.672491702374092,
+      1.510533099803528
+    ],
+    "autocorr_diff": 0.044180027416874865,
+    "phase_jump_ratio": 1736.5177211035502,
+    "best_stat": 0.166189506649971,
+    "n_epochs": 170,
+    "elapsed_s": 834.779375076294,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_power_watts"
+    ],
+    "ref_vr_s21": 0.672,
+    "ref_vr_s19": 1.226
+  },
+  {
+    "workload": "gpt2",
+    "stage": "s27",
+    "architecture": "GeneratorSeg",
+    "run_tag": "s27_seg_vr03_fm10_ae150",
+    "n_metrics": 8,
+    "var_ratio_mean": 0.946011984946308,
+    "var_ratio_per_metric": [
+      0.8009540721644067,
+      0.6151589955055495,
+      0.45917503068003557,
+      0.7966285992947351,
+      1.4688142542623577,
+      2.180665881161975,
+      0.027137543708625433,
+      1.2195615027927798
+    ],
+    "autocorr_diff": 0.09814529397584407,
+    "phase_jump_ratio": 10917.518365119624,
+    "best_stat": 1.8893503248691559,
+    "n_epochs": 170,
+    "elapsed_s": 826.0776724815369,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_power_watts"
+    ],
+    "ref_vr_s21": 0.996,
+    "ref_vr_s19": 1.011
+  },
+  {
+    "workload": "resnet152",
+    "stage": "s27",
+    "architecture": "GeneratorSeg",
+    "run_tag": "s27_seg_vr03_fm10_ae150",
+    "n_metrics": 7,
+    "var_ratio_mean": 0.8509032256690985,
+    "var_ratio_per_metric": [
+      0.8501827822538862,
+      0.583237112153718,
+      0.6022385514391593,
+      0.8676986234654538,
+      0.9186281765133241,
+      1.2204908117691977,
+      0.9138465220889502
+    ],
+    "autocorr_diff": 0.10269968413843036,
+    "phase_jump_ratio": 22862.402615181036,
+    "best_stat": 0.1425485722720623,
+    "n_epochs": 170,
+    "elapsed_s": 835.4641921520233,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_power_watts"
+    ],
+    "ref_vr_s21": 0.96,
+    "ref_vr_s19": 1.024
+  },
+  {
+    "workload": "whisper",
+    "stage": "s27",
+    "architecture": "GeneratorSeg",
+    "run_tag": "s27_seg_vr03_fm10_ae150",
+    "n_metrics": 6,
+    "var_ratio_mean": 1.6299192870671184,
+    "var_ratio_per_metric": [
+      2.5612176020689383,
+      0.45820034202290355,
+      2.335889827917381,
+      1.2121114029382467,
+      1.5324482550661904,
+      1.6796482923890508
+    ],
+    "autocorr_diff": 0.06249610857590262,
+    "phase_jump_ratio": 26.70852445275696,
+    "best_stat": 0.3846813067793846,
+    "n_epochs": 170,
+    "elapsed_s": 443.69607877731323,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization",
+      "gpu_power_watts"
+    ],
+    "ref_vr_s21": 1.722,
+    "ref_vr_s19": 0.788
+  },
+  {
+    "workload": "yolo",
+    "stage": "s27",
+    "architecture": "GeneratorSeg",
+    "run_tag": "s27_seg_vr03_fm10_ae150",
+    "n_metrics": 7,
+    "var_ratio_mean": 0.9973339833655473,
+    "var_ratio_per_metric": [
+      0.6233654499364216,
+      0.8788623814879879,
+      1.9408834186805382,
+      0.6967673139580424,
+      0.7045716040676218,
+      0.7000366527395355,
+      1.4368510626886843
+    ],
+    "autocorr_diff": 0.008082476614497153,
+    "phase_jump_ratio": 1986.6067016727452,
+    "best_stat": 0.13588107749819756,
+    "n_epochs": 170,
+    "elapsed_s": 832.8339655399323,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_power_watts"
+    ],
+    "ref_vr_s21": 0.661,
+    "ref_vr_s19": 1.228
+  }
+]
