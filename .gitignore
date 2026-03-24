@@ -92,3 +92,58 @@ Thumbs.db
 desktop.ini
 # Monitoring backups
 k8s/monitoring/*-backup.yaml
+
+# ==============================================================================
+# Phase 4 exceptions
+# ==============================================================================
+
+# --- Track milestone model checkpoints (S21, S27, S34, S36) ---
+!models/phase4/timegan_s21/**/*.pt
+!models/phase4/timegan_s21/**/*.json
+!models/phase4/timegan_s27/**/*.pt
+!models/phase4/timegan_s27/**/*.json
+!models/phase4/timegan_s34/**/*.pt
+!models/phase4/timegan_s34/**/*.json
+!models/phase4/timegan_s36/**/*.pt
+!models/phase4/timegan_s36/**/*.json
+
+# --- Track milestone outputs ---
+!outputs/phase4/timegan_s21/**/*.json
+!outputs/phase4/timegan_s27/**/*.json
+!outputs/phase4/timegan_s34/**/*.json
+!outputs/phase4/timegan_s36/**/*.json
+!outputs/phase4/validation/**/*.json
+!outputs/phase4/validation/**/*.png
+!outputs/phase4/comparison_plots/**/*.png
+!outputs/phase4/postprocessed/**/*.npy
+
+# --- Track processed dataset and normalization ---
+!data/processed/phase4/unified/*.npz
+!data/processed/phase4/unified/*.json
+!data/processed/phase4/raw/*.npz
+!data/processed/phase4/raw/*.json
+
+# --- Ignore intermediate model checkpoints ---
+models/phase4/timegan_s28/
+models/phase4/timegan_s29/
+models/phase4/timegan_s30/
+models/phase4/timegan_s31/
+models/phase4/timegan_s32/
+models/phase4/timegan_s33/
+models/phase4/timegan_s35/
+models/phase4/timegan_s37/
+models/phase4/timegan_s38/
+models/phase4/timegan_s39/
+
+# --- Ignore intermediate outputs ---
+outputs/phase4/timegan_s28/
+outputs/phase4/timegan_s29/
+outputs/phase4/timegan_s31/
+outputs/phase4/timegan_s32/
+outputs/phase4/timegan_s33/
+outputs/phase4/timegan_s35/
+outputs/phase4/timegan_s37/
+outputs/phase4/timegan_s38/
+outputs/phase4/timegan_s39/
+outputs/phase4/quality_evaluation_s27/
+outputs/phase4/comprehensive_eval/
