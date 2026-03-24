@@ -1,0 +1,26 @@
+{
+  "stage": "s29",
+  "architecture": "GeneratorSegUnified",
+  "n_workloads": 5,
+  "train_pods": 245,
+  "val_pods": 30,
+  "unified_metrics": [
+    "pod_cpu_usage",
+    "pod_memory_bytes",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used",
+    "gpu_power_watts"
+  ],
+  "hidden_dim": 128,
+  "num_layers": 2,
+  "latent_dim": 64,
+  "replica_embed_dim": 16,
+  "workload_embed_dim": 16,
+  "phase_embed_dim": 8,
+  "dropout": 0.1,
+  "grad_clip": 1.0,
+  "seed": 42
+}
