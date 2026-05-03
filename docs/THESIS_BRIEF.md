@@ -1,4 +1,4 @@
-# THESIS BRIEF v2.0
+# THESIS BRIEF v2.1
 ## Generative Modeling of Application Workloads for Synthetic Trace Generation
 
 **Purpose:** Single reference document for writing the full research thesis. Every fact, number, and decision has been verified against project records.

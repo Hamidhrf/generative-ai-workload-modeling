@@ -1,0 +1,117 @@
+[
+  {
+    "workload": "bert",
+    "model": "timevae_v2",
+    "var_ratio_mean": 0.4582764321666084,
+    "var_ratio_per_metric": [
+      0.7006701332555683,
+      0.37703968555607187,
+      0.19572513804514938,
+      0.7014570495791587,
+      0.3164901543970939
+    ],
+    "autocorr_diff": 0.2457889786678774,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "n_metrics_generated": 5,
+    "n_real_train_pods": 49,
+    "n_syn_pods": 275
+  },
+  {
+    "workload": "gpt2",
+    "model": "timevae_v2",
+    "var_ratio_mean": 0.644724700255061,
+    "var_ratio_per_metric": [
+      0.7771127367371987,
+      0.19138453105162076,
+      0.8847699810979781,
+      0.8158462874980197,
+      0.4711786298950035,
+      0.728056035250545
+    ],
+    "autocorr_diff": 0.1795073993980587,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used"
+    ],
+    "n_metrics_generated": 6,
+    "n_real_train_pods": 49,
+    "n_syn_pods": 275
+  },
+  {
+    "workload": "resnet152",
+    "model": "timevae_v2",
+    "var_ratio_mean": 0.4045871383781076,
+    "var_ratio_per_metric": [
+      0.7338331589529942,
+      0.36787292136110356,
+      0.050508238373972635,
+      0.6862372413133971,
+      0.18448413188907062
+    ],
+    "autocorr_diff": 0.3165092499851868,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "n_metrics_generated": 5,
+    "n_real_train_pods": 49,
+    "n_syn_pods": 275
+  },
+  {
+    "workload": "whisper",
+    "model": "timevae_v2",
+    "var_ratio_mean": 0.6793798956514865,
+    "var_ratio_per_metric": [
+      0.9057952959549889,
+      0.5407422136355549,
+      0.7302537483161397,
+      0.5407283246992629
+    ],
+    "autocorr_diff": 0.09310318220437101,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization"
+    ],
+    "n_metrics_generated": 4,
+    "n_real_train_pods": 49,
+    "n_syn_pods": 275
+  },
+  {
+    "workload": "yolo",
+    "model": "timevae_v2",
+    "var_ratio_mean": 0.395759685636039,
+    "var_ratio_per_metric": [
+      0.6002754105331248,
+      0.2692164283340071,
+      0.41472776415545554,
+      0.5541721505253762,
+      0.1404066746322315
+    ],
+    "autocorr_diff": 0.27709860583761436,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "n_metrics_generated": 5,
+    "n_real_train_pods": 49,
+    "n_syn_pods": 275
+  }
+]
