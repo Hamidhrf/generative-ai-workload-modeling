@@ -1,35 +1,6 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-
-# Data
-data/raw/
-data/processed/
-data/experiments/
-*.csv
-*.npz
-*.log
-*.pkl
-*.h5
-*.hdf5
-
-# Environment
-env/
-.venv/
-venv/
-*.env
-.env.local
-
-# Kubernetes secrets and sensitive configs
+# ==============================================================================
+# Security — always ignore
+# ==============================================================================
 *.kubeconfig
 admin.conf
 *.key
@@ -38,112 +9,104 @@ admin.conf
 *-token
 secrets.yaml
 secret-*.yaml
+*.env
+.env.local
 
-# Tools - Monitoring stack downloads
-tools/prometheus*
-tools/grafana*
-tools/*.tar.gz
-tools/*.zip
-tools/alertmanager*
+# ==============================================================================
+# Python bytecode — generated, never commit
+# ==============================================================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
 
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*~
+# ==============================================================================
+# Virtual environments
+# ==============================================================================
+env/
+.venv/
+venv/
+
+# ==============================================================================
+# OS and IDE noise
+# ==============================================================================
 .DS_Store
 Thumbs.db
-
-# IDE
+desktop.ini
+*.swp
+*.tmp
+*.temp
+*~
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
+# ==============================================================================
+# Jupyter — ignore checkpoints only, not notebooks themselves
+# ==============================================================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ==============================================================================
+# Raw experiment data — ~400 MB of Prometheus CSVs, not practical for git
+# ==============================================================================
+data/raw/
+
+# ==============================================================================
+# Downloaded monitoring stack binaries — not code
+# ==============================================================================
+tools/prometheus*/
+tools/grafana*/
+tools/alertmanager*/
+tools/*.tar.gz
+tools/*.zip
+
+# ==============================================================================
 # Logs
+# ==============================================================================
 logs/
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# AI Model files (if large)
-models/*.pth
-models/*.pt
-models/*.ckpt
-models/*.safetensors
-# Keep model configs
-!models/*.yaml
-!models/*.json
-!models/README.md
-
-# Monitoring data
+# ==============================================================================
+# Monitoring runtime data
+# ==============================================================================
 dashboards/data/
 prometheus/data/
 grafana/data/
-
-# Performance test results (keep summaries, exclude raw data)
-data/benchmarks/*.json
-!data/benchmarks/summary*.json
-
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
-# Monitoring backups
 k8s/monitoring/*-backup.yaml
 
 # ==============================================================================
-# Phase 4 exceptions
+# Model checkpoints — ignore intermediate/superseded stages
+# Keep: S21, S27, S34, S36 (milestones + ablation baseline + final)
+# Keep: LSTM baseline, TimeVAE variants
+# Ignore: everything else (superseded stages, ~300 MB total)
 # ==============================================================================
 
-# --- Track milestone model checkpoints (S21, S27, S34, S36) ---
-!models/phase4/timegan_s21/**/*.pt
-!models/phase4/timegan_s21/**/*.json
-!models/phase4/timegan_s27/**/*.pt
-!models/phase4/timegan_s27/**/*.json
-!models/phase4/timegan_s34/**/*.pt
-!models/phase4/timegan_s34/**/*.json
+# Ignore all model .pt files by default
+models/**/*.pt
+models/**/*.ckpt
+models/**/*.safetensors
+models/**/*.pth
+
+# Re-track final model and key milestones
 !models/phase4/timegan_s36/**/*.pt
 !models/phase4/timegan_s36/**/*.json
+!models/phase4/timegan_s34/**/*.pt
+!models/phase4/timegan_s34/**/*.json
+!models/phase4/timegan_s27/**/*.pt
+!models/phase4/timegan_s27/**/*.json
+!models/phase4/timegan_s21/**/*.pt
+!models/phase4/timegan_s21/**/*.json
+!models/phase4/lstm/**/*.pt
+!models/phase4/lstm/**/*.json
+!models/phase4/timevae/**/*.pt
+!models/phase4/timevae/**/*.json
 
-# --- Track milestone outputs ---
-!outputs/phase4/timegan_s21/**/*.json
-!outputs/phase4/timegan_s27/**/*.json
-!outputs/phase4/timegan_s34/**/*.json
-!outputs/phase4/timegan_s36/**/*.json
-!outputs/phase4/validation/**/*.json
-!outputs/phase4/validation/**/*.png
-!outputs/phase4/comparison_plots/**/*.png
-!outputs/phase4/postprocessed/**/*.npy
-
-# --- Track processed dataset and normalization ---
-!data/processed/phase4/unified/*.npz
-!data/processed/phase4/unified/*.json
-!data/processed/phase4/raw/*.npz
-!data/processed/phase4/raw/*.json
-
-# --- Ignore intermediate model checkpoints ---
-models/phase4/timegan_s28/
-models/phase4/timegan_s29/
-models/phase4/timegan_s30/
-models/phase4/timegan_s31/
-models/phase4/timegan_s32/
-models/phase4/timegan_s33/
-models/phase4/timegan_s35/
-models/phase4/timegan_s37/
-models/phase4/timegan_s38/
-models/phase4/timegan_s39/
-
-# --- Ignore intermediate outputs ---
-outputs/phase4/timegan_s28/
-outputs/phase4/timegan_s29/
-outputs/phase4/timegan_s31/
-outputs/phase4/timegan_s32/
-outputs/phase4/timegan_s33/
-outputs/phase4/timegan_s35/
-outputs/phase4/timegan_s37/
-outputs/phase4/timegan_s38/
-outputs/phase4/timegan_s39/
-outputs/phase4/quality_evaluation_s27/
-outputs/phase4/comprehensive_eval/
+# Keep model configs for all stages (tiny JSON/YAML files)
+!models/**/*.yaml
+!models/**/*.json
+!models/**/README.md

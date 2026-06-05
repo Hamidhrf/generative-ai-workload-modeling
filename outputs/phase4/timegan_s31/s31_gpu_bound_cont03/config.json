@@ -1,0 +1,19 @@
+{
+  "stage": "s31",
+  "innovation": "LSTM state continuity + boundary smoothness loss",
+  "excluded_workloads": [
+    "whisper"
+  ],
+  "valid_workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "yolo"
+  ],
+  "n_workloads": 4,
+  "train_pods": 196,
+  "val_pods": 24,
+  "n_metrics": 10,
+  "elapsed_s": 3137.608613729477,
+  "best_val_loss": 0.003760758484713733
+}

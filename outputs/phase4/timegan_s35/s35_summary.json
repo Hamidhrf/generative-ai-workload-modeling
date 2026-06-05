@@ -1,0 +1,47 @@
+{
+  "stage": "s35",
+  "description": "S34 architecture, 4x augmented dataset (704 traces)",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "results": {
+    "bert": {
+      "best_val": 0.026776812660197418,
+      "elapsed_s": 4063.664632320404,
+      "model_path": "models/phase4/timegan_s35/s35_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 0.05961312726140022,
+      "elapsed_s": 4057.2265865802765,
+      "model_path": "models/phase4/timegan_s35/s35_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.02517454217498501,
+      "elapsed_s": 4079.8673000335693,
+      "model_path": "models/phase4/timegan_s35/s35_resnet152_vr04_fm10"
+    },
+    "whisper": {
+      "best_val": 0.013636962821086248,
+      "elapsed_s": 2168.6396696567535,
+      "model_path": "models/phase4/timegan_s35/s35_whisper_vr05_fm05"
+    },
+    "yolo": {
+      "best_val": 0.03456636735548576,
+      "elapsed_s": 4071.418694496155,
+      "model_path": "models/phase4/timegan_s35/s35_yolo_vr03_fm12"
+    }
+  },
+  "augmentation": {
+    "original_traces": 176,
+    "augmented_traces": 704,
+    "multiplier": 4,
+    "methods": [
+      "sliding_window",
+      "noise_injection"
+    ]
+  }
+}

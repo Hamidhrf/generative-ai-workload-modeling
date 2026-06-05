@@ -1,0 +1,68 @@
+{
+  "stage": "s31_evaluation",
+  "innovation": "LSTM state continuity + boundary smoothness loss",
+  "model_path": "models/phase4/timegan_s31/s31_gpu_bound_cont03",
+  "excluded_workloads": [
+    "whisper"
+  ],
+  "evaluated_workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "yolo"
+  ],
+  "n_workloads": 4,
+  "mean_vr_s31": 3.6338155769890768,
+  "mean_vr_s29": 1.594,
+  "mean_vr_s27": 0.9199999999999999,
+  "delta_vs_s29": 2.039815576989077,
+  "delta_vs_s27": 2.713815576989077,
+  "pass_rate": "4/4",
+  "yolo_crosses_threshold": true,
+  "per_workload_results": [
+    {
+      "workload": "bert",
+      "vr_mean": 3.6833630892723734,
+      "ref_s29": 1.683,
+      "ref_s27": 0.886,
+      "delta_s29": 2.0003630892723736,
+      "delta_s27": 2.7973630892723733,
+      "passes_threshold": true,
+      "n_real": 49,
+      "n_synthetic": 100
+    },
+    {
+      "workload": "gpt2",
+      "vr_mean": 3.4641379793086235,
+      "ref_s29": 2.204,
+      "ref_s27": 0.946,
+      "delta_s29": 1.2601379793086234,
+      "delta_s27": 2.518137979308624,
+      "passes_threshold": true,
+      "n_real": 49,
+      "n_synthetic": 100
+    },
+    {
+      "workload": "resnet152",
+      "vr_mean": 4.078371265794232,
+      "ref_s29": 1.728,
+      "ref_s27": 0.851,
+      "delta_s29": 2.350371265794232,
+      "delta_s27": 3.2273712657942317,
+      "passes_threshold": true,
+      "n_real": 49,
+      "n_synthetic": 100
+    },
+    {
+      "workload": "yolo",
+      "vr_mean": 3.309389973581079,
+      "ref_s29": 0.761,
+      "ref_s27": 0.997,
+      "delta_s29": 2.5483899735810787,
+      "delta_s27": 2.312389973581079,
+      "passes_threshold": true,
+      "n_real": 49,
+      "n_synthetic": 100
+    }
+  ]
+}

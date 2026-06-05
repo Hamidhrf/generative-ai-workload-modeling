@@ -1,0 +1,57 @@
+{
+  "method": "minmax",
+  "metric_names": [
+    "pod_cpu_usage",
+    "pod_memory_bytes",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used",
+    "gpu_memory_total",
+    "gpu_power_watts",
+    "gpu_temperature"
+  ],
+  "params": {
+    "pod_cpu_usage": {
+      "min": 0.09763455,
+      "max": 0.9304007214403006
+    },
+    "pod_memory_bytes": {
+      "min": 1049264128.0,
+      "max": 1484468224.0
+    },
+    "pod_psi_cpu": {
+      "min": 2.517430278039272e-05,
+      "max": 0.0020193831428147
+    },
+    "pod_latency_avg": {
+      "min": 0.4626163393259048,
+      "max": 2.467053753989084
+    },
+    "pod_throughput": {
+      "min": 0.2363636363636363,
+      "max": 1.4545454545454546
+    },
+    "gpu_utilization": {
+      "min": 0.0,
+      "max": 50.0
+    },
+    "gpu_memory_used": {
+      "min": 632.8888888888889,
+      "max": 649.0
+    },
+    "gpu_memory_total": {
+      "min": 1496.2,
+      "max": 14962.0
+    },
+    "gpu_power_watts": {
+      "min": 4.392888888888889,
+      "max": 45.446
+    },
+    "gpu_temperature": {
+      "min": 7.1,
+      "max": 72.0
+    }
+  }
+}

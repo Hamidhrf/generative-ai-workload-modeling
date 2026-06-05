@@ -1,0 +1,32 @@
+{
+  "stage": "s33",
+  "description": "S27 architecture, GPU-bound only",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "yolo"
+  ],
+  "results": {
+    "bert": {
+      "best_val": 0.07392235845327377,
+      "elapsed_s": 834.5454740524292,
+      "model_path": "models/phase4/timegan_s33/s33_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 0.662820965051651,
+      "elapsed_s": 832.5231902599335,
+      "model_path": "models/phase4/timegan_s33/s33_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.053590161725878716,
+      "elapsed_s": 834.6076054573059,
+      "model_path": "models/phase4/timegan_s33/s33_resnet152_vr04_fm10"
+    },
+    "yolo": {
+      "best_val": 0.09640655666589737,
+      "elapsed_s": 833.6381437778473,
+      "model_path": "models/phase4/timegan_s33/s33_yolo_vr03_fm12"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+Workload,Has_NaN,Has_Inf,In_Range_0_1,Zero_Traces,Status
+BERT,False,False,True,0,OK
+GPT2,False,False,True,0,OK
+RESNET152,False,False,True,0,OK
+WHISPER,False,False,True,0,OK
+YOLO,False,False,True,0,OK

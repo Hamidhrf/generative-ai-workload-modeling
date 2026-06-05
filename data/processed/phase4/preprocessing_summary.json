@@ -1,0 +1,602 @@
+[
+  {
+    "workload": "bert",
+    "method": "raw",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "bert",
+    "method": "diff",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      714,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "bert",
+    "method": "zeromean",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "bert",
+    "method": "windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "bert",
+    "method": "diff_windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "gpt2",
+    "method": "raw",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "gpt2",
+    "method": "diff",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      714,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "gpt2",
+    "method": "zeromean",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "gpt2",
+    "method": "windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "gpt2",
+    "method": "diff_windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "resnet152",
+    "method": "raw",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "resnet152",
+    "method": "diff",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      714,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "resnet152",
+    "method": "zeromean",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "resnet152",
+    "method": "windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "resnet152",
+    "method": "diff_windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "whisper",
+    "method": "raw",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "whisper",
+    "method": "diff",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      714,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "whisper",
+    "method": "zeromean",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "whisper",
+    "method": "windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "whisper",
+    "method": "diff_windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "yolo",
+    "method": "raw",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "yolo",
+    "method": "diff",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      714,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "yolo",
+    "method": "zeromean",
+    "n_samples": 55,
+    "n_train": 49,
+    "n_val": 6,
+    "trace_shape": [
+      55,
+      715,
+      10
+    ],
+    "replica_distribution": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10
+    }
+  },
+  {
+    "workload": "yolo",
+    "method": "windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  },
+  {
+    "workload": "yolo",
+    "method": "diff_windows",
+    "n_samples": 1210,
+    "n_train": 1089,
+    "n_val": 121,
+    "trace_shape": [
+      1210,
+      60,
+      10
+    ],
+    "replica_distribution": {
+      "1": 22,
+      "2": 44,
+      "3": 66,
+      "4": 88,
+      "5": 110,
+      "6": 132,
+      "7": 154,
+      "8": 176,
+      "9": 198,
+      "10": 220
+    }
+  }
+]

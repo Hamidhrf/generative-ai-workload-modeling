@@ -1,0 +1,40 @@
+{
+  "stage": "s37",
+  "description": "S36 architecture + Discriminator Dropout (p=0.3)",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "improvement": "discriminator_dropout",
+  "baseline": "s36",
+  "results": {
+    "bert": {
+      "best_val": 0.10776542872190475,
+      "elapsed_s": 1702.0701200962067,
+      "model_path": "models/phase4/timegan_s37/s37_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 2.127695858478546,
+      "elapsed_s": 1704.0543892383575,
+      "model_path": "models/phase4/timegan_s37/s37_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.055931512266397476,
+      "elapsed_s": 1708.9410951137543,
+      "model_path": "models/phase4/timegan_s37/s37_resnet152_vr04_fm10"
+    },
+    "whisper": {
+      "best_val": 0.05381057783961296,
+      "elapsed_s": 881.7226955890656,
+      "model_path": "models/phase4/timegan_s37/s37_whisper_vr05_fm05"
+    },
+    "yolo": {
+      "best_val": 0.0527190612629056,
+      "elapsed_s": 1702.3047785758972,
+      "model_path": "models/phase4/timegan_s37/s37_yolo_vr03_fm12"
+    }
+  }
+}

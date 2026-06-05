@@ -1,0 +1,81 @@
+{
+  "method": "minmax",
+  "metric_names": [
+    "pod_cpu_usage",
+    "pod_memory_bytes",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used",
+    "gpu_memory_total",
+    "gpu_power_watts",
+    "gpu_temperature"
+  ],
+  "params": {
+    "pod_cpu_usage": {
+      "min": 0.0071780749999999,
+      "max": 0.2006128084453577
+    },
+    "pod_memory_bytes": {
+      "min": 792121344.0,
+      "max": 1121558528.0
+    },
+    "pod_psi_cpu": {
+      "min": 1.8871098845187697e-05,
+      "max": 0.0010874872416266
+    },
+    "pod_latency_avg": {
+      "min": 0.0076182547368501,
+      "max": 0.0099463595284356
+    },
+    "pod_throughput": {
+      "min": 0.3090909090909091,
+      "max": 4.236363636363636
+    },
+    "gpu_utilization": {
+      "min": 0.0,
+      "max": 12.25
+    },
+    "gpu_memory_used": {
+      "min": 554.8888888888889,
+      "max": 569.0
+    },
+    "gpu_memory_total": {
+      "min": 1496.2,
+      "max": 14962.0
+    },
+    "gpu_power_watts": {
+      "min": 3.2908999999999997,
+      "max": 41.542
+    },
+    "gpu_temperature": {
+      "min": 6.4,
+      "max": 66.0
+    }
+  },
+  "diff_min": {
+    "pod_cpu_usage": -0.4400384332688356,
+    "pod_memory_bytes": -0.001666065722562754,
+    "pod_psi_cpu": -0.5168396886364224,
+    "pod_latency_avg": -0.32707686010212583,
+    "pod_throughput": -0.08333333333333326,
+    "gpu_utilization": -0.9795918367346939,
+    "gpu_memory_used": 0.0,
+    "gpu_memory_total": 0.0,
+    "gpu_power_watts": -0.19842566618999202,
+    "gpu_temperature": -0.016778523489932917
+  },
+  "diff_max": {
+    "pod_cpu_usage": 0.4450919491828813,
+    "pod_memory_bytes": 0.0017655323328650135,
+    "pod_psi_cpu": 0.5251305548999994,
+    "pod_latency_avg": 0.36166440763282026,
+    "pod_throughput": 0.06944444444444475,
+    "gpu_utilization": 0.9523809523809523,
+    "gpu_memory_used": 0.0,
+    "gpu_memory_total": 0.0,
+    "gpu_power_watts": 0.22509156599418056,
+    "gpu_temperature": 0.016778523489932917
+  }
+}

@@ -1,0 +1,6 @@
+Workload,Total Pods,Train,Val,Timesteps,Metrics,Replica Counts
+BERT,55,49,6,715,10,1-10
+GPT2,55,49,6,715,10,1-10
+RESNET152,55,49,6,715,10,1-10
+WHISPER,55,49,6,715,10,1-10
+YOLO,55,49,6,715,10,1-10

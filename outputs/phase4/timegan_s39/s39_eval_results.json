@@ -1,0 +1,139 @@
+{
+  "window_size": 5,
+  "smoothing_enabled": true,
+  "dataset_size": "176 traces (original, no augmentation)",
+  "improvement": "targeted_variance_tuning",
+  "changes": "GPT2 lambda_var 0.3->0.6, Whisper 0.5->0.8",
+  "workloads": {
+    "bert": {
+      "workload": "bert",
+      "vr_raw": 1.049210548400879,
+      "vr_smooth": 1.0193418264389038,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        1.1718412637710571,
+        1.2614163160324097,
+        0.7382122278213501,
+        1.1311551332473755,
+        0.9313908815383911,
+        0.9639784693717957,
+        0.9373996257781982
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    },
+    "gpt2": {
+      "workload": "gpt2",
+      "vr_raw": 1.3155618906021118,
+      "vr_smooth": 1.2764322757720947,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        1.0424275398254395,
+        0.5199461579322815,
+        0.4922509491443634,
+        0.6870899200439453,
+        1.1731740236282349,
+        2.8329975605010986,
+        2.1871402263641357
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    },
+    "resnet152": {
+      "workload": "resnet152",
+      "vr_raw": 1.0371968746185303,
+      "vr_smooth": 0.9892866015434265,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        0.8677076697349548,
+        1.5289376974105835,
+        0.633094847202301,
+        0.9797188639640808,
+        0.7723413705825806,
+        0.8637974858283997,
+        1.279408574104309
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    },
+    "whisper": {
+      "workload": "whisper",
+      "vr_raw": 2.391695261001587,
+      "vr_smooth": 2.3187201023101807,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        1.120174765586853,
+        5.890160083770752,
+        2.8361847400665283,
+        1.7285256385803223,
+        1.5721851587295532,
+        0.9124901294708252,
+        2.171320915222168
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    },
+    "yolo": {
+      "workload": "yolo",
+      "vr_raw": 1.0444508790969849,
+      "vr_smooth": 1.036391019821167,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        0.7942389249801636,
+        1.5885008573532104,
+        0.9146491885185242,
+        0.9423553347587585,
+        0.9148051142692566,
+        0.8360923528671265,
+        1.264095664024353
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    }
+  },
+  "summary": {
+    "mean_vr_smooth": 1.3280343651771545,
+    "pass_count": 5,
+    "total": 5
+  }
+}

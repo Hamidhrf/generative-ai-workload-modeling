@@ -1,0 +1,40 @@
+{
+  "stage": "s38",
+  "description": "S36 architecture + Multi-Layer Feature Matching",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "improvement": "multi_layer_feature_matching",
+  "baseline": "s36",
+  "results": {
+    "bert": {
+      "best_val": 0.0750082116574049,
+      "elapsed_s": 845.8667659759521,
+      "model_path": "models/phase4/timegan_s38/s38_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 0.5388971865177155,
+      "elapsed_s": 845.6729726791382,
+      "model_path": "models/phase4/timegan_s38/s38_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.029843343421816826,
+      "elapsed_s": 848.0927731990814,
+      "model_path": "models/phase4/timegan_s38/s38_resnet152_vr04_fm10"
+    },
+    "whisper": {
+      "best_val": 0.04761549457907677,
+      "elapsed_s": 452.6459496021271,
+      "model_path": "models/phase4/timegan_s38/s38_whisper_vr05_fm05"
+    },
+    "yolo": {
+      "best_val": 0.07734214328229427,
+      "elapsed_s": 842.2468640804291,
+      "model_path": "models/phase4/timegan_s38/s38_yolo_vr03_fm12"
+    }
+  }
+}

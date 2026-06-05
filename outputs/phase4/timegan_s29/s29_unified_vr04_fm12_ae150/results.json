@@ -1,0 +1,21 @@
+{
+  "stage": "s29",
+  "architecture": "GeneratorSegUnified",
+  "n_workloads": 5,
+  "n_metrics": 8,
+  "train_pods": 245,
+  "val_pods": 30,
+  "best_stat": 0.387982706228892,
+  "n_epochs": 170,
+  "elapsed_s": 4471.059930324554,
+  "unified_metrics": [
+    "pod_cpu_usage",
+    "pod_memory_bytes",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used",
+    "gpu_power_watts"
+  ]
+}
