@@ -1,9 +1,8 @@
 # Generative Modeling of Application Workloads for Synthetic Trace Generation
 
-**Master's Thesis in Digital Transformation**  
+**Master's Research Thesis in Digital Transformation**  
 **Author:** Hamidreza Fathollahzadeh  
-**Institution:** Fachhochschule Dortmund  
-**Supervisor:** [Supervisor Name]  
+**Institution:** Fachhochschule Dortmund   
 **Date:** January 2026
 
 ---
@@ -3234,6 +3233,5 @@ fi
 
 **Document Status:** Phase 1 Complete, Comprehensive Draft Ready  
 **Date:** January 15, 2026  
-**Word Count:** ~28,000 words  
 **Next Update:** After Phase 2 completion (model selection)
 

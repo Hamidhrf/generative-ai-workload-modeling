@@ -1,0 +1,32 @@
+{
+  "adversarial": "wgan",
+  "spectral_norm": false,
+  "two_timescale_lr": true,
+  "n_disc_steps": 2,
+  "lambda_rec": 0.1,
+  "lambda_adv": 1.0,
+  "lambda_fm": 0.01,
+  "lambda_var": 0.0,
+  "lambda_gp": 10.0,
+  "conditional_disc": true,
+  "preprocessing": "zeromean",
+  "epochs": 200,
+  "hidden_dim": 128,
+  "num_layers": 2,
+  "latent_dim": 64,
+  "regime_dim": 32,
+  "pod_dim": 32,
+  "replica_embed_dim": 8,
+  "phase_embed_dim": 4,
+  "dropout": 0.1,
+  "grad_clip": 1.0,
+  "seed": 42,
+  "gen_option": "a",
+  "workload": "whisper",
+  "kept_metrics": [
+    "pod_cpu_usage",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "gpu_utilization"
+  ]
+}

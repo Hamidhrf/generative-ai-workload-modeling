@@ -1,0 +1,38 @@
+{
+  "stage": "s34",
+  "description": "S27 architecture, all 5 workloads (S33 + Whisper)",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "results": {
+    "bert": {
+      "best_val": 0.09660801105201244,
+      "elapsed_s": 835.18416929245,
+      "model_path": "models/phase4/timegan_s34/s34_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 1.946037769317627,
+      "elapsed_s": 841.2714674472809,
+      "model_path": "models/phase4/timegan_s34/s34_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.03787034843116999,
+      "elapsed_s": 840.0981390476227,
+      "model_path": "models/phase4/timegan_s34/s34_resnet152_vr04_fm10"
+    },
+    "whisper": {
+      "best_val": 0.06260917522013187,
+      "elapsed_s": 448.17672657966614,
+      "model_path": "models/phase4/timegan_s34/s34_whisper_vr05_fm05"
+    },
+    "yolo": {
+      "best_val": 0.07291641272604465,
+      "elapsed_s": 838.493824005127,
+      "model_path": "models/phase4/timegan_s34/s34_yolo_vr03_fm12"
+    }
+  }
+}

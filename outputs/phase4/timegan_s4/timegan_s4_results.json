@@ -1,0 +1,162 @@
+[
+  {
+    "workload": "bert",
+    "stage": "s4_wgan_gp",
+    "var_ratio_mean": 0.11649336418360179,
+    "var_ratio_per_metric": [
+      0.012357694798109338,
+      0.34915942915764003,
+      0.18572560243056577,
+      0.009007354716865167,
+      0.026216739814828686
+    ],
+    "autocorr_diff": 0.26318544548544126,
+    "phase_jump_ratio": 14.691078579178132,
+    "val_rec": 0.009920809417963028,
+    "n_epochs": 26,
+    "elapsed_s": 851.1916246414185,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.01,
+    "lambda_gp": 10.0,
+    "lstm_baseline_vr": 0.594,
+    "s1_vr": 0.191,
+    "s2_vr": 0.252,
+    "s3_vr": 0.276
+  },
+  {
+    "workload": "gpt2",
+    "stage": "s4_wgan_gp",
+    "var_ratio_mean": 0.4802436165443049,
+    "var_ratio_per_metric": [
+      0.11140853824023429,
+      0.12576978431247385,
+      0.6724399258373552,
+      0.6801133862441539,
+      0.3685279792145769,
+      0.9232020854170355
+    ],
+    "autocorr_diff": 0.204221406395058,
+    "phase_jump_ratio": 6.528410702478017,
+    "val_rec": 0.0021245917305350304,
+    "n_epochs": 26,
+    "elapsed_s": 843.8085479736328,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.01,
+    "lambda_gp": 10.0,
+    "lstm_baseline_vr": 0.676,
+    "s1_vr": 0.532,
+    "s2_vr": 0.552,
+    "s3_vr": 0.539
+  },
+  {
+    "workload": "resnet152",
+    "stage": "s4_wgan_gp",
+    "var_ratio_mean": 0.10219142144203416,
+    "var_ratio_per_metric": [
+      0.12019257219224315,
+      0.08816632916869513,
+      0.10415301790747006,
+      0.008206355134361224,
+      0.19023883280740128
+    ],
+    "autocorr_diff": 0.31907208457229724,
+    "phase_jump_ratio": 9.350800082863593,
+    "val_rec": 0.004650574643164873,
+    "n_epochs": 27,
+    "elapsed_s": 878.8671362400055,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.01,
+    "lambda_gp": 10.0,
+    "lstm_baseline_vr": 0.607,
+    "s1_vr": 0.108,
+    "s2_vr": 0.308,
+    "s3_vr": 0.288
+  },
+  {
+    "workload": "whisper",
+    "stage": "s4_wgan_gp",
+    "var_ratio_mean": 0.7852389409786418,
+    "var_ratio_per_metric": [
+      1.0353891143899867,
+      0.661980099822418,
+      0.759991481121128,
+      0.6835950685810344
+    ],
+    "autocorr_diff": 0.09418495766046192,
+    "phase_jump_ratio": 33.02788371198026,
+    "val_rec": 0.0014568428741768003,
+    "n_epochs": 26,
+    "elapsed_s": 843.6448442935944,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.01,
+    "lambda_gp": 10.0,
+    "lstm_baseline_vr": 0.748,
+    "s1_vr": 0.754,
+    "s2_vr": 0.761,
+    "s3_vr": 0.746
+  },
+  {
+    "workload": "yolo",
+    "stage": "s4_wgan_gp",
+    "var_ratio_mean": 0.1234313118591079,
+    "var_ratio_per_metric": [
+      0.10871369488917075,
+      0.1782520340657914,
+      0.2396636465929339,
+      0.07317451481239647,
+      0.017352668935247003
+    ],
+    "autocorr_diff": 0.2682035185241908,
+    "phase_jump_ratio": 15.501077863164253,
+    "val_rec": 0.007596943527460098,
+    "n_epochs": 27,
+    "elapsed_s": 875.0051689147949,
+    "metrics_generated": [
+      "pod_cpu_usage",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization"
+    ],
+    "lambda_rec": 1.0,
+    "lambda_adv": 0.1,
+    "lambda_fm": 0.01,
+    "lambda_gp": 10.0,
+    "lstm_baseline_vr": 0.438,
+    "s1_vr": 0.271,
+    "s2_vr": 0.68,
+    "s3_vr": 0.19
+  }
+]

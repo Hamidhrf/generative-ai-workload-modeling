@@ -1,0 +1,16 @@
+{
+  "architecture": "GeneratorSeg",
+  "preprocessing": "raw_normalized",
+  "fm_stat_type": "per_segment",
+  "seg_len": 120,
+  "n_phases": 6,
+  "hidden_dim": 128,
+  "num_layers": 2,
+  "latent_dim": 64,
+  "replica_embed_dim": 16,
+  "phase_embed_dim": 8,
+  "dropout": 0.1,
+  "grad_clip": 1.0,
+  "seed": 42,
+  "disc_hidden": 32
+}
