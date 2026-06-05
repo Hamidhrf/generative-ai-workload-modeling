@@ -51,10 +51,15 @@ data distribution. Adversarial training breaks through this ceiling.
 
 ## Results at a Glance
 
-### Architecture
+### System Architecture
+
+![System Architecture](figures/system_architecture.png)
+*Single-node Kubernetes cluster with Prometheus monitoring stack and five AI inference workloads*
+
+### Model Architecture (S36)
 
 ![TimeGAN S36 Architecture](figures/timegan_architecture.png)
-*S36 architecture: encoder-free generator with segment-based LSTM, BiLSTM discriminator with spectral normalization*
+*S36: encoder-free generator with segment-based LSTM, BiLSTM discriminator with spectral normalization*
 
 ### Real vs Synthetic Traces (r=5)
 
