@@ -49,6 +49,30 @@ data distribution. Adversarial training breaks through this ceiling.
 
 ---
 
+## Results at a Glance
+
+### Architecture
+
+![TimeGAN S36 Architecture](figures/timegan_architecture.png)
+*S36 architecture: encoder-free generator with segment-based LSTM, BiLSTM discriminator with spectral normalization*
+
+### Real vs Synthetic Traces (r=5)
+
+![Real vs Synthetic Traces](figures/real_vs_synthetic_r5.png)
+*Real (blue) vs S36 synthetic (orange) traces at r=5 across all five workloads*
+
+### Scaling Curves
+
+![Scaling Curves](figures/scaling_curves.png)
+*Real vs synthetic scaling curves for GPU utilization and latency*
+
+### Ablation Study
+
+![Ablation Study](figures/ablation_study.png)
+*S36 (spectral normalization) achieves the lowest deviation from ideal VR=1.0 across all ablation stages*
+
+---
+
 ## Infrastructure
 
 | Component | Specification |
