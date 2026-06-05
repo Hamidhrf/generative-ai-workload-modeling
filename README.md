@@ -326,7 +326,9 @@ Supervisor: Prof. Dr. Stephan Recker.
 
 **Hamidreza Fathollahzadeh**
 Master's Student — Digital Transformation, Fachhochschule Dortmund
+
 GitHub: github.com/Hamidhrf/generative-ai-workload-modeling
+
 Email: hamidrezafathollahzadeh@gmail.com
 
 ---
