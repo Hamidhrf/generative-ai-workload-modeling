@@ -62,16 +62,16 @@
 - Whisper: 1.284, YOLO: 0.661
 
 ### Qualitative
-- ✅ Whisper: Clear replica-level separation (S26 collapsed)
-- ✅ GPT-2: Stable training (S26 had discriminator spikes)
-- ✅ All: Phase structure preserved
-- ✅ YOLO: Acceptable quality (S26 worse)
+-  Whisper: Clear replica-level separation (S26 collapsed)
+-  GPT-2: Stable training (S26 had discriminator spikes)
+-  All: Phase structure preserved
+-  YOLO: Acceptable quality (S26 worse)
 
 ### Thesis Requirements
-- ✅ Exceeds VR target (0.915 > 0.8)
-- ✅ Preserves replica-dependent scaling
-- ✅ Maintains 6-phase structure
-- ✅ Training stable and reproducible
+-  Exceeds VR target (0.915 > 0.8)
+-  Preserves replica-dependent scaling
+-  Maintains 6-phase structure
+-  Training stable and reproducible
 
 ---
 
@@ -201,7 +201,7 @@
 
 ---
 
-## Status: ✅ PHASE 4 COMPLETE
+## Status:  PHASE 4 COMPLETE
 
 **Final Model:** S21 TimeGAN  
 **Performance:** VR=0.915 (18% above target)  

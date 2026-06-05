@@ -1,8 +1,6 @@
 # PROJECT_INVENTORY.md
 
 Generated on 2026-04-24 against the working tree on branch `phase4-model-training`.
-No branch checkouts were performed; other-branch inspection used `git ls-tree` / `git show`
-so no uncommitted work was touched. Sizes are in bytes unless stated otherwise.
 
 ---
 

@@ -2,7 +2,6 @@
 
 **Date**: January 23, 2026
 **Phase**: Phase 2 - Data Preprocessing
-**Status**: ✅ FINAL DECISION
 
 ### Decision
 - Use StandardScaler normalization for training
@@ -20,7 +19,7 @@
 
 
 Project Decision Log
-Master's Thesis: Generative AI Workload Modeling
+Research's Thesis: Generative AI Workload Modeling
 Author: Hamidreza Fathollahzadeh
 Institution: Fachhochschule Dortmund
 Date Started: December 2025
@@ -30,7 +29,7 @@ as a reference to avoid repeating past mistakes and ensures consistency througho
 Decision #1: Pod-Level Data Handling (DO NOT AGGREGATE)
 Date: January 21, 2026
 Phase: Phase 2 - Model Selection
-Status: ✅ FINAL DECISION - DO NOT CHANGE
+Status:  FINAL DECISION - DO NOT CHANGE
 Decision
 KEEP POD-LEVEL DATA SEPARATE - DO NOT AGGREGATE ACROSS PODS/REPLICAS
 Context
@@ -50,11 +49,11 @@ Why Pod-Level is Correct:
 6. Kwok Integration: Simulation environment likely needs individual pod traces
 7. Experimental Design: Phase 1 measured individual pod behavior under contention
 Why Aggregation is Wrong:
-1. ❌ Loses pod-level variability (critical research data)
-2. ❌ Reduces training data by 75%
-3. ❌ Cannot generate individual pod traces for simulation
-4. ❌ Doesn't match thesis objective
-5. ❌ Throws away valuable contention measurements
+1.  Loses pod-level variability (critical research data)
+2.  Reduces training data by 75%
+3.  Cannot generate individual pod traces for simulation
+4.  Doesn't match thesis objective
+5.  Throws away valuable contention measurements
 Implementation
 Data Structure:
 python
@@ -81,18 +80,18 @@ for for pod_id pod_id in in range range( (50 50) ): :
 trace trace = = model model. .generate generate( (condition condition= ={ {'r' 'r': : 50 50, , 'workload' 'workload': : 'resnet50' 'resnet50'} }) )
 # trace shape: (720, 15) # trace shape: (720, 15)
 Code Files Affected
-✅ correct
+ correct
 data
 _
 _
 loader.py - Loads pod-level traces
-✅ phase2
+ phase2
 _
 eda.py - EDA on pod-level data
-✅ lstm
+ lstm
 _
 baseline.py - Trains on pod-level traces
-✅ All documentation files updated
+ All documentation files updated
 References
 Thesis proposal: Section 5 (Expected Outcome)
 WHY
@@ -146,15 +145,15 @@ Last Updated: January 21, 2026
 
 **Date**: January 23, 2026
 **Phase**: Phase 2 - EDA Complete
-**Status**: ✅ Verified
+**Status**:  Verified
 
 ### Key Findings
 
 1. **Normalization Ranges Validated:**
    - All proposed absolute ranges appropriate
-   - CPU max: 6.21 (range 0-8) ✓
-   - Memory max: 3.36GB (range 0-10GB) ✓
-   - Latency max: 1.69s (range 0-5s) ✓
+   - CPU max: 6.21 (range 0-8) 
+   - Memory max: 3.36GB (range 0-10GB) 
+   - Latency max: 1.69s (range 0-5s) 
 
 2. **Contention Effects Confirmed:**
    - CPU usage increases with replica count
@@ -173,7 +172,7 @@ Last Updated: January 21, 2026
 
 ### Impact on Model Design
 
-- ✅ Absolute normalization strategy confirmed
-- ✅ VM config conditioning justified
-- ✅ 15 metrics (including zeros) is correct
-- ✅ Pod-level approach validated
+-  Absolute normalization strategy confirmed
+-  VM config conditioning justified
+-  15 metrics (including zeros) is correct
+-  Pod-level approach validated

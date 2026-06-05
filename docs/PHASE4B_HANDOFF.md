@@ -3,56 +3,8 @@
 **Date:** February 23, 2026  
 **From:** Phase 4a (Preprocessing + EDA)  
 **To:** Phase 4b (LSTM Baseline Training)  
-**Status:** Phase 4a COMPLETE ✅ → Ready for Phase 4b
+**Status:** Phase 4a COMPLETE → Ready for Phase 4b
 
----
-
-## Quick Start for New Chat
-
-**Paste this into your new chat:**
-
-```
-Hi! I'm starting Phase 4b: LSTM Baseline Training for my Master's thesis.
-
-CONTEXT FROM PHASE 4A:
-- Completed preprocessing: 275 pods, 10 metrics, 715 timesteps
-- 5 workloads: BERT, GPT2, ResNet152, Whisper, YOLO
-- Data path: data/processed/phase1_v3/
-- Shape per workload: (55, 715, 10)
-- Train/val split: 90/10 (245 train, 30 val)
-- Normalization: MinMax [0,1] per-workload
-- Removed: pod_psi_memory, pod_psi_io (zero variance)
-
-CRITICAL DECISIONS FROM PHASE 4A:
-1. Kept Whisper r=10 pod_9 (partial data showing realistic degradation)
-2. Per-workload normalization (not global)
-3. 90/10 split (no test set - generative model evaluation)
-4. 5 separate models strategy (one per workload)
-5. Conditioning on replica_count (1-10)
-
-DATASET FILES:
-- bert_traces.npz, bert_normalization.json
-- gpt2_traces.npz, gpt2_normalization.json
-- resnet152_traces.npz, resnet152_normalization.json
-- whisper_traces.npz, whisper_normalization.json
-- yolo_traces.npz, yolo_normalization.json
-
-Each .npz contains:
-- traces: (55, 715, 10) normalized to [0,1]
-- replica_counts: (55,) values 1-10
-- train_idx: (49,) indices
-- val_idx: (6,) indices
-- metric_names: 10 strings
-- metadata: pod info
-
-GOAL FOR PHASE 4B:
-Create LSTM baseline to establish performance floor before TimeGAN.
-Train 5 separate LSTM models (one per workload) with replica_count conditioning.
-
-Please create the LSTM baseline training script!
-```
-
----
 
 ## Critical Context from Phase 4a
 
@@ -87,8 +39,8 @@ METRICS = [
 ```
 
 **Removed (zero variance):**
-- ~~pod_psi_memory~~ - AI inference has no memory pressure
-- ~~pod_psi_io~~ - AI inference has no I/O pressure
+-  AI inference has no memory pressure
+-  AI inference has no I/O pressure
 
 ### 3. Workload Characteristics
 
@@ -121,18 +73,18 @@ METRICS = [
 
 **Issue:**
 Pod_9 at r=10 has:
-- ✅ CPU data (mean=0.267)
-- ✅ Memory data (mean=0.184)
-- ✅ PSI_CPU data (mean=0.839) ← EXTREMELY HIGH
-- ❌ Latency = 0 (missing)
-- ❌ Throughput = 0 (missing)
+-  CPU data (mean=0.267)
+-  Memory data (mean=0.184)
+-  PSI_CPU data (mean=0.839) ← EXTREMELY HIGH
+-  Latency = 0 (missing)
+-  Throughput = 0 (missing)
 
 **Interpretation:**
 - Pod was under extreme CPU stress but not serving requests
 - Realistic degradation pattern (pod exists but unresponsive)
 
 **Decision:**
-✅ **KEPT in dataset** because:
+ **KEPT in dataset** because:
 1. Shows realistic failure mode
 2. PSI_CPU=0.839 is valuable extreme data
 3. Zero throughput is meaningful (not noise)
@@ -149,23 +101,23 @@ Pod_9 at r=10 has:
 ### 5. Critical Training Decisions
 
 **Per-Workload vs Global Normalization:**
-- ✅ **Decision:** Per-workload normalization
+-  **Decision:** Per-workload normalization
 - **Reason:** Preserves workload-specific characteristics
 - **Implication:** Train 5 separate LSTM models (one per workload)
 
 **Train/Val/Test Split:**
-- ✅ **Decision:** 90/10 train/val, NO test set
+-  **Decision:** 90/10 train/val, NO test set
 - **Reason:** Small dataset, generative model evaluation differs from discriminative
 - **Implication:** Use validation for early stopping only
 - **Evaluation:** Generation quality metrics (MSE, variance ratio, visual inspection)
 
 **Conditioning Strategy:**
-- ✅ **Decision:** Condition on replica_count (1-10)
+-  **Decision:** Condition on replica_count (1-10)
 - **Reason:** Model needs to learn scaling behavior
 - **Implication:** LSTM input = [trace features + replica_count embedding]
 
 **Model Strategy:**
-- ✅ **Decision:** 5 separate models (NOT one multi-workload model)
+-  **Decision:** 5 separate models (NOT one multi-workload model)
 - **Reason:** Different workload characteristics, per-workload normalization
 - **Implication:** Train BERT model, GPT2 model, ResNet152 model, Whisper model, YOLO model independently
 
@@ -316,20 +268,6 @@ HYPERPARAMETERS = {
 
 ---
 
-## Expected Timeline
-
-| Task | Time | Status |
-|------|------|--------|
-| Script creation | 30 min | 📝 TODO |
-| Training (5 models) | 2-3 hours | ⏳ TODO |
-| Evaluation | 30 min | 📊 TODO |
-| Documentation | 15 min | 📄 TODO |
-| **TOTAL** | **3-4 hours** | - |
-
-**Can run overnight:** Yes, training is fully automated
-
----
-
 ## Things to Watch For
 
 ### During Training
@@ -421,47 +359,6 @@ train_size = 0.95
 
 ---
 
-## Key Reminders
-
-1. **This is a BASELINE**, not the main model
-   - Good enough is good enough
-   - Don't over-optimize
-   - Purpose: establish performance floor
-
-2. **5 Separate Models**
-   - Train independently
-   - Different convergence times okay
-   - Compare performance across workloads
-
-3. **Conditioning Matters**
-   - Must condition on replica_count
-   - Model needs to learn r=1 differs from r=10
-   - Embedding size can be small (16 is fine)
-
-4. **Validation Strategy**
-   - Use for early stopping only
-   - Primary evaluation: generation quality
-   - Visual inspection is important
-
-5. **Save Everything**
-   - Models (for later comparison)
-   - Training curves (for thesis plots)
-   - Reconstructions (for thesis figures)
-   - Metrics (for results table)
-
----
-
-## Questions for New Chat
-
-When starting Phase 4b, Claude should ask:
-
-1. ✅ "Should I create the training script first, or would you like to discuss architecture decisions?"
-2. ✅ "Do you want to train all 5 workloads at once, or start with one as a test?"
-3. ✅ "Should I include data augmentation, or keep it simple for baseline?"
-4. ✅ "Do you want real-time training monitoring (tensorboard), or just final results?"
-
----
-
 ## Repository State
 
 **Current Branch:** `phase4-model-training`
@@ -471,27 +368,4 @@ When starting Phase 4b, Claude should ask:
 - Phase 4a EDA (27 plots)
 - Verification scripts
 
-**Working Directory Clean:** Yes (after commit)
-
-**Ready for Phase 4b:** ✅
-
----
-
-## Final Checklist Before Starting Phase 4b
-
-- [x] Phase 4a complete
-- [x] Data validated (275 pods, 10 metrics)
-- [x] EDA reports generated
-- [x] Git committed
-- [x] Handoff document created
-- [ ] New chat started
-- [ ] LSTM script created
-- [ ] Training initiated
-
----
-
-**Status:** READY TO START PHASE 4b ✅
-
-**Next Action:** Start new chat with context above, create LSTM training script
-
-**Good luck!** 🚀
+**Ready for Phase 4b:** 
