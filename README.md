@@ -53,28 +53,38 @@ data distribution. Adversarial training breaks through this ceiling.
 
 ### System Architecture
 
-![System Architecture](figures/system_architecture.png)
-*Single-node Kubernetes cluster with Prometheus monitoring stack and five AI inference workloads*
+<p align="center">
+  <img src="figures/system_architecture.png" width="750"/>
+  <br><em>Single-node Kubernetes cluster with Prometheus monitoring stack and five AI inference workloads</em>
+</p>
 
 ### Model Architecture (S36)
 
-![TimeGAN S36 Architecture](figures/timegan_architecture.png)
-*S36: encoder-free generator with segment-based LSTM, BiLSTM discriminator with spectral normalization*
+<p align="center">
+  <img src="figures/timegan_architecture.png" width="750"/>
+  <br><em>S36: encoder-free generator with segment-based LSTM, BiLSTM discriminator with spectral normalization</em>
+</p>
 
 ### Real vs Synthetic Traces (r=5)
 
-![Real vs Synthetic Traces](figures/real_vs_synthetic_r5.png)
-*Real (blue) vs S36 synthetic (orange) traces at r=5 across all five workloads*
+<p align="center">
+  <img src="figures/real_vs_synthetic_r5.png" width="850"/>
+  <br><em>Real (blue) vs S36 synthetic (orange) traces at r=5 across all five workloads</em>
+</p>
 
 ### Scaling Curves
 
-![Scaling Curves](figures/scaling_curves.png)
-*Real vs synthetic scaling curves for GPU utilization and latency*
+<p align="center">
+  <img src="figures/scaling_curves.png" width="850"/>
+  <br><em>Real vs synthetic scaling curves for GPU utilization and latency</em>
+</p>
 
 ### Ablation Study
 
-![Ablation Study](figures/ablation_study.png)
-*S36 (spectral normalization) achieves the lowest deviation from ideal VR=1.0 across all ablation stages*
+<p align="center">
+  <img src="figures/ablation_study.png" width="850"/>
+  <br><em>S36 (spectral normalization) achieves the lowest deviation from ideal VR=1.0 across all ablation stages</em>
+</p>
 
 ---
 
