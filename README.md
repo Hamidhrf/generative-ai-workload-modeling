@@ -68,21 +68,21 @@ data distribution. Adversarial training breaks through this ceiling.
 ### Real vs Synthetic Traces (r=5)
 
 <p align="center">
-  <img src="figures/real_vs_synthetic_r5.png" width="850"/>
+  <img src="figures/real_vs_synthetic_r5.png" width="750"/>
   <br><em>Real (blue) vs S36 synthetic (orange) traces at r=5 across all five workloads</em>
 </p>
 
 ### Scaling Curves
 
 <p align="center">
-  <img src="figures/scaling_curves.png" width="850"/>
+  <img src="figures/scaling_curves.png" width="750"/>
   <br><em>Real vs synthetic scaling curves for GPU utilization and latency</em>
 </p>
 
 ### Ablation Study
 
 <p align="center">
-  <img src="figures/ablation_study.png" width="850"/>
+  <img src="figures/ablation_study.png" width="750"/>
   <br><em>S36 (spectral normalization) achieves the lowest deviation from ideal VR=1.0 across all ablation stages</em>
 </p>
 
