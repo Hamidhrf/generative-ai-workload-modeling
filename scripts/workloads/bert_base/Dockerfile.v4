@@ -1,0 +1,5 @@
+FROM pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime
+WORKDIR /app
+RUN pip install --no-cache-dir transformers==4.36.0 prometheus-client
+COPY inference_variable.py .
+CMD ["python", "inference_variable.py"]

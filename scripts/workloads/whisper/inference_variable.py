@@ -107,6 +107,10 @@ def generate_audio_file(duration_s, sample_rate=16000):
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if torch.cuda.is_available():
+        name = torch.cuda.get_device_name(0)
+        cap = torch.cuda.get_device_capability(0)
+        print(f"[startup] device={name}, compute_capability={cap}", flush=True)
     logger.info(f"Using device: {device}")
 
     # Load Whisper model
