@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: whisper
-        image: hamidhrf/whisper-inference:v3
+        image: hamidhrf/whisper-inference:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

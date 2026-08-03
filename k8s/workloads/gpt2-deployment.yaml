@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: gpt2
-        image: hamidhrf/gpt2-inference:v3.1
+        image: hamidhrf/gpt2-inference:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

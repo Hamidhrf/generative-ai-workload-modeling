@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: resnet152
-        image: hamidhrf/resnet152-inference:v3
+        image: hamidhrf/resnet152-inference:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

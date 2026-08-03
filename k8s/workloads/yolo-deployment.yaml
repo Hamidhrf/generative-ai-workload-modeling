@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: yolo
-        image: hamidhrf/yolo-inference:v3.1
+        image: hamidhrf/yolo-inference:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

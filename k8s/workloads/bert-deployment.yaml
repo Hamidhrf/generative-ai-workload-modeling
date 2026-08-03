@@ -24,7 +24,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: bert
-        image: hamidhrf/bert-inference:v3
+        image: hamidhrf/bert-inference:v4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
