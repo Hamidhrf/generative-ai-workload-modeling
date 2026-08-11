@@ -81,7 +81,7 @@ class ExperimentRunnerV3:
         self.cleanup_delay = 30
         
         # Output directory
-        self.data_dir = Path("data/raw/phase1_v3")
+        self.data_dir = Path(os.environ.get("DATA_OUTPUT_DIR", "data/raw/phase1_v3"))
         self.data_dir.mkdir(parents=True, exist_ok=True)
         
         # Scrape interval
