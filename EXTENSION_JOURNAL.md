@@ -49,3 +49,5 @@ Cluster is ready for workload deployment. All 5 v4 images already on Docker Hub 
 Aug 11 2026: H100 smoke test bert passed. Transient ErrImagePull on first pull attempt (hit quay.io mirror, unauthorized), auto-retried successfully against correct registry in 1.1s. Pod reached 1/1 Running, [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). bert_inference_total counter=25.0 after warm-up. Scaled back to 0.
 
 Aug 11 2026: H100 smoke test gpt2 passed. Pod reached 1/1 Running cleanly, no image pull issues. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). gpt2_inference_total counter=7.0 after warm-up. Scaled back to 0.
+
+Aug 11 2026: H100 smoke test resnet152 passed. Pod reached 1/1 Running cleanly, no image pull issues. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). resnet152_inference_total counter=40.0 after warm-up. Scaled back to 0.
