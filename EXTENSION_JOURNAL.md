@@ -55,3 +55,11 @@ Aug 11 2026: H100 smoke test resnet152 passed. Pod reached 1/1 Running cleanly, 
 Aug 11 2026: H100 smoke test whisper passed. Used bumped 300s readiness timeout per protocol (heavier model load, ~460MB); pod reached 1/1 Running within that window. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). whisper_inference_total counter=12.0 after warm-up. Scaled back to 0.
 
 Aug 11 2026: H100 smoke test yolo passed. Pod reached 1/1 Running cleanly, no image pull issues. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). yolo_inference_total counter=100.0 after warm-up. Scaled back to 0. All 5 v4 workloads (bert, gpt2, resnet152, whisper, yolo) now smoke-tested and passing on H100 NVL.
+
+Aug 11 2026: monitoring stack deployed on H100. Selective subset of k8s/monitoring/: namespace, prometheus-config (with DCGM ns patched to gpu-operator), prometheus-deployment, node-exporter. Skipped grafana (unused), kube-state-metrics (unused), kepler (unused + eBPF risk on kernel 7.0), and both dcgm-exporter YAMLs (GPU Operator already provides one). All Prometheus targets UP: prometheus, node-exporter, dcgm-exporter (via gpu-operator ns), kubelet-cadvisor. ai-inference-apps target is empty pending workload deploys during experiments. Runner prometheus_url now env-configurable; A16 default preserved.
+
+Repo bug found and fixed: prometheus-config.yaml was committed as raw Prometheus config (global:, scrape_configs:) rather than a Kubernetes ConfigMap manifest. Deploys silently relied on a manual kubectl create configmap step that was never committed. Wrapped the file as a proper ConfigMap so future kubectl apply -f works standalone.
+
+local-path-provisioner v0.0.24 installed on H100 and set as default storageclass; A16's deploy-monitoring-stack.sh assumed it was already present but H100 was a fresh cluster.
+
+Target list note: ai-inference-apps and kube-state-metrics scrape jobs use role: endpoints — when no matching Endpoints exist, no target entry is emitted at all (not shown as 'down'). ai-inference-apps will appear during experiments when workload pods are deployed; kube-state-metrics stays absent by design.
