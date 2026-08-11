@@ -53,3 +53,5 @@ Aug 11 2026: H100 smoke test gpt2 passed. Pod reached 1/1 Running cleanly, no im
 Aug 11 2026: H100 smoke test resnet152 passed. Pod reached 1/1 Running cleanly, no image pull issues. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). resnet152_inference_total counter=40.0 after warm-up. Scaled back to 0.
 
 Aug 11 2026: H100 smoke test whisper passed. Used bumped 300s readiness timeout per protocol (heavier model load, ~460MB); pod reached 1/1 Running within that window. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). whisper_inference_total counter=12.0 after warm-up. Scaled back to 0.
+
+Aug 11 2026: H100 smoke test yolo passed. Pod reached 1/1 Running cleanly, no image pull issues. [startup] log confirmed device=NVIDIA H100 NVL, compute_capability=(9, 0). yolo_inference_total counter=100.0 after warm-up. Scaled back to 0. All 5 v4 workloads (bert, gpt2, resnet152, whisper, yolo) now smoke-tested and passing on H100 NVL.
