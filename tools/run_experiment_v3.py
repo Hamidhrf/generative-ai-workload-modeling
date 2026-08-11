@@ -19,6 +19,7 @@ USAGE:
   python run_experiment_v3.py bert 8
 """
 
+import os
 import subprocess
 import time
 import sys
@@ -28,7 +29,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 class ExperimentRunnerV3:
-    def __init__(self, workload, replicas, prometheus_url="http://172.22.174.58:30090"):
+    def __init__(self, workload, replicas, prometheus_url=os.environ.get("PROMETHEUS_URL", "http://172.22.174.58:30090")):
         self.workload = workload
         self.replicas = replicas
         self.prometheus_url = prometheus_url

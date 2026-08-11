@@ -1,89 +1,96 @@
-# Prometheus Configuration for Phase 1 v3
-# Service-based discovery for AI workloads (more stable than pod-based)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    # Prometheus Configuration for Phase 1 v3
+    # Service-based discovery for AI workloads (more stable than pod-based)
 
-global:
-  scrape_interval: 5s
-  evaluation_interval: 5s
+    global:
+      scrape_interval: 5s
+      evaluation_interval: 5s
 
-scrape_configs:
-  # Prometheus self-monitoring
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
+    scrape_configs:
+      # Prometheus self-monitoring
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
 
-  # Node Exporter - System metrics
-  - job_name: 'node-exporter'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - monitoring
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: node-exporter
+      # Node Exporter - System metrics
+      - job_name: 'node-exporter'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - monitoring
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: node-exporter
 
-  # DCGM Exporter - GPU metrics
-  - job_name: 'dcgm-exporter'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - monitoring
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: nvidia-dcgm-exporter
+      # DCGM Exporter - GPU metrics
+      - job_name: 'dcgm-exporter'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - gpu-operator
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: nvidia-dcgm-exporter
 
-  # Kubelet/cAdvisor - Container metrics
-  - job_name: 'kubelet-cadvisor'
-    scheme: https
-    tls_config:
-      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      insecure_skip_verify: true
-    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-    kubernetes_sd_configs:
-      - role: node
-    relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+      # Kubelet/cAdvisor - Container metrics
+      - job_name: 'kubelet-cadvisor'
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+          - target_label: __address__
+            replacement: kubernetes.default.svc:443
+          - source_labels: [__meta_kubernetes_node_name]
+            regex: (.+)
+            target_label: __metrics_path__
+            replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
 
-  # kube-state-metrics - Kubernetes object metrics
-  - job_name: 'kube-state-metrics'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - kube-system
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: kube-state-metrics
+      # kube-state-metrics - Kubernetes object metrics
+      - job_name: 'kube-state-metrics'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - kube-system
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: kube-state-metrics
 
-  # AI Inference Apps - Custom application metrics
-  # Service-based discovery (more stable than pod-based)
-  - job_name: 'ai-inference-apps'
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-            - default
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name]
-        action: keep
-        regex: (resnet152|bert|whisper|yolo|gpt2)-inference
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: pod
-      - source_labels: [__meta_kubernetes_service_label_app]
-        action: replace
-        target_label: app
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: namespace
+      # AI Inference Apps - Custom application metrics
+      # Service-based discovery (more stable than pod-based)
+      - job_name: 'ai-inference-apps'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - default
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: (resnet152|bert|whisper|yolo|gpt2)-inference
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: pod
+          - source_labels: [__meta_kubernetes_service_label_app]
+            action: replace
+            target_label: app
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: namespace
