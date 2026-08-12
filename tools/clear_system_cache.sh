@@ -15,8 +15,8 @@ echo ""
 
 # 2. Clear all caches (PageCache, dentries, inodes)
 echo "Clearing system caches..."
-sudo sync
-sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+sync
+sudo /usr/bin/tee /proc/sys/vm/drop_caches <<< 3 > /dev/null
 sleep 2
 
 # 3. Check memory state after clearing
@@ -40,12 +40,12 @@ nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader | awk '
 # 5. Verify no workloads running
 echo ""
 echo "=== Workload Status ==="
-WORKLOAD_COUNT=$(kubectl get pods -l 'app in (resnet50,distilbert,whisper)' 2>/dev/null | grep -v NAME | wc -l)
+WORKLOAD_COUNT=$(kubectl get pods -l 'app in (bert,gpt2,resnet152,whisper,yolo)' 2>/dev/null | grep -v NAME | wc -l)
 if [ "$WORKLOAD_COUNT" -eq 0 ]; then
     echo "✓ No workload pods running (clean slate)"
 else
     echo "⚠ Warning: $WORKLOAD_COUNT workload pods found"
-    kubectl get pods -l 'app in (resnet50,distilbert,whisper)'
+    kubectl get pods -l 'app in (bert,gpt2,resnet152,whisper,yolo)'
 fi
 
 echo ""

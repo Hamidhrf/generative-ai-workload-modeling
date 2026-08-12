@@ -47,12 +47,12 @@ fi
 # 5. No running workloads
 echo ""
 echo "[5/5] Checking for running workload pods:"
-WORKLOAD_PODS=$(kubectl get pods -l 'app in (resnet50,distilbert,whisper)' --no-headers 2>/dev/null | wc -l)
+WORKLOAD_PODS=$(kubectl get pods -l 'app in (bert,gpt2,resnet152,whisper,yolo)' --no-headers 2>/dev/null | wc -l)
 if [ "$WORKLOAD_PODS" -eq 0 ]; then
     echo "✓ No workload pods running"
 else
     echo " Found $WORKLOAD_PODS workload pods running:"
-    kubectl get pods -l 'app in (resnet50,distilbert,whisper)' --no-headers
+    kubectl get pods -l 'app in (bert,gpt2,resnet152,whisper,yolo)' --no-headers
 fi
 
 echo ""
