@@ -28,6 +28,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 from pathlib import Path
 
+def _auto_confirm():
+    return os.environ.get("EXPERIMENT_AUTO_CONFIRM", "").lower() in ("1", "true", "yes")
+
 class ExperimentRunnerV3:
     def __init__(self, workload, replicas, prometheus_url=os.environ.get("PROMETHEUS_URL", "http://172.22.174.58:30090")):
         self.workload = workload
@@ -224,7 +227,11 @@ class ExperimentRunnerV3:
         if output:
             print(f"[WARN] Found existing workload pods:")
             print(output)
-            response = input("\nDelete them and continue? (yes/no): ")
+            if _auto_confirm():
+                print("\nDelete them and continue? (yes/no): yes  [EXPERIMENT_AUTO_CONFIRM]")
+                response = "yes"
+            else:
+                response = input("\nDelete them and continue? (yes/no): ")
             if response.lower() == 'yes':
                 self.cleanup_all_workloads()
             else:
@@ -544,7 +551,11 @@ class ExperimentRunnerV3:
         )
         print(f"\nEstimated duration: {total_time//60} minutes (~{total_time//3600}h {(total_time%3600)//60}m)\n")
         
-        response = input("Start experiment? (yes/no): ")
+        if _auto_confirm():
+            print("Start experiment? (yes/no): yes  [EXPERIMENT_AUTO_CONFIRM]")
+            response = "yes"
+        else:
+            response = input("Start experiment? (yes/no): ")
         if response.lower() != 'yes':
             print("Aborted.")
             return
