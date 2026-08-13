@@ -53,7 +53,9 @@ desktop.ini
 # ==============================================================================
 # Raw experiment data — ~400 MB of Prometheus CSVs, not practical for git
 # ==============================================================================
-data/raw/
+data/raw/*
+!data/raw/extension_tier1/
+!data/raw/extension_tier1/**
 
 # ==============================================================================
 # Downloaded monitoring stack binaries — not code
