@@ -71,3 +71,6 @@ Aug 13 2026: H100 Tier 1 batch (gpt2, resnet152, whisper, yolo, r=1) collected v
 gpu_utilization peak across Tier 1 (all r=1): bert 4%, gpt2 24%, resnet152 4%, whisper 26%, yolo 2%. Transformer/attention models (gpt2, whisper) show higher peak utilization than classification/embedding models (bert, resnet152, yolo), all under 30% on H100 at r=1. Whisper's peak drop from 65% (A16) to 26% (H100) is notable — on A16 whisper was CPU-bound (PSI=0.63 at r=10, pod crashes); on H100's faster CPU the workload profile changes and GPU becomes the sole bound resource but is under-utilized. Hardware upgrades reclassify resource bounds, not just accelerate.
 
 Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulated in inter-step scheduling overhead (most notably ~26 min before yolo Step 1, ~95 min between yolo exit and final push). Runner and cluster behavior was uniform; overhead is on the agent scheduling side. Relevant for Tier 2 batch estimation (35 runs).
+
+## Tier 2 batch started 2026-08-14T15:59:47Z — 35 experiments (index 0 onward)
+- 2026-08-14T17:05:43Z Tier 2 bert r=1: 33 csv files, mean rows=1767
