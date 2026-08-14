@@ -56,6 +56,13 @@ desktop.ini
 data/raw/*
 !data/raw/extension_tier1/
 !data/raw/extension_tier1/**
+!data/raw/extension_tier2/
+!data/raw/extension_tier2/**
+
+# ==============================================================================
+# Tier 2 batch runner state — machine-local resume checkpoint, not for git
+# ==============================================================================
+.tier2_state.json
 
 # ==============================================================================
 # Downloaded monitoring stack binaries — not code
