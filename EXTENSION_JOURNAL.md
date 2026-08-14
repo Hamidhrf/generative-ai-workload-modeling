@@ -79,3 +79,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-14T20:23:39Z Tier 2 bert r=4: 33 csv files, mean rows=2225
 - 2026-08-14T21:29:38Z Tier 2 bert r=5: 33 csv files, mean rows=2378
 - 2026-08-14T22:35:38Z Tier 2 bert r=6: 33 csv files, mean rows=2530
+- 2026-08-14T23:41:37Z Tier 2 bert r=7: 33 csv files, mean rows=2683
