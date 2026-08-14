@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt2-inference
+  namespace: default
+  labels:
+    app: gpt2
+    workload: ai-inference
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: gpt2
+  template:
+    metadata:
+      labels:
+        app: gpt2
+        workload: ai-inference
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: gpt2
+        image: hamidhrf/gpt2-inference:v4
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpt2-inference
+  namespace: default
+  labels:
+    app: gpt2
+spec:
+  type: ClusterIP
+  selector:
+    app: gpt2
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: metrics

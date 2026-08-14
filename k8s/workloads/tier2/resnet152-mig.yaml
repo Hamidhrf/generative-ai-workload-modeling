@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resnet152-inference
+  namespace: default
+  labels:
+    app: resnet152
+    workload: ai-inference
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: resnet152
+  template:
+    metadata:
+      labels:
+        app: resnet152
+        workload: ai-inference
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: resnet152
+        image: hamidhrf/resnet152-inference:v4
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resnet152-inference
+  namespace: default
+  labels:
+    app: resnet152
+spec:
+  type: ClusterIP
+  selector:
+    app: resnet152
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: metrics
