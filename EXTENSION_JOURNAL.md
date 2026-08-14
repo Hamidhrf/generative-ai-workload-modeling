@@ -75,3 +75,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 ## Tier 2 batch started 2026-08-14T15:59:47Z — 35 experiments (index 0 onward)
 - 2026-08-14T17:05:43Z Tier 2 bert r=1: 33 csv files, mean rows=1767
 - 2026-08-14T18:11:42Z Tier 2 bert r=2: 33 csv files, mean rows=1920
+- 2026-08-14T19:17:40Z Tier 2 bert r=3: 33 csv files, mean rows=2072
