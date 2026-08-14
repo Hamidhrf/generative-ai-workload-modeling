@@ -244,7 +244,7 @@ for workload in "${WORKLOADS[@]}"; do
 
     LOGFILE="/tmp/tier2_${workload}_r${r}.log"
     nohup env PROMETHEUS_URL="$PROM_URL" DATA_OUTPUT_DIR="$DATA_DIR" \
-      EXPERIMENT_AUTO_CONFIRM=1 \
+      EXPERIMENT_AUTO_CONFIRM=1 PYTHONUNBUFFERED=1 \
       "$PYTHON_BIN" tools/run_experiment_v4.py \
       "$workload" "$r" > "$LOGFILE" 2>&1
     wait
