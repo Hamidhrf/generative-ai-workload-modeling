@@ -99,3 +99,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-15T18:23:22Z Tier 2 whisper r=3: 33 csv files, mean rows=2072
 - 2026-08-15T19:29:21Z Tier 2 whisper r=4: 33 csv files, mean rows=2225
 - 2026-08-15T20:35:21Z Tier 2 whisper r=5: 33 csv files, mean rows=2378
+- 2026-08-15T21:41:21Z Tier 2 whisper r=6: 33 csv files, mean rows=2530
