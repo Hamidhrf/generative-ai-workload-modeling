@@ -85,3 +85,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-15T02:59:33Z Tier 2 gpt2 r=3: 33 csv files, mean rows=2072
 - 2026-08-15T04:05:32Z Tier 2 gpt2 r=4: 33 csv files, mean rows=2225
 - 2026-08-15T05:11:32Z Tier 2 gpt2 r=5: 33 csv files, mean rows=2378
+- 2026-08-15T06:17:31Z Tier 2 gpt2 r=6: 33 csv files, mean rows=2530
