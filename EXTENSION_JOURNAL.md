@@ -105,3 +105,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-16T00:59:19Z Tier 2 yolo r=2: 33 csv files, mean rows=1920
 - 2026-08-16T02:05:18Z Tier 2 yolo r=3: 33 csv files, mean rows=2072
 - 2026-08-16T03:11:17Z Tier 2 yolo r=4: 33 csv files, mean rows=2225
+- 2026-08-16T04:17:16Z Tier 2 yolo r=5: 33 csv files, mean rows=2378
