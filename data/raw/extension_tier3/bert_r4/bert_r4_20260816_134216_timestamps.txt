@@ -1,0 +1,7 @@
+Workload: bert
+Replicas: 4
+Start: 2026-08-16T13:42:16.144099
+End: 2026-08-16T14:42:16.144099
+Duration: 3600s
+Version: Phase 1 v3
+Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)
