@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bert-inference
+  namespace: default
+  labels:
+    app: bert
+    workload: ai-inference
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: bert
+  template:
+    metadata:
+      labels:
+        app: bert
+        workload: ai-inference
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: bert
+        image: hamidhrf/bert-inference:v4
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bert-inference
+  namespace: default
+  labels:
+    app: bert
+spec:
+  type: ClusterIP
+  selector:
+    app: bert
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: metrics

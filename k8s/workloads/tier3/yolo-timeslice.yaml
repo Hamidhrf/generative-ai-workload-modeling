@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo-inference
+  namespace: default
+  labels:
+    app: yolo
+    workload: ai-inference
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: yolo
+  template:
+    metadata:
+      labels:
+        app: yolo
+        workload: ai-inference
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: yolo
+        image: hamidhrf/yolo-inference:v4
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-inference
+  namespace: default
+  labels:
+    app: yolo
+spec:
+  type: ClusterIP
+  selector:
+    app: yolo
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: metrics
