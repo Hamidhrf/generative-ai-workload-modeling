@@ -117,3 +117,6 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - Output: data/raw/extension_tier2/<workload>_r<n>/ (34 files each: 33 CSV + 1 timestamps.txt)
 - Per-slice GPU attribution recovered natively via DCGM per-instance labels
 - MIG config stable throughout at all-1g.12gb (7 slices)
+
+## Tier 3 batch started 2026-08-16T10:19:05Z — 50 experiments (index 0 onward)
+- 2026-08-16T11:25:01Z Tier 3 bert r=1: 22 CSV files, mean rows=715
