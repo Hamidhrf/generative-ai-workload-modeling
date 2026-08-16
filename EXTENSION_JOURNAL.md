@@ -108,3 +108,12 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-16T04:17:16Z Tier 2 yolo r=5: 33 csv files, mean rows=2378
 - 2026-08-16T05:23:15Z Tier 2 yolo r=6: 33 csv files, mean rows=2530
 - 2026-08-16T06:29:15Z Tier 2 yolo r=7: 33 csv files, mean rows=2683
+
+## Tier 2 batch complete — 2026-08-16
+
+- 35/35 experiments successful (5 workloads x r=1..7)
+- Zero failures, whisper r=7 survived (CPU-bound but did not crash mid-run)
+- Total elapsed: 1 day 14h 29m; mean 65m 59s per experiment
+- Output: data/raw/extension_tier2/<workload>_r<n>/ (34 files each: 33 CSV + 1 timestamps.txt)
+- Per-slice GPU attribution recovered natively via DCGM per-instance labels
+- MIG config stable throughout at all-1g.12gb (7 slices)
