@@ -1,0 +1,7 @@
+Workload: gpt2
+Replicas: 1
+Start: 2026-08-17T19:23:52.845073
+End: 2026-08-17T20:23:52.845073
+Duration: 3600s
+Version: Phase 1 v3
+Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)
