@@ -140,3 +140,4 @@ Batch wall-clock: ~6h43m for 4 runs vs. naive ~4h20m estimate. ~2h23m accumulate
 - 2026-08-17T07:12:44Z Tier 3 yolo r=9: 22 CSV files, mean rows=2535
 - 2026-08-17T08:18:44Z Tier 3 yolo r=10: 22 CSV files, mean rows=2762
 - 2026-08-17T09:24:43Z Tier 3 resnet152 r=1: 22 CSV files, mean rows=715
+- 2026-08-17T10:30:42Z Tier 3 resnet152 r=2: 22 CSV files, mean rows=942
