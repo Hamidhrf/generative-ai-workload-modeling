@@ -107,6 +107,10 @@ models/**/*.pth
 # Re-track final model and key milestones
 !models/phase4/timegan_s36/**/*.pt
 !models/phase4/timegan_s36/**/*.json
+!models/phase4/timegan_s36_tier3/**/*.pt
+!models/phase4/timegan_s36_tier3/**/*.json
+!models/phase4/timegan_s36_tier3_sweep/**/*.pt
+!models/phase4/timegan_s36_tier3_sweep/**/*.json
 !models/phase4/timegan_s34/**/*.pt
 !models/phase4/timegan_s34/**/*.json
 !models/phase4/timegan_s27/**/*.pt
