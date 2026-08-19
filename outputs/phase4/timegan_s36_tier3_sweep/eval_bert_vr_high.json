@@ -1,0 +1,38 @@
+{
+  "window_size": 5,
+  "smoothing_enabled": true,
+  "dataset_size": "176 traces (original, no augmentation)",
+  "improvement": "spectral_normalization",
+  "workloads": {
+    "bert": {
+      "workload": "bert",
+      "vr_raw": 1.9609858989715576,
+      "vr_smooth": 1.93880295753479,
+      "pass_raw": true,
+      "pass_smooth": true,
+      "vr_per_metric_smooth": [
+        0.9330645203590393,
+        7.628453731536865,
+        1.0118112564086914,
+        0.9005904793739319,
+        0.8834746479988098,
+        0.9611507058143616,
+        1.2530748844146729
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    }
+  },
+  "summary": {
+    "mean_vr_smooth": 1.93880295753479,
+    "pass_count": 1,
+    "total": 1
+  }
+}

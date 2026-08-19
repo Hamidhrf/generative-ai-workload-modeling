@@ -1,0 +1,16 @@
+{
+  "stage": "s36",
+  "description": "S34 architecture + Spectral Normalization in discriminator",
+  "workloads": [
+    "whisper"
+  ],
+  "improvement": "spectral_normalization",
+  "baseline": "s34",
+  "results": {
+    "whisper": {
+      "best_val": 0.09135295450687408,
+      "elapsed_s": 457.4761338233948,
+      "model_path": "models/phase4/timegan_s36_tier3/s36_whisper_vr05_fm05"
+    }
+  }
+}

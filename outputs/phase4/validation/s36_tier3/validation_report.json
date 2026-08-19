@@ -1,0 +1,2205 @@
+{
+  "model": "S36 (spectral normalization)",
+  "post_processing": "cosine blend (w=20) + adaptive filter + memory reconstruction",
+  "workloads": {
+    "bert": {
+      "validated_replicas": {
+        "1": {
+          "CPU Usage": {
+            "real_mean": 0.066643,
+            "synth_mean": 0.063187,
+            "pct_error": 5.19
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000108,
+            "synth_mean": 0.000364,
+            "pct_error": 236.52
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.0056,
+            "synth_mean": 0.005659,
+            "pct_error": 1.05
+          },
+          "Throughput": {
+            "real_mean": 2.41424,
+            "synth_mean": 0.832549,
+            "pct_error": 65.52
+          },
+          "Pod Memory": {
+            "real_mean": 2107.052868,
+            "synth_mean": 2107.052923,
+            "pct_error": 0.0
+          },
+          "GPU Utilization": {
+            "real_mean": 0.931469,
+            "synth_mean": 0.393493,
+            "pct_error": 57.76
+          },
+          "GPU Power": {
+            "real_mean": 121.424283,
+            "synth_mean": 92.264773,
+            "pct_error": 24.01
+          },
+          "wasserstein": {
+            "CPU Usage": 0.020872059562732526,
+            "CPU Pressure (PSI)": 0.00026678415710581235,
+            "Latency (Avg)": 6.63883020401444e-05,
+            "Throughput": 1.600934380070166,
+            "Pod Memory": 0.07439466756209928,
+            "GPU Utilization": 0.9637161692216264,
+            "GPU Power": 28.47802833732125
+          }
+        },
+        "2": {
+          "CPU Usage": {
+            "real_mean": 0.067313,
+            "synth_mean": 0.063614,
+            "pct_error": 5.5
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000108,
+            "synth_mean": 0.000121,
+            "pct_error": 12.55
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005645,
+            "synth_mean": 0.005609,
+            "pct_error": 0.63
+          },
+          "Throughput": {
+            "real_mean": 2.40328,
+            "synth_mean": 1.74103,
+            "pct_error": 27.56
+          },
+          "Pod Memory": {
+            "real_mean": 1458.85715,
+            "synth_mean": 1617.557967,
+            "pct_error": 10.88
+          },
+          "GPU Utilization": {
+            "real_mean": 0.881119,
+            "synth_mean": 0.786467,
+            "pct_error": 10.74
+          },
+          "GPU Power": {
+            "real_mean": 61.407111,
+            "synth_mean": 60.961827,
+            "pct_error": 0.73
+          },
+          "wasserstein": {
+            "CPU Usage": 0.00851441873161796,
+            "CPU Pressure (PSI)": 2.058102008110245e-05,
+            "Latency (Avg)": 3.482862246967466e-05,
+            "Throughput": 0.7137795870248027,
+            "Pod Memory": 106.23980763498389,
+            "GPU Utilization": 0.39138150127799987,
+            "GPU Power": 13.000980340384103
+          }
+        },
+        "3": {
+          "CPU Usage": {
+            "real_mean": 0.067254,
+            "synth_mean": 0.062216,
+            "pct_error": 7.49
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000111,
+            "synth_mean": 0.00011,
+            "pct_error": 1.04
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005624,
+            "synth_mean": 0.005652,
+            "pct_error": 0.5
+          },
+          "Throughput": {
+            "real_mean": 2.397152,
+            "synth_mean": 1.952594,
+            "pct_error": 18.55
+          },
+          "Pod Memory": {
+            "real_mean": 1241.360372,
+            "synth_mean": 1326.322165,
+            "pct_error": 6.84
+          },
+          "GPU Utilization": {
+            "real_mean": 0.784149,
+            "synth_mean": 0.835315,
+            "pct_error": 6.52
+          },
+          "GPU Power": {
+            "real_mean": 41.360531,
+            "synth_mean": 44.013483,
+            "pct_error": 6.41
+          },
+          "wasserstein": {
+            "CPU Usage": 0.00663478642071785,
+            "CPU Pressure (PSI)": 8.357092642602136e-06,
+            "Latency (Avg)": 7.48222488582921e-05,
+            "Throughput": 0.5092117865446841,
+            "Pod Memory": 144.6401717087145,
+            "GPU Utilization": 0.25552945085703493,
+            "GPU Power": 9.674998100790813
+          }
+        },
+        "5": {
+          "CPU Usage": {
+            "real_mean": 0.067755,
+            "synth_mean": 0.067286,
+            "pct_error": 0.69
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000112,
+            "synth_mean": 0.000105,
+            "pct_error": 6.55
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005638,
+            "synth_mean": 0.005561,
+            "pct_error": 1.35
+          },
+          "Throughput": {
+            "real_mean": 2.38401,
+            "synth_mean": 2.123919,
+            "pct_error": 10.91
+          },
+          "Pod Memory": {
+            "real_mean": 1066.661594,
+            "synth_mean": 1090.2367,
+            "pct_error": 2.21
+          },
+          "GPU Utilization": {
+            "real_mean": 0.832448,
+            "synth_mean": 0.845664,
+            "pct_error": 1.59
+          },
+          "GPU Power": {
+            "real_mean": 25.374819,
+            "synth_mean": 24.97356,
+            "pct_error": 1.58
+          },
+          "wasserstein": {
+            "CPU Usage": 0.0054173050612471366,
+            "CPU Pressure (PSI)": 9.521255596920332e-06,
+            "Latency (Avg)": 6.004917573093497e-05,
+            "Throughput": 0.4089026236791028,
+            "Pod Memory": 107.40015165675356,
+            "GPU Utilization": 0.16135393111949614,
+            "GPU Power": 2.096204596951145
+          }
+        },
+        "6": {
+          "CPU Usage": {
+            "real_mean": 0.067487,
+            "synth_mean": 0.06462,
+            "pct_error": 4.25
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000112,
+            "synth_mean": 0.00011,
+            "pct_error": 1.94
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005649,
+            "synth_mean": 0.005706,
+            "pct_error": 1.01
+          },
+          "Throughput": {
+            "real_mean": 2.379945,
+            "synth_mean": 2.038662,
+            "pct_error": 14.34
+          },
+          "Pod Memory": {
+            "real_mean": 1024.525735,
+            "synth_mean": 1023.509704,
+            "pct_error": 0.1
+          },
+          "GPU Utilization": {
+            "real_mean": 0.906294,
+            "synth_mean": 0.826283,
+            "pct_error": 8.83
+          },
+          "GPU Power": {
+            "real_mean": 21.345504,
+            "synth_mean": 20.259333,
+            "pct_error": 5.09
+          },
+          "wasserstein": {
+            "CPU Usage": 0.006157310662792816,
+            "CPU Pressure (PSI)": 9.169640587281533e-06,
+            "Latency (Avg)": 7.283535422956844e-05,
+            "Throughput": 0.37196584953774736,
+            "Pod Memory": 28.87270415488206,
+            "GPU Utilization": 0.17191906583745095,
+            "GPU Power": 1.2595150518030553
+          }
+        },
+        "8": {
+          "CPU Usage": {
+            "real_mean": 0.068103,
+            "synth_mean": 0.062808,
+            "pct_error": 7.77
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000129,
+            "synth_mean": 0.000141,
+            "pct_error": 9.44
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005692,
+            "synth_mean": 0.005805,
+            "pct_error": 1.98
+          },
+          "Throughput": {
+            "real_mean": 2.366054,
+            "synth_mean": 2.056641,
+            "pct_error": 13.08
+          },
+          "Pod Memory": {
+            "real_mean": 970.057933,
+            "synth_mean": 915.562369,
+            "pct_error": 5.62
+          },
+          "GPU Utilization": {
+            "real_mean": 0.91049,
+            "synth_mean": 0.84889,
+            "pct_error": 6.77
+          },
+          "GPU Power": {
+            "real_mean": 16.296835,
+            "synth_mean": 15.124697,
+            "pct_error": 7.19
+          },
+          "wasserstein": {
+            "CPU Usage": 0.006632374512732529,
+            "CPU Pressure (PSI)": 2.5378220477996052e-05,
+            "Latency (Avg)": 0.00012919459139539905,
+            "Throughput": 0.3311697790997177,
+            "Pod Memory": 56.80010320828107,
+            "GPU Utilization": 0.11160604035130124,
+            "GPU Power": 1.224981408264587
+          }
+        },
+        "10": {
+          "CPU Usage": {
+            "real_mean": 0.068319,
+            "synth_mean": 0.062394,
+            "pct_error": 8.67
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000141,
+            "synth_mean": 0.000178,
+            "pct_error": 26.16
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.005703,
+            "synth_mean": 0.005696,
+            "pct_error": 0.12
+          },
+          "Throughput": {
+            "real_mean": 2.346907,
+            "synth_mean": 1.98549,
+            "pct_error": 15.4
+          },
+          "Pod Memory": {
+            "real_mean": 932.477313,
+            "synth_mean": 975.103201,
+            "pct_error": 4.57
+          },
+          "GPU Utilization": {
+            "real_mean": 0.92951,
+            "synth_mean": 0.81159,
+            "pct_error": 12.69
+          },
+          "GPU Power": {
+            "real_mean": 13.246918,
+            "synth_mean": 13.305995,
+            "pct_error": 0.45
+          },
+          "wasserstein": {
+            "CPU Usage": 0.00795544532830661,
+            "CPU Pressure (PSI)": 3.810552080521171e-05,
+            "Latency (Avg)": 8.183438678390455e-05,
+            "Throughput": 0.4275932322904763,
+            "Pod Memory": 68.70058252507886,
+            "GPU Utilization": 0.1586153523375417,
+            "GPU Power": 0.21660547503320648
+          }
+        }
+      },
+      "extrapolation_replicas": {
+        "15": {
+          "CPU Usage": {
+            "synth_mean": 0.05879,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000233,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.005673,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.856568,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 927.614348,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.480116,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.369006,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "20": {
+          "CPU Usage": {
+            "synth_mean": 0.068732,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000318,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.005693,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.966089,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 957.452277,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.533947,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.311094,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "30": {
+          "CPU Usage": {
+            "synth_mean": 0.07441,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.00041,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.005724,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.893664,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 779.428434,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.568326,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.301372,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "50": {
+          "CPU Usage": {
+            "synth_mean": 0.07828,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.00044,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.00572,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.912748,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1032.216903,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.601528,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.302225,
+            "note": "extrapolation (no real data)"
+          }
+        }
+      },
+      "mean_wasserstein_all": 11.741224
+    },
+    "gpt2": {
+      "validated_replicas": {
+        "1": {
+          "CPU Usage": {
+            "real_mean": 0.414403,
+            "synth_mean": 0.344532,
+            "pct_error": 16.86
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000221,
+            "synth_mean": 0.000195,
+            "pct_error": 12.01
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.337338,
+            "synth_mean": 0.389867,
+            "pct_error": 15.57
+          },
+          "Throughput": {
+            "real_mean": 1.252231,
+            "synth_mean": 1.086643,
+            "pct_error": 13.22
+          },
+          "Pod Memory": {
+            "real_mean": 2695.466916,
+            "synth_mean": 2695.467423,
+            "pct_error": 0.0
+          },
+          "GPU Utilization": {
+            "real_mean": 8.030769,
+            "synth_mean": 16.706688,
+            "pct_error": 108.03
+          },
+          "GPU Power": {
+            "real_mean": 126.048414,
+            "synth_mean": 62.500953,
+            "pct_error": 50.42
+          },
+          "wasserstein": {
+            "CPU Usage": 0.0901025099976074,
+            "CPU Pressure (PSI)": 2.954939633840287e-05,
+            "Latency (Avg)": 0.05163459881738488,
+            "Throughput": 0.263241770067415,
+            "Pod Memory": 0.062016199479324574,
+            "GPU Utilization": 8.360430144663457,
+            "GPU Power": 63.14601828037075
+          }
+        },
+        "2": {
+          "CPU Usage": {
+            "real_mean": 0.439128,
+            "synth_mean": 0.387672,
+            "pct_error": 11.72
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000211,
+            "synth_mean": 0.000211,
+            "pct_error": 0.12
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.383426,
+            "synth_mean": 0.411163,
+            "pct_error": 7.23
+          },
+          "Throughput": {
+            "real_mean": 1.156961,
+            "synth_mean": 1.045312,
+            "pct_error": 9.65
+          },
+          "Pod Memory": {
+            "real_mean": 1873.539098,
+            "synth_mean": 1836.614411,
+            "pct_error": 1.97
+          },
+          "GPU Utilization": {
+            "real_mean": 19.325874,
+            "synth_mean": 16.833294,
+            "pct_error": 12.9
+          },
+          "GPU Power": {
+            "real_mean": 66.212004,
+            "synth_mean": 54.705383,
+            "pct_error": 17.38
+          },
+          "wasserstein": {
+            "CPU Usage": 0.06426460706806528,
+            "CPU Pressure (PSI)": 1.173172040471242e-05,
+            "Latency (Avg)": 0.021432921762287047,
+            "Throughput": 0.15632353260648985,
+            "Pod Memory": 144.0138529656869,
+            "GPU Utilization": 8.54488206936763,
+            "GPU Power": 11.474486602313704
+          }
+        },
+        "3": {
+          "CPU Usage": {
+            "real_mean": 0.474516,
+            "synth_mean": 0.482217,
+            "pct_error": 1.62
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000221,
+            "synth_mean": 0.000226,
+            "pct_error": 2.36
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.452672,
+            "synth_mean": 0.466611,
+            "pct_error": 3.08
+          },
+          "Throughput": {
+            "real_mean": 1.029413,
+            "synth_mean": 0.979462,
+            "pct_error": 4.85
+          },
+          "Pod Memory": {
+            "real_mean": 1612.288523,
+            "synth_mean": 1576.140742,
+            "pct_error": 2.24
+          },
+          "GPU Utilization": {
+            "real_mean": 15.415385,
+            "synth_mean": 17.763131,
+            "pct_error": 15.23
+          },
+          "GPU Power": {
+            "real_mean": 45.568935,
+            "synth_mean": 43.684101,
+            "pct_error": 4.14
+          },
+          "wasserstein": {
+            "CPU Usage": 0.02808297191452535,
+            "CPU Pressure (PSI)": 1.2066466483395736e-05,
+            "Latency (Avg)": 0.013652227883241145,
+            "Throughput": 0.06118195145027595,
+            "Pod Memory": 150.66555913729943,
+            "GPU Utilization": 5.784730974344106,
+            "GPU Power": 3.7459317802560808
+          }
+        },
+        "5": {
+          "CPU Usage": {
+            "real_mean": 0.527258,
+            "synth_mean": 0.58451,
+            "pct_error": 10.86
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000239,
+            "synth_mean": 0.000248,
+            "pct_error": 3.75
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.60158,
+            "synth_mean": 0.682324,
+            "pct_error": 13.42
+          },
+          "Throughput": {
+            "real_mean": 0.850151,
+            "synth_mean": 0.733275,
+            "pct_error": 13.75
+          },
+          "Pod Memory": {
+            "real_mean": 1407.552629,
+            "synth_mean": 1337.236758,
+            "pct_error": 5.0
+          },
+          "GPU Utilization": {
+            "real_mean": 15.35049,
+            "synth_mean": 15.782619,
+            "pct_error": 2.82
+          },
+          "GPU Power": {
+            "real_mean": 28.397676,
+            "synth_mean": 22.977835,
+            "pct_error": 19.09
+          },
+          "wasserstein": {
+            "CPU Usage": 0.06848475585961666,
+            "CPU Pressure (PSI)": 1.7546441347478218e-05,
+            "Latency (Avg)": 0.07317752105264759,
+            "Throughput": 0.1082309804348674,
+            "Pod Memory": 253.54316003864128,
+            "GPU Utilization": 3.299935951819787,
+            "GPU Power": 4.96580214953784
+          }
+        },
+        "6": {
+          "CPU Usage": {
+            "real_mean": 0.550496,
+            "synth_mean": 0.608584,
+            "pct_error": 10.55
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000251,
+            "synth_mean": 0.000266,
+            "pct_error": 6.17
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.688184,
+            "synth_mean": 0.785287,
+            "pct_error": 14.11
+          },
+          "Throughput": {
+            "real_mean": 0.771114,
+            "synth_mean": 0.652724,
+            "pct_error": 15.35
+          },
+          "Pod Memory": {
+            "real_mean": 1357.528408,
+            "synth_mean": 1317.229857,
+            "pct_error": 2.97
+          },
+          "GPU Utilization": {
+            "real_mean": 13.88648,
+            "synth_mean": 13.900008,
+            "pct_error": 0.1
+          },
+          "GPU Power": {
+            "real_mean": 23.943281,
+            "synth_mean": 20.023719,
+            "pct_error": 16.37
+          },
+          "wasserstein": {
+            "CPU Usage": 0.07234240338309325,
+            "CPU Pressure (PSI)": 2.8870700150771242e-05,
+            "Latency (Avg)": 0.1152527041515062,
+            "Throughput": 0.1292365472562177,
+            "Pod Memory": 125.25684674837679,
+            "GPU Utilization": 3.0634546450190334,
+            "GPU Power": 4.092398899496296
+          }
+        },
+        "8": {
+          "CPU Usage": {
+            "real_mean": 0.590684,
+            "synth_mean": 0.581342,
+            "pct_error": 1.58
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000343,
+            "synth_mean": 0.000374,
+            "pct_error": 9.21
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.892,
+            "synth_mean": 0.924909,
+            "pct_error": 3.69
+          },
+          "Throughput": {
+            "real_mean": 0.634467,
+            "synth_mean": 0.486091,
+            "pct_error": 23.39
+          },
+          "Pod Memory": {
+            "real_mean": 1288.719167,
+            "synth_mean": 1126.474485,
+            "pct_error": 12.59
+          },
+          "GPU Utilization": {
+            "real_mean": 11.065559,
+            "synth_mean": 8.262858,
+            "pct_error": 25.33
+          },
+          "GPU Power": {
+            "real_mean": 18.245026,
+            "synth_mean": 17.927163,
+            "pct_error": 1.74
+          },
+          "wasserstein": {
+            "CPU Usage": 0.05871017718030034,
+            "CPU Pressure (PSI)": 5.6845292306635645e-05,
+            "Latency (Avg)": 0.04865325661433762,
+            "Throughput": 0.15094205967767643,
+            "Pod Memory": 130.97717041002002,
+            "GPU Utilization": 5.086802553471253,
+            "GPU Power": 0.48522503787167426
+          }
+        },
+        "10": {
+          "CPU Usage": {
+            "real_mean": 0.621143,
+            "synth_mean": 0.468788,
+            "pct_error": 24.53
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.00042,
+            "synth_mean": 0.000443,
+            "pct_error": 5.46
+          },
+          "Latency (Avg)": {
+            "real_mean": 1.129631,
+            "synth_mean": 0.907163,
+            "pct_error": 19.69
+          },
+          "Throughput": {
+            "real_mean": 0.522341,
+            "synth_mean": 0.425256,
+            "pct_error": 18.59
+          },
+          "Pod Memory": {
+            "real_mean": 1229.960361,
+            "synth_mean": 1339.4865,
+            "pct_error": 8.9
+          },
+          "GPU Utilization": {
+            "real_mean": 8.866154,
+            "synth_mean": 5.185545,
+            "pct_error": 41.51
+          },
+          "GPU Power": {
+            "real_mean": 14.639561,
+            "synth_mean": 17.545712,
+            "pct_error": 19.85
+          },
+          "wasserstein": {
+            "CPU Usage": 0.16137307412459254,
+            "CPU Pressure (PSI)": 8.428253528600646e-05,
+            "Latency (Avg)": 0.2288437246490784,
+            "Throughput": 0.10887968448716981,
+            "Pod Memory": 136.15711140148642,
+            "GPU Utilization": 5.572637146160505,
+            "GPU Power": 2.897375711266578
+          }
+        }
+      },
+      "extrapolation_replicas": {
+        "15": {
+          "CPU Usage": {
+            "synth_mean": 0.339799,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000721,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.83956,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.435856,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1202.43637,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.000281,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 17.770465,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "20": {
+          "CPU Usage": {
+            "synth_mean": 0.436365,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.001002,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.94949,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.44441,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1177.166095,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.000194,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 17.784573,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "30": {
+          "CPU Usage": {
+            "synth_mean": 0.466683,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.001223,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.960503,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.420892,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1303.355987,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.000171,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 17.697984,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "50": {
+          "CPU Usage": {
+            "synth_mean": 0.477836,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.001417,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.971097,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.411997,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1243.054973,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.000166,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 17.654503,
+            "note": "extrapolation (no real data)"
+          }
+        }
+      },
+      "mean_wasserstein_all": 21.903472
+    },
+    "resnet152": {
+      "validated_replicas": {
+        "1": {
+          "CPU Usage": {
+            "real_mean": 0.024051,
+            "synth_mean": 0.057799,
+            "pct_error": 140.32
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000104,
+            "synth_mean": 0.000158,
+            "pct_error": 51.56
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.008881,
+            "synth_mean": 0.009418,
+            "pct_error": 6.06
+          },
+          "Throughput": {
+            "real_mean": 2.572537,
+            "synth_mean": 4.077136,
+            "pct_error": 58.49
+          },
+          "Pod Memory": {
+            "real_mean": 2001.043433,
+            "synth_mean": 2001.040318,
+            "pct_error": 0.0
+          },
+          "GPU Utilization": {
+            "real_mean": 0.822378,
+            "synth_mean": 2.146415,
+            "pct_error": 161.0
+          },
+          "GPU Power": {
+            "real_mean": 121.081494,
+            "synth_mean": 100.028704,
+            "pct_error": 17.39
+          },
+          "wasserstein": {
+            "CPU Usage": 0.03246297767219775,
+            "CPU Pressure (PSI)": 4.6279426251592e-05,
+            "Latency (Avg)": 0.0005118786316100766,
+            "Throughput": 1.5714539575849606,
+            "Pod Memory": 0.07088415715071449,
+            "GPU Utilization": 1.2944824942258688,
+            "GPU Power": 24.135070289622487
+          }
+        },
+        "2": {
+          "CPU Usage": {
+            "real_mean": 0.024563,
+            "synth_mean": 0.036346,
+            "pct_error": 47.97
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000105,
+            "synth_mean": 8.9e-05,
+            "pct_error": 15.15
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009109,
+            "synth_mean": 0.00911,
+            "pct_error": 0.02
+          },
+          "Throughput": {
+            "real_mean": 2.565315,
+            "synth_mean": 2.89065,
+            "pct_error": 12.68
+          },
+          "Pod Memory": {
+            "real_mean": 1292.083369,
+            "synth_mean": 1251.80637,
+            "pct_error": 3.12
+          },
+          "GPU Utilization": {
+            "real_mean": 0.948252,
+            "synth_mean": 1.710435,
+            "pct_error": 80.38
+          },
+          "GPU Power": {
+            "real_mean": 60.898641,
+            "synth_mean": 53.19227,
+            "pct_error": 12.65
+          },
+          "wasserstein": {
+            "CPU Usage": 0.010252162520389045,
+            "CPU Pressure (PSI)": 2.8238188513819223e-05,
+            "Latency (Avg)": 3.7382851759298254e-05,
+            "Throughput": 0.7065688676055041,
+            "Pod Memory": 102.17619579604572,
+            "GPU Utilization": 0.7603899784417417,
+            "GPU Power": 18.43069842784108
+          }
+        },
+        "3": {
+          "CPU Usage": {
+            "real_mean": 0.024453,
+            "synth_mean": 0.027352,
+            "pct_error": 11.85
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 9.9e-05,
+            "synth_mean": 9e-05,
+            "pct_error": 9.37
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009053,
+            "synth_mean": 0.009024,
+            "pct_error": 0.32
+          },
+          "Throughput": {
+            "real_mean": 2.566501,
+            "synth_mean": 2.247806,
+            "pct_error": 12.42
+          },
+          "Pod Memory": {
+            "real_mean": 1055.697078,
+            "synth_mean": 1088.597803,
+            "pct_error": 3.12
+          },
+          "GPU Utilization": {
+            "real_mean": 1.046154,
+            "synth_mean": 1.004079,
+            "pct_error": 4.02
+          },
+          "GPU Power": {
+            "real_mean": 40.881845,
+            "synth_mean": 32.674467,
+            "pct_error": 20.08
+          },
+          "wasserstein": {
+            "CPU Usage": 0.0035160301197376077,
+            "CPU Pressure (PSI)": 2.4952240027884525e-05,
+            "Latency (Avg)": 5.985723066071683e-05,
+            "Throughput": 0.45234097765072556,
+            "Pod Memory": 93.1730420795308,
+            "GPU Utilization": 0.32882013935309196,
+            "GPU Power": 8.526059672407673
+          }
+        },
+        "5": {
+          "CPU Usage": {
+            "real_mean": 0.024216,
+            "synth_mean": 0.020282,
+            "pct_error": 16.25
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000101,
+            "synth_mean": 9.2e-05,
+            "pct_error": 9.36
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009007,
+            "synth_mean": 0.008998,
+            "pct_error": 0.1
+          },
+          "Throughput": {
+            "real_mean": 2.555463,
+            "synth_mean": 1.962005,
+            "pct_error": 23.22
+          },
+          "Pod Memory": {
+            "real_mean": 865.733192,
+            "synth_mean": 972.524866,
+            "pct_error": 12.34
+          },
+          "GPU Utilization": {
+            "real_mean": 1.035524,
+            "synth_mean": 0.781259,
+            "pct_error": 24.55
+          },
+          "GPU Power": {
+            "real_mean": 24.800198,
+            "synth_mean": 25.550465,
+            "pct_error": 3.03
+          },
+          "wasserstein": {
+            "CPU Usage": 0.004500553906494012,
+            "CPU Pressure (PSI)": 2.072072897805996e-05,
+            "Latency (Avg)": 5.611503980541855e-05,
+            "Throughput": 0.6462794652020031,
+            "Pod Memory": 130.54198988326738,
+            "GPU Utilization": 0.32523885617410386,
+            "GPU Power": 4.615581439593122
+          }
+        },
+        "6": {
+          "CPU Usage": {
+            "real_mean": 0.02465,
+            "synth_mean": 0.020448,
+            "pct_error": 17.04
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.00011,
+            "synth_mean": 9.2e-05,
+            "pct_error": 16.31
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009125,
+            "synth_mean": 0.009119,
+            "pct_error": 0.06
+          },
+          "Throughput": {
+            "real_mean": 2.550854,
+            "synth_mean": 2.024819,
+            "pct_error": 20.62
+          },
+          "Pod Memory": {
+            "real_mean": 818.483865,
+            "synth_mean": 980.326546,
+            "pct_error": 19.77
+          },
+          "GPU Utilization": {
+            "real_mean": 0.974126,
+            "synth_mean": 0.769861,
+            "pct_error": 20.97
+          },
+          "GPU Power": {
+            "real_mean": 20.764778,
+            "synth_mean": 22.415418,
+            "pct_error": 7.95
+          },
+          "wasserstein": {
+            "CPU Usage": 0.00496837752787854,
+            "CPU Pressure (PSI)": 2.5770130209659467e-05,
+            "Latency (Avg)": 9.043999816983367e-05,
+            "Throughput": 0.6043323070838003,
+            "Pod Memory": 59.35219386631934,
+            "GPU Utilization": 0.2866820263810508,
+            "GPU Power": 4.629667101064829
+          }
+        },
+        "8": {
+          "CPU Usage": {
+            "real_mean": 0.024411,
+            "synth_mean": 0.019743,
+            "pct_error": 19.12
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000105,
+            "synth_mean": 9.2e-05,
+            "pct_error": 12.23
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009065,
+            "synth_mean": 0.009042,
+            "pct_error": 0.26
+          },
+          "Throughput": {
+            "real_mean": 2.552511,
+            "synth_mean": 2.382402,
+            "pct_error": 6.66
+          },
+          "Pod Memory": {
+            "real_mean": 758.790571,
+            "synth_mean": 754.321488,
+            "pct_error": 0.59
+          },
+          "GPU Utilization": {
+            "real_mean": 1.03479,
+            "synth_mean": 0.969897,
+            "pct_error": 6.27
+          },
+          "GPU Power": {
+            "real_mean": 15.848834,
+            "synth_mean": 15.388587,
+            "pct_error": 2.9
+          },
+          "wasserstein": {
+            "CPU Usage": 0.005339004746651789,
+            "CPU Pressure (PSI)": 1.798716080532276e-05,
+            "Latency (Avg)": 8.134996169948656e-05,
+            "Throughput": 0.37686360893686033,
+            "Pod Memory": 144.6128614396441,
+            "GPU Utilization": 0.14115031380232396,
+            "GPU Power": 0.9014597963026354
+          }
+        },
+        "10": {
+          "CPU Usage": {
+            "real_mean": 0.026425,
+            "synth_mean": 0.017105,
+            "pct_error": 35.27
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000165,
+            "synth_mean": 0.000142,
+            "pct_error": 13.79
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009432,
+            "synth_mean": 0.009439,
+            "pct_error": 0.07
+          },
+          "Throughput": {
+            "real_mean": 2.524268,
+            "synth_mean": 2.240028,
+            "pct_error": 11.26
+          },
+          "Pod Memory": {
+            "real_mean": 723.921574,
+            "synth_mean": 710.856395,
+            "pct_error": 1.8
+          },
+          "GPU Utilization": {
+            "real_mean": 1.047832,
+            "synth_mean": 0.876858,
+            "pct_error": 16.32
+          },
+          "GPU Power": {
+            "real_mean": 12.819569,
+            "synth_mean": 13.012587,
+            "pct_error": 1.51
+          },
+          "wasserstein": {
+            "CPU Usage": 0.009908348559236287,
+            "CPU Pressure (PSI)": 5.106033246623783e-05,
+            "Latency (Avg)": 8.388524473527733e-05,
+            "Throughput": 0.5930423767431308,
+            "Pod Memory": 113.98183696830114,
+            "GPU Utilization": 0.19753294083439593,
+            "GPU Power": 0.22244425078705485
+          }
+        }
+      },
+      "extrapolation_replicas": {
+        "15": {
+          "CPU Usage": {
+            "synth_mean": 0.022032,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000411,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.0102,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.182418,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 594.66373,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.458783,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.376675,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "20": {
+          "CPU Usage": {
+            "synth_mean": 0.02423,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000629,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.010232,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.803476,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 734.495845,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.345205,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.312761,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "30": {
+          "CPU Usage": {
+            "synth_mean": 0.027594,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.00086,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.010327,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.679968,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 598.210421,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.35606,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.278045,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "50": {
+          "CPU Usage": {
+            "synth_mean": 0.028961,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000922,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.010409,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.695624,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 703.592073,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.353627,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.267263,
+            "note": "extrapolation (no real data)"
+          }
+        }
+      },
+      "mean_wasserstein_all": 14.565862
+    },
+    "whisper": {
+      "validated_replicas": {
+        "1": {
+          "CPU Usage": {
+            "real_mean": 0.544566,
+            "synth_mean": 0.481698,
+            "pct_error": 11.54
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.002874,
+            "synth_mean": 0.004402,
+            "pct_error": 53.19
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.115529,
+            "synth_mean": 0.10724,
+            "pct_error": 7.17
+          },
+          "Throughput": {
+            "real_mean": 1.89213,
+            "synth_mean": 1.737658,
+            "pct_error": 8.16
+          },
+          "Pod Memory": {
+            "real_mean": 3181.642112,
+            "synth_mean": 3181.780217,
+            "pct_error": 0.0
+          },
+          "GPU Utilization": {
+            "real_mean": 5.53007,
+            "synth_mean": 0.248271,
+            "pct_error": 95.51
+          },
+          "GPU Power": {
+            "real_mean": 124.868881,
+            "synth_mean": 97.6427,
+            "pct_error": 21.8
+          },
+          "wasserstein": {
+            "CPU Usage": 0.06513623631295518,
+            "CPU Pressure (PSI)": 0.0012158056903846864,
+            "Latency (Avg)": 0.006523184286720042,
+            "Throughput": 0.4009214783231745,
+            "Pod Memory": 4.718064506620751,
+            "GPU Utilization": 5.172258794642024,
+            "GPU Power": 27.610630703372554
+          }
+        },
+        "2": {
+          "CPU Usage": {
+            "real_mean": 0.561827,
+            "synth_mean": 0.555862,
+            "pct_error": 1.06
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.004492,
+            "synth_mean": 0.003766,
+            "pct_error": 16.15
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.112128,
+            "synth_mean": 0.114821,
+            "pct_error": 2.4
+          },
+          "Throughput": {
+            "real_mean": 1.892537,
+            "synth_mean": 1.463882,
+            "pct_error": 22.65
+          },
+          "Pod Memory": {
+            "real_mean": 2261.449274,
+            "synth_mean": 1949.582583,
+            "pct_error": 13.79
+          },
+          "GPU Utilization": {
+            "real_mean": 4.53986,
+            "synth_mean": 2.500313,
+            "pct_error": 44.93
+          },
+          "GPU Power": {
+            "real_mean": 64.938542,
+            "synth_mean": 86.318049,
+            "pct_error": 32.92
+          },
+          "wasserstein": {
+            "CPU Usage": 0.03205797782002298,
+            "CPU Pressure (PSI)": 0.0010126565730584963,
+            "Latency (Avg)": 0.004071536699762116,
+            "Throughput": 0.46142493419559166,
+            "Pod Memory": 312.1036101977685,
+            "GPU Utilization": 2.1765356091749766,
+            "GPU Power": 24.824132736756653
+          }
+        },
+        "3": {
+          "CPU Usage": {
+            "real_mean": 0.738499,
+            "synth_mean": 0.545015,
+            "pct_error": 26.2
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.009857,
+            "synth_mean": 0.006132,
+            "pct_error": 37.79
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.127547,
+            "synth_mean": 0.124997,
+            "pct_error": 2.0
+          },
+          "Throughput": {
+            "real_mean": 1.800304,
+            "synth_mean": 1.523053,
+            "pct_error": 15.4
+          },
+          "Pod Memory": {
+            "real_mean": 1931.196024,
+            "synth_mean": 1997.006236,
+            "pct_error": 3.41
+          },
+          "GPU Utilization": {
+            "real_mean": 3.899301,
+            "synth_mean": 3.315633,
+            "pct_error": 14.97
+          },
+          "GPU Power": {
+            "real_mean": 44.558599,
+            "synth_mean": 58.572096,
+            "pct_error": 31.45
+          },
+          "wasserstein": {
+            "CPU Usage": 0.18982844905764865,
+            "CPU Pressure (PSI)": 0.004124945466325691,
+            "Latency (Avg)": 0.004783419376639804,
+            "Throughput": 0.28976503346494475,
+            "Pod Memory": 159.69246688272975,
+            "GPU Utilization": 1.0917243202575915,
+            "GPU Power": 18.1741691476789
+          }
+        },
+        "5": {
+          "CPU Usage": {
+            "real_mean": 1.400434,
+            "synth_mean": 0.792772,
+            "pct_error": 43.39
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.049433,
+            "synth_mean": 0.018884,
+            "pct_error": 61.8
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.207837,
+            "synth_mean": 0.158079,
+            "pct_error": 23.94
+          },
+          "Throughput": {
+            "real_mean": 1.387682,
+            "synth_mean": 1.141373,
+            "pct_error": 17.75
+          },
+          "Pod Memory": {
+            "real_mean": 1688.646632,
+            "synth_mean": 1858.488132,
+            "pct_error": 10.06
+          },
+          "GPU Utilization": {
+            "real_mean": 3.578182,
+            "synth_mean": 2.606416,
+            "pct_error": 27.16
+          },
+          "GPU Power": {
+            "real_mean": 27.401443,
+            "synth_mean": 27.660752,
+            "pct_error": 0.95
+          },
+          "wasserstein": {
+            "CPU Usage": 0.5965233816976668,
+            "CPU Pressure (PSI)": 0.03078345639634263,
+            "Latency (Avg)": 0.04904556144505103,
+            "Throughput": 0.24791369370894117,
+            "Pod Memory": 174.66542003481092,
+            "GPU Utilization": 0.9706516917627175,
+            "GPU Power": 0.79299668244646
+          }
+        },
+        "6": {
+          "CPU Usage": {
+            "real_mean": 1.355673,
+            "synth_mean": 1.011457,
+            "pct_error": 25.39
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.076144,
+            "synth_mean": 0.046981,
+            "pct_error": 38.3
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.263958,
+            "synth_mean": 0.20841,
+            "pct_error": 21.04
+          },
+          "Throughput": {
+            "real_mean": 1.227968,
+            "synth_mean": 0.931454,
+            "pct_error": 24.15
+          },
+          "Pod Memory": {
+            "real_mean": 1618.866597,
+            "synth_mean": 1469.775987,
+            "pct_error": 9.21
+          },
+          "GPU Utilization": {
+            "real_mean": 3.4,
+            "synth_mean": 2.490256,
+            "pct_error": 26.76
+          },
+          "GPU Power": {
+            "real_mean": 22.860514,
+            "synth_mean": 22.625245,
+            "pct_error": 1.03
+          },
+          "wasserstein": {
+            "CPU Usage": 0.3514858453533884,
+            "CPU Pressure (PSI)": 0.03435488356916678,
+            "Latency (Avg)": 0.06922504087215961,
+            "Throughput": 0.28996779152501456,
+            "Pod Memory": 203.95210544394098,
+            "GPU Utilization": 0.9624313126314592,
+            "GPU Power": 0.4324240388357168
+          }
+        },
+        "10": {
+          "CPU Usage": {
+            "real_mean": 1.132863,
+            "synth_mean": 1.247566,
+            "pct_error": 10.13
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.159937,
+            "synth_mean": 0.169409,
+            "pct_error": 5.92
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.64733,
+            "synth_mean": 0.617435,
+            "pct_error": 4.62
+          },
+          "Throughput": {
+            "real_mean": 0.746632,
+            "synth_mean": 0.648912,
+            "pct_error": 13.09
+          },
+          "Pod Memory": {
+            "real_mean": 1481.740897,
+            "synth_mean": 1423.262208,
+            "pct_error": 3.95
+          },
+          "GPU Utilization": {
+            "real_mean": 3.424895,
+            "synth_mean": 4.065494,
+            "pct_error": 18.7
+          },
+          "GPU Power": {
+            "real_mean": 14.159236,
+            "synth_mean": 16.175112,
+            "pct_error": 14.24
+          },
+          "wasserstein": {
+            "CPU Usage": 0.13774849827088304,
+            "CPU Pressure (PSI)": 0.02120272934182637,
+            "Latency (Avg)": 0.069994350874163,
+            "Throughput": 0.10093094592285934,
+            "Pod Memory": 147.13608479876268,
+            "GPU Utilization": 0.8561621282246448,
+            "GPU Power": 2.0385009117948094
+          }
+        }
+      },
+      "extrapolation_replicas": {
+        "15": {
+          "CPU Usage": {
+            "synth_mean": 1.450614,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.211813,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.892977,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.65181,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1403.817716,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 4.645528,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 15.025283,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "20": {
+          "CPU Usage": {
+            "synth_mean": 1.524644,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.227766,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.967046,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.660637,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1472.077057,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 4.609544,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 14.941012,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "30": {
+          "CPU Usage": {
+            "synth_mean": 1.584927,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.239263,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 1.004627,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.672163,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1577.737597,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 4.789065,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 15.16081,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "50": {
+          "CPU Usage": {
+            "synth_mean": 1.580208,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.238618,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 1.022781,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 0.663162,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1489.489486,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 4.824481,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 15.169013,
+            "note": "extrapolation (no real data)"
+          }
+        }
+      },
+      "mean_wasserstein_all": 25.972153
+    },
+    "yolo": {
+      "validated_replicas": {
+        "1": {
+          "CPU Usage": {
+            "real_mean": 0.021827,
+            "synth_mean": 0.023197,
+            "pct_error": 6.27
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000105,
+            "synth_mean": 0.000127,
+            "pct_error": 20.36
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.006507,
+            "synth_mean": 0.006994,
+            "pct_error": 7.48
+          },
+          "Throughput": {
+            "real_mean": 2.590846,
+            "synth_mean": 1.862114,
+            "pct_error": 28.13
+          },
+          "Pod Memory": {
+            "real_mean": 2663.962518,
+            "synth_mean": 2663.963249,
+            "pct_error": 0.0
+          },
+          "GPU Utilization": {
+            "real_mean": 0.495105,
+            "synth_mean": 0.402546,
+            "pct_error": 18.69
+          },
+          "GPU Power": {
+            "real_mean": 120.706527,
+            "synth_mean": 40.898983,
+            "pct_error": 66.12
+          },
+          "wasserstein": {
+            "CPU Usage": 0.00338013521117693,
+            "CPU Pressure (PSI)": 2.551839090088547e-05,
+            "Latency (Avg)": 0.0004878228660124717,
+            "Throughput": 0.9395186900213427,
+            "Pod Memory": 0.04906716501273158,
+            "GPU Utilization": 0.3386467097368795,
+            "GPU Power": 79.74090175841005
+          }
+        },
+        "2": {
+          "CPU Usage": {
+            "real_mean": 0.022403,
+            "synth_mean": 0.023949,
+            "pct_error": 6.9
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.00011,
+            "synth_mean": 0.000124,
+            "pct_error": 12.92
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.006691,
+            "synth_mean": 0.007137,
+            "pct_error": 6.67
+          },
+          "Throughput": {
+            "real_mean": 2.589091,
+            "synth_mean": 1.955457,
+            "pct_error": 24.47
+          },
+          "Pod Memory": {
+            "real_mean": 1785.46678,
+            "synth_mean": 1819.752454,
+            "pct_error": 1.92
+          },
+          "GPU Utilization": {
+            "real_mean": 0.436364,
+            "synth_mean": 0.443098,
+            "pct_error": 1.54
+          },
+          "GPU Power": {
+            "real_mean": 60.480759,
+            "synth_mean": 39.733107,
+            "pct_error": 34.3
+          },
+          "wasserstein": {
+            "CPU Usage": 0.003285822828157698,
+            "CPU Pressure (PSI)": 1.4822755980851037e-05,
+            "Latency (Avg)": 0.00042855363726755397,
+            "Throughput": 0.6655109520741249,
+            "Pod Memory": 38.61281983291296,
+            "GPU Utilization": 0.19027315682177987,
+            "GPU Power": 20.72627773387349
+          }
+        },
+        "3": {
+          "CPU Usage": {
+            "real_mean": 0.024238,
+            "synth_mean": 0.024047,
+            "pct_error": 0.79
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000102,
+            "synth_mean": 0.000119,
+            "pct_error": 16.64
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.007188,
+            "synth_mean": 0.007474,
+            "pct_error": 3.98
+          },
+          "Throughput": {
+            "real_mean": 2.580004,
+            "synth_mean": 2.033502,
+            "pct_error": 21.18
+          },
+          "Pod Memory": {
+            "real_mean": 1505.920443,
+            "synth_mean": 1510.976523,
+            "pct_error": 0.34
+          },
+          "GPU Utilization": {
+            "real_mean": 0.461538,
+            "synth_mean": 0.476552,
+            "pct_error": 3.25
+          },
+          "GPU Power": {
+            "real_mean": 40.451705,
+            "synth_mean": 37.556525,
+            "pct_error": 7.16
+          },
+          "wasserstein": {
+            "CPU Usage": 0.0027369058853596523,
+            "CPU Pressure (PSI)": 1.9030156190855377e-05,
+            "Latency (Avg)": 0.0003148052544505017,
+            "Throughput": 0.5865870569984548,
+            "Pod Memory": 57.70043514469655,
+            "GPU Utilization": 0.2074318593983172,
+            "GPU Power": 6.174609486271784
+          }
+        },
+        "5": {
+          "CPU Usage": {
+            "real_mean": 0.030598,
+            "synth_mean": 0.028744,
+            "pct_error": 6.06
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000106,
+            "synth_mean": 0.000122,
+            "pct_error": 15.12
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.009965,
+            "synth_mean": 0.008531,
+            "pct_error": 14.4
+          },
+          "Throughput": {
+            "real_mean": 2.557538,
+            "synth_mean": 2.331854,
+            "pct_error": 8.82
+          },
+          "Pod Memory": {
+            "real_mean": 1263.776224,
+            "synth_mean": 1242.417031,
+            "pct_error": 1.69
+          },
+          "GPU Utilization": {
+            "real_mean": 0.506853,
+            "synth_mean": 0.612149,
+            "pct_error": 20.77
+          },
+          "GPU Power": {
+            "real_mean": 24.388137,
+            "synth_mean": 27.872303,
+            "pct_error": 14.29
+          },
+          "wasserstein": {
+            "CPU Usage": 0.003960403601786036,
+            "CPU Pressure (PSI)": 1.997797082374571e-05,
+            "Latency (Avg)": 0.0017457640637676417,
+            "Throughput": 0.400496166802938,
+            "Pod Memory": 71.16362476380155,
+            "GPU Utilization": 0.26494017568030037,
+            "GPU Power": 7.441125585160262
+          }
+        },
+        "6": {
+          "CPU Usage": {
+            "real_mean": 0.038039,
+            "synth_mean": 0.03396,
+            "pct_error": 10.72
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000101,
+            "synth_mean": 0.00012,
+            "pct_error": 19.24
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.013263,
+            "synth_mean": 0.00848,
+            "pct_error": 36.06
+          },
+          "Throughput": {
+            "real_mean": 2.528976,
+            "synth_mean": 2.398173,
+            "pct_error": 5.17
+          },
+          "Pod Memory": {
+            "real_mean": 1218.261834,
+            "synth_mean": 1217.83684,
+            "pct_error": 0.03
+          },
+          "GPU Utilization": {
+            "real_mean": 0.557809,
+            "synth_mean": 0.6134,
+            "pct_error": 9.97
+          },
+          "GPU Power": {
+            "real_mean": 20.385766,
+            "synth_mean": 21.62684,
+            "pct_error": 6.09
+          },
+          "wasserstein": {
+            "CPU Usage": 0.005624505614056198,
+            "CPU Pressure (PSI)": 2.286701650154626e-05,
+            "Latency (Avg)": 0.004830516918363916,
+            "Throughput": 0.32551349852640366,
+            "Pod Memory": 44.698448012411205,
+            "GPU Utilization": 0.36634855646926623,
+            "GPU Power": 4.054935782674864
+          }
+        },
+        "8": {
+          "CPU Usage": {
+            "real_mean": 0.04745,
+            "synth_mean": 0.052436,
+            "pct_error": 10.51
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000108,
+            "synth_mean": 0.000126,
+            "pct_error": 16.51
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.017075,
+            "synth_mean": 0.017466,
+            "pct_error": 2.29
+          },
+          "Throughput": {
+            "real_mean": 2.493182,
+            "synth_mean": 2.687766,
+            "pct_error": 7.8
+          },
+          "Pod Memory": {
+            "real_mean": 1139.675753,
+            "synth_mean": 1138.947623,
+            "pct_error": 0.06
+          },
+          "GPU Utilization": {
+            "real_mean": 0.419406,
+            "synth_mean": 0.792388,
+            "pct_error": 88.93
+          },
+          "GPU Power": {
+            "real_mean": 15.365774,
+            "synth_mean": 14.462608,
+            "pct_error": 5.88
+          },
+          "wasserstein": {
+            "CPU Usage": 0.007698509835385515,
+            "CPU Pressure (PSI)": 1.3831937753589353e-05,
+            "Latency (Avg)": 0.0012540681167409076,
+            "Throughput": 0.3235734104743252,
+            "Pod Memory": 33.06139173847514,
+            "GPU Utilization": 0.35332330521033306,
+            "GPU Power": 0.9225101182801574
+          }
+        },
+        "10": {
+          "CPU Usage": {
+            "real_mean": 0.052928,
+            "synth_mean": 0.04324,
+            "pct_error": 18.3
+          },
+          "CPU Pressure (PSI)": {
+            "real_mean": 0.000118,
+            "synth_mean": 0.000108,
+            "pct_error": 8.08
+          },
+          "Latency (Avg)": {
+            "real_mean": 0.017992,
+            "synth_mean": 0.017776,
+            "pct_error": 1.2
+          },
+          "Throughput": {
+            "real_mean": 2.466078,
+            "synth_mean": 2.161009,
+            "pct_error": 12.37
+          },
+          "Pod Memory": {
+            "real_mean": 1079.992267,
+            "synth_mean": 1108.489546,
+            "pct_error": 2.64
+          },
+          "GPU Utilization": {
+            "real_mean": 0.461538,
+            "synth_mean": 0.3764,
+            "pct_error": 18.45
+          },
+          "GPU Power": {
+            "real_mean": 12.382493,
+            "synth_mean": 12.378141,
+            "pct_error": 0.04
+          },
+          "wasserstein": {
+            "CPU Usage": 0.009690259155790547,
+            "CPU Pressure (PSI)": 2.628914261856418e-05,
+            "Latency (Avg)": 0.0016410189747745481,
+            "Throughput": 0.37366218367853654,
+            "Pod Memory": 52.729463375405516,
+            "GPU Utilization": 0.24048163159377461,
+            "GPU Power": 0.07652253591385419
+          }
+        }
+      },
+      "extrapolation_replicas": {
+        "15": {
+          "CPU Usage": {
+            "synth_mean": 0.035476,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000119,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.018249,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.750277,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1118.001126,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.269092,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.247771,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "20": {
+          "CPU Usage": {
+            "synth_mean": 0.029168,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000124,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.018386,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.500331,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 953.680591,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.217995,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.232521,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "30": {
+          "CPU Usage": {
+            "synth_mean": 0.029464,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000126,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.018511,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.514173,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1061.00669,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.240439,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.231916,
+            "note": "extrapolation (no real data)"
+          }
+        },
+        "50": {
+          "CPU Usage": {
+            "synth_mean": 0.027479,
+            "note": "extrapolation (no real data)"
+          },
+          "CPU Pressure (PSI)": {
+            "synth_mean": 0.000123,
+            "note": "extrapolation (no real data)"
+          },
+          "Latency (Avg)": {
+            "synth_mean": 0.01844,
+            "note": "extrapolation (no real data)"
+          },
+          "Throughput": {
+            "synth_mean": 1.443032,
+            "note": "extrapolation (no real data)"
+          },
+          "Pod Memory": {
+            "synth_mean": 1086.170751,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Utilization": {
+            "synth_mean": 0.218246,
+            "note": "extrapolation (no real data)"
+          },
+          "GPU Power": {
+            "synth_mean": 12.229696,
+            "note": "extrapolation (no real data)"
+          }
+        }
+      },
+      "mean_wasserstein_all": 8.628075
+    }
+  }
+}
