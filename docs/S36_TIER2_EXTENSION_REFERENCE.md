@@ -220,14 +220,14 @@ restored the formula throughout).
 
 ### 4.1 Headline VR (smooth) — three-way
 
-| Workload | A16 (thesis) | Tier 3 frozen | Tier 2 frozen | Tier 2 best variant | Tier 2 best value |
-|---|---|---|---|---|---|
-| bert | 1.022 | 1.885 | 1.142 | frozen | 1.142 |
-| gpt2 | 1.137 | 0.920 | 0.612 | fm_low (fm=1.0) | 0.616 |
-| resnet152 | 0.985 | 1.064 | 0.369 | fm_high (fm=2.0) | 0.432 |
-| whisper | 1.397 | 0.759 | 1.106 | fm_low (fm=0.25) | 1.294 |
-| yolo | 1.039 | 1.069 | 0.774 | fm_low (fm=0.6) | 0.957 |
-| **Mean** | **1.116** | **1.140** | **0.800** | — | **0.888** |
+| Workload | A16 (thesis) | Tier 3 frozen | Tier 3 best-tuned | Best variant (T3) | Tier 2 frozen | Tier 2 best variant | Tier 2 best value |
+|---|---|---|---|---|---|---|---|
+| bert | 1.022 | 1.885 | 1.885 | baseline | 1.142 | frozen | 1.142 |
+| gpt2 | 1.137 | 0.920 | 1.000 | fm_low | 0.612 | fm_low (fm=1.0) | 0.616 |
+| resnet152 | 0.985 | 1.064 | 0.940 | fm_high | 0.369 | fm_high (fm=2.0) | 0.432 |
+| whisper | 1.397 | 0.759 | 0.994 | fm_low | 1.106 | fm_low (fm=0.25) | 1.294 |
+| yolo | 1.039 | 1.069 | 1.011 | fm_low | 0.774 | fm_low (fm=0.6) | 0.957 |
+| **Mean** | **1.116** | **1.140** | **1.166** | — | **0.800** | — | **0.888** |
 
 Pass criterion is one-sided `VR_smooth > 0.8`, matching the Tier 3
 reference doc's Section 4.1 convention.
@@ -543,9 +543,8 @@ ordered): preprocessing pipeline + processed data (2d0508c), sanity
 audit + per-slice-vs-averaged diagnostic (1fa0853), unified dataset
 + normalization (a4dc2cf), frozen retrain 5 checkpoints (753f3fa),
 eval + validation (9dadfa4), ablation 20 variants + sweep eval
-(3410555), cross-tier Wasserstein synthesis (8ed7b31). Reference
-doc + `TIER2_NOTES.md` augmentation land in a final commit at the
-end of Step 7.
+(3410555), cross-tier Wasserstein synthesis (8ed7b31), reference
+doc + `TIER2_NOTES.md` augmentation (75449ef).
 
 **Data provenance.** Raw collection performed 2026-08-14 through
 2026-08-16 on the H100 devLab (172.22.174.66) via
