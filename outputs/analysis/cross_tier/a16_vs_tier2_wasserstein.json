@@ -1,0 +1,84 @@
+{
+  "description": "A16 (phase1_v3) vs Tier 2 real-data Wasserstein-1 distance per (workload, metric), computed on denormalized (raw-unit) traces.",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "metric_names": [
+    "pod_cpu_usage",
+    "pod_memory_bytes",
+    "pod_psi_cpu",
+    "pod_latency_avg",
+    "pod_throughput",
+    "gpu_utilization",
+    "gpu_memory_used",
+    "gpu_memory_total",
+    "gpu_power_watts",
+    "gpu_temperature"
+  ],
+  "distances": {
+    "bert": {
+      "pod_cpu_usage": 0.03226776290594797,
+      "pod_memory_bytes": 280622994.4038216,
+      "pod_psi_cpu": 2.245023734713083e-05,
+      "pod_latency_avg": 0.0033366783109353413,
+      "pod_throughput": 0.13484833888979714,
+      "gpu_utilization": 1.1838176613386615,
+      "gpu_memory_used": 141.98181818181817,
+      "gpu_memory_total": 328.5275541125542,
+      "gpu_power_watts": 17.122189901916265,
+      "gpu_temperature": 1.2397097599370328
+    },
+    "gpt2": {
+      "pod_cpu_usage": 0.2535889994382168,
+      "pod_memory_bytes": 355414872.74883664,
+      "pod_psi_cpu": 4.805285486430186e-05,
+      "pod_latency_avg": 1.008332142085352,
+      "pod_throughput": 0.6525121282355636,
+      "gpu_utilization": 3.614239081413537,
+      "gpu_memory_used": 143.8442620006257,
+      "gpu_memory_total": 328.5275541125542,
+      "gpu_power_watts": 18.77372890019072,
+      "gpu_temperature": 1.4571737353555534
+    },
+    "resnet152": {
+      "pod_cpu_usage": 0.01944809136334471,
+      "pod_memory_bytes": 1687076133.41213,
+      "pod_psi_cpu": 9.31870946299707e-06,
+      "pod_latency_avg": 0.007963194941098541,
+      "pod_throughput": 0.0823832148521481,
+      "gpu_utilization": 1.9861619826537111,
+      "gpu_memory_used": 46.01818181818183,
+      "gpu_memory_total": 328.5275541125542,
+      "gpu_power_watts": 17.04476824811552,
+      "gpu_temperature": 1.3370799654890568
+    },
+    "whisper": {
+      "pod_cpu_usage": 1.205443120344086,
+      "pod_memory_bytes": 446680815.9959893,
+      "pod_psi_cpu": 0.3910250811991173,
+      "pod_latency_avg": 0.8873890248718427,
+      "pod_throughput": 0.4639777205805461,
+      "gpu_utilization": 4.7429040433203165,
+      "gpu_memory_used": 214.746521660158,
+      "gpu_memory_total": 328.5275541125542,
+      "gpu_power_watts": 17.337763126873128,
+      "gpu_temperature": 1.2861924439197172
+    },
+    "yolo": {
+      "pod_cpu_usage": 0.048273112600675946,
+      "pod_memory_bytes": 1246954901.805685,
+      "pod_psi_cpu": 1.5492869385491187e-05,
+      "pod_latency_avg": 0.016503450247881853,
+      "pod_throughput": 0.20645859947353606,
+      "gpu_utilization": 1.0057682437865163,
+      "gpu_memory_used": 203.44675324675325,
+      "gpu_memory_total": 328.5275541125542,
+      "gpu_power_watts": 17.330727614203976,
+      "gpu_temperature": 1.4263146701783067
+    }
+  }
+}
