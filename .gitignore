@@ -111,6 +111,8 @@ models/**/*.pth
 !models/phase4/timegan_s36_tier3/**/*.json
 !models/phase4/timegan_s36_tier3_sweep/**/*.pt
 !models/phase4/timegan_s36_tier3_sweep/**/*.json
+!models/phase4/timegan_s36_tier2/**/*.pt
+!models/phase4/timegan_s36_tier2/**/*.json
 !models/phase4/timegan_s34/**/*.pt
 !models/phase4/timegan_s34/**/*.json
 !models/phase4/timegan_s27/**/*.pt
