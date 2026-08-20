@@ -204,17 +204,17 @@ Downstream loader normalises all three differences into one canonical schema. Se
 
 ---
 
-## 9. Per-workload observations (populated post-hoc after data loading)
+## 9. Per-workload observations
 
-Placeholder for after `load_experiment.py` is in and initial analysis begins. Structure:
+**BERT.** GPU utilization at r=7 averages 1.83% with cross-pod spread of 0.04 — negligible contention, consistent with BERT's low compute footprint. PSI CPU ~0 throughout. Latency r=7/r=1 ratio 1.00 — no degradation under full replica load. Frozen S36 VR: 1.142 (pass, mild overshoot). None of the 4 ablation variants improves on frozen; best-of-5 remains frozen itself.
 
-- BERT r=1..7: [pending]
-- GPT-2 r=1..7: [pending]
-- ResNet-152 r=1..7: [pending]
-- Whisper r=1..7: [pending — priority — CPU contention was highest here, r=7 survived]
-- YOLO r=1..7: [pending]
+**GPT-2.** GPU utilization at r=7 averages 15.79% with spread of 0.58 — the largest absolute cross-pod variance of any workload (2.18), reflecting autoregressive per-inference variance that per-slice measurement preserves rather than averages away. PSI CPU ~0. Latency r=7/r=1 ratio 1.07. Frozen S36 VR: 0.612 (fail). Best ablation variant is fm_low at 0.616 — effectively unchanged; local hyperparameter search does not recover the frozen recipe.
 
-Each entry: peak GPU utilization, peak GPU memory used, peak pod CPU, peak PSI CPU, peak per-pod latency, any crashes and recovery pattern, any degradation vs A16.
+**ResNet-152.** GPU utilization at r=7 averages 1.96% with spread of 0.07. PSI CPU ~0. Latency r=7/r=1 ratio 0.92. Frozen S36 VR: 0.369 — the worst of any workload across the full three-tier study. Best ablation variant is fm_high at 0.432, still well short of the 0.8 pass threshold. The local ablation neighborhood (vr ±0.2, fm ×0.5/×2.0) is insufficient to reach passing.
+
+**Whisper.** GPU utilization at r=7 averages 5.71% with spread of 0.61. PSI CPU 0.32 — the only workload with non-negligible PSI, consistent with section 12.7's CPU-contention finding. Latency r=7/r=1 ratio 2.86 — the largest degradation of any workload; host CPU sharing under MIG (16 vCPUs across 7 pods, unlike GPU which is isolated per-slice) preserves substantial contention and consequently substantial per-pod variance. Frozen S36 VR: 1.106 (pass) — flips from Tier 3's failure to a clean Tier 2 pass. Best ablation variant is fm_low at 1.294.
+
+**YOLO.** GPU utilization at r=7 averages 0.94% with spread of 0.03. PSI CPU ~0. Latency r=7/r=1 ratio 0.97. Frozen S36 VR: 0.774 — a marginal fail. Best ablation variant is fm_low at 0.957, a 23% improvement that crosses the pass threshold. Cleanest ablation-recovery story in the extension.
 
 ---
 
@@ -317,6 +317,8 @@ kubectl label node $NODE nvidia.com/mig.config=all-disabled --overwrite
 **13.5 Slice-to-pod mapping depends on GPU Operator DCGM version.** The `pod` label on per-instance DCGM series comes from GPU Operator v26.3.3's DCGM integration. Earlier GPU Operator versions may not populate this label; downstream reproducibility on other clusters may require the fallback path (query pod annotations for `nvidia.com/mig-*` resource claims).
 
 **13.6 Business Day rate unchanged from Tier 1 / Phase 1 v3.** Per methodological answer during v4 design, workload inference rate was not scaled per-tier or per-workload. Apples-to-apples fidelity matters more than avoiding degradation at high r. Whisper r=7 CPU contention is a legitimate finding, not a measurement artefact.
+
+**13.7 S36 retrain uses per-slice gpu_utilization column.** The Tier 2 retrain trains on `gpu_utilization_per_slice_*.csv`, not the aggregated `gpu_utilization_*.csv` (section 10). This preserves per-pod attribution, consistent with section 1's methodological headline and section 6.2's aggregation rules — the aggregated file serves whole-experiment reporting, not per-pod training. The alternative of dividing the aggregated file by MIG's fixed 7-slice count was considered and rejected: it would manually destroy the per-pod variance Tier 2 was designed to capture. See `S36_TIER2_EXTENSION_REFERENCE.md` section 2.1 for full justification and section 4.6 for the diagnostic quantifying what /7 would have destroyed.
 
 ---
 
