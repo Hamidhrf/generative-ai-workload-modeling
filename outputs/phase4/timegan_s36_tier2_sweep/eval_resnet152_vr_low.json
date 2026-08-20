@@ -1,0 +1,38 @@
+{
+  "window_size": 5,
+  "smoothing_enabled": true,
+  "dataset_size": "176 traces (original, no augmentation)",
+  "improvement": "spectral_normalization",
+  "workloads": {
+    "resnet152": {
+      "workload": "resnet152",
+      "vr_raw": 0.3705010712146759,
+      "vr_smooth": 0.3604705035686493,
+      "pass_raw": false,
+      "pass_smooth": false,
+      "vr_per_metric_smooth": [
+        0.7233161330223083,
+        0.11165561527013779,
+        0.20831823348999023,
+        0.0147795919328928,
+        0.6495547890663147,
+        0.6352614760398865,
+        0.18040773272514343
+      ],
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ]
+    }
+  },
+  "summary": {
+    "mean_vr_smooth": 0.3604705035686493,
+    "pass_count": 0,
+    "total": 1
+  }
+}

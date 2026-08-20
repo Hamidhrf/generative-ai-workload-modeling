@@ -1,0 +1,16 @@
+{
+  "stage": "s36",
+  "description": "S34 architecture + Spectral Normalization in discriminator",
+  "workloads": [
+    "yolo"
+  ],
+  "improvement": "spectral_normalization",
+  "baseline": "s34",
+  "results": {
+    "yolo": {
+      "best_val": 0.40274864435195923,
+      "elapsed_s": 381.2312602996826,
+      "model_path": "models/phase4/timegan_s36_tier2_sweep/s36_yolo_vr03_fm24"
+    }
+  }
+}
