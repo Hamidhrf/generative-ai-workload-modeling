@@ -109,15 +109,19 @@ RESERVE (appendix / answer-if-asked):
 
 ## What is required before writing
 
-E1 is done and it decided the framing. Remaining:
+E1 is done and it decided the framing. The remaining experiments are
+done too; nothing experimental blocks drafting.
 
-- E6 (now the interesting one): wider hyperparameter search on the
-  workloads that fail at low data. Live question under Paper A: does
-  tuning recover them at the reduced budget, or is the data threshold
-  hard? Either answer is a real result.
-- E3 (demoted): the MIG gpu_utilization counter control. Less central now
-  that sharing mode is not the headline; run only if cheap and if the
-  counter is mentioned in the methods. Optional.
+- E6 (done): wider feature-matching search on the low-data failures, run
+  on both r=1..7 tiers. Result: GPT-2 is a hard floor - no fm value
+  recovers it at n=28 on either MIG or matched time-slicing. ResNet-152
+  recovers on MIG at fm=4.0 (stable across 30 draws on all three
+  contention metrics), in the opposite direction from the other
+  workloads. This is the data-threshold answer the discussion needs: the
+  budget is a hard floor for some workloads and tunable for others -
+  workload-dependent, not a blanket failure.
+- E3 (dropped): the MIG gpu_utilization counter control. Structurally
+  unnecessary given E1's design; do not run.
 
 Deferred / skip: A16 re-baseline, OOD replica generalization, seed
 sweeps, stratified resplit. Post-submission or skip.
@@ -127,7 +131,7 @@ limitation, not future work.
 
 ## The deliverables
 
-- Paper = this extension (Paper A framing). Writeable now; E6 sharpens
+- Paper = this extension (Paper A framing). Writeable now; E6's result sharpens
   the limitations section. Most sections drafted, need reframing off the
   old sharing-mode spine.
 - Research thesis = foundation (S36 on A16). Done, submitted. Paper cites.
@@ -139,6 +143,6 @@ limitation, not future work.
 ## Stop condition
 
 E1 resolved the central fork. The claim is now supported and controlled.
-Stop stress-testing. From here: E6, then reframe the draft off this
-anchor, then write. Do not reopen the sharing-mode claim - it is
+Stop stress-testing. From here: reframe the draft off
+this anchor, then write. Do not reopen the sharing-mode claim - it is
 falsified and the confound is permanent by hardware constraint.
