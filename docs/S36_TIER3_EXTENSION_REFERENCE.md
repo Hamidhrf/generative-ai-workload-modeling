@@ -1,3 +1,32 @@
+## Post-E1 correction (2026-08-22)
+
+The central interpretation in this document is superseded; the
+methodology, collection details, and per-tier numbers below remain valid
+and are still the paper's source of record.
+
+Superseded claims:
+1. Sharing-mode framing. See the matched-size control (E1): the MIG
+   degradation is reproduced by size-matched time-slicing, so transfer is
+   gated by training-data volume, not sharing mode or hardware
+   generation. The A16-to-H100-time-slicing (hardware) transfer holds at
+   full data and is unaffected.
+2. bert Tier 3 VR 1.885. This is a pod_memory_bytes small-denominator
+   artifact (H100 has ~6x the VRAM, real memory variance near zero).
+   pod_memory_bytes is reconstructed in post-processing, not generated,
+   and is excluded from the composite fidelity score; the 6-metric bert
+   Tier 3 composite is ~0.99.
+3. Whisper Tier 3 "regime crossing" physical story and the fm 0.5->0.3
+   recovery narrative. Withdrawn (matched-r CPU contention is
+   near-identical across the two H100 configs; the effect is hardware,
+   A16-vs-H100).
+4. Raw pooled Wasserstein (~5x) figures. Retired in favour of
+   scale-normalized per-metric distances.
+
+Current framing: see S36_EXTENSION_ANCHOR.md. Body below is retained as
+the record of the pre-E1 analysis.
+
+---
+
 # S36 Tier 3 Extension: Reference Document
 
 Consolidated reference for the H100 Tier 3 extension of the S36

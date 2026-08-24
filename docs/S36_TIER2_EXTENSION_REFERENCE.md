@@ -1,3 +1,34 @@
+## Post-E1 correction (2026-08-22)
+
+The central interpretation in this document is superseded; the
+methodology, collection details, and per-tier numbers below remain valid
+and are still the paper's source of record.
+
+Superseded claims:
+1. Sharing-mode framing. The "sharing mode matters more than hardware
+   generation" claim does not survive the matched-size control (E1).
+   Time-slicing restricted to MIG's r=1..7 / 28-trace budget reproduces
+   the MIG degradation, including the per-metric collapse on the
+   contention metrics. The break is gated by training-data volume, not
+   sharing mode. A MIG H100 exposes at most 7 compute instances, so MIG
+   data cannot be collected at full range - the confound is intrinsic.
+2. Whisper cross-tier physical story ("cleanest cross-tier physical
+   story"). Withdrawn. At matched replica count the two H100 configs show
+   near-identical CPU contention (they share the node and 16 vCPUs), so
+   MIG does not preserve a contention that time-slicing lacked. The real
+   effect is A16-vs-H100 (hardware), which the recipe absorbs.
+3. Raw pooled Wasserstein (~5x) figures. Retired; dominated by
+   large-unit metrics and order-unstable. Replaced by scale-normalized
+   per-metric distances.
+4. Feature-matching mechanism wording ("targets tuned to a noisier
+   signal"). Sign-inconsistent with the data (MIG failures undershoot);
+   the mechanism is fixed-weight variance over-suppression.
+
+Current framing: see S36_EXTENSION_ANCHOR.md. Body below is retained as
+the record of the pre-E1 analysis.
+
+---
+
 # S36 Tier 2 Extension Reference
 
 Standalone reference for the H100 Tier 2 (MIG all-1g.12gb) extension
