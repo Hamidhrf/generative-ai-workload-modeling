@@ -1,0 +1,14 @@
+{
+  "tier": "tier2",
+  "workload": "resnet152",
+  "fm_override": 0.25,
+  "hyperparams": {
+    "lambda_var_reg": 0.4,
+    "lambda_fm_stat": 0.25,
+    "lambda_smooth": 0.1,
+    "n_disc_steps": 2
+  },
+  "best_val": 0.23505990207195282,
+  "elapsed_s": 395.27168107032776,
+  "model_path": "models/phase4/timegan_s36_tier2_e6_fm0p25/resnet152"
+}

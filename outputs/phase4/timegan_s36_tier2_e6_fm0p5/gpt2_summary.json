@@ -1,0 +1,14 @@
+{
+  "tier": "tier2",
+  "workload": "gpt2",
+  "fm_override": 0.5,
+  "hyperparams": {
+    "lambda_var_reg": 0.3,
+    "lambda_fm_stat": 0.5,
+    "lambda_smooth": 0.1,
+    "n_disc_steps": 2
+  },
+  "best_val": 0.6685889959335327,
+  "elapsed_s": 386.6788320541382,
+  "model_path": "models/phase4/timegan_s36_tier2_e6_fm0p5/gpt2"
+}

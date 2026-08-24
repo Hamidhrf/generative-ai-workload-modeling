@@ -1,0 +1,565 @@
+{
+  "excluded_metric": "pod_memory_bytes",
+  "cells": [
+    {
+      "tier": "A16",
+      "workload": "bert",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        1.1739742755889893,
+        1.26210618019104,
+        0.734890341758728,
+        1.1324477195739746,
+        0.9312983751296997,
+        0.9445239305496216,
+        0.9775179028511047
+      ],
+      "stored_vr_smooth": 1.022394061088562,
+      "composite_7": 1.0223941036633082,
+      "composite_6": 0.9824420909086863,
+      "abs_composite_7_minus_1": 0.022394103663308185,
+      "abs_composite_6_minus_1": 0.017557909091313717,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "A16",
+      "workload": "gpt2",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.8389940857887268,
+        0.4069403409957886,
+        0.4753449559211731,
+        0.8699295520782471,
+        1.2721469402313232,
+        2.706758737564087,
+        1.3859174251556396
+      ],
+      "stored_vr_smooth": 1.1365759372711182,
+      "composite_7": 1.1365760053907121,
+      "composite_6": 1.2581819494565327,
+      "abs_composite_7_minus_1": 0.13657600539071213,
+      "abs_composite_6_minus_1": 0.2581819494565327,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": false
+    },
+    {
+      "tier": "A16",
+      "workload": "resnet152",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.8654416799545288,
+        1.5010638236999512,
+        0.6330767273902893,
+        0.976603627204895,
+        0.7682250142097473,
+        0.86955726146698,
+        1.2840027809143066
+      ],
+      "stored_vr_smooth": 0.9854244589805603,
+      "composite_7": 0.985424416405814,
+      "composite_6": 0.8994845151901245,
+      "abs_composite_7_minus_1": 0.014575583594185981,
+      "abs_composite_6_minus_1": 0.10051548480987549,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "A16",
+      "workload": "whisper",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        1.0496139526367188,
+        3.165233850479126,
+        1.4349995851516724,
+        1.1819415092468262,
+        0.9101214408874512,
+        1.0471662282943726,
+        0.9883724451065063
+      ],
+      "stored_vr_smooth": 1.3967783451080322,
+      "composite_7": 1.3967784302575248,
+      "composite_6": 1.1020358602205913,
+      "abs_composite_7_minus_1": 0.3967784302575248,
+      "abs_composite_6_minus_1": 0.1020358602205913,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "A16",
+      "workload": "yolo",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.7889777421951294,
+        1.5943422317504883,
+        0.964832603931427,
+        0.9315688610076904,
+        0.9069702625274658,
+        0.8384357690811157,
+        1.246358871459961
+      ],
+      "stored_vr_smooth": 1.0387836694717407,
+      "composite_7": 1.0387837631361825,
+      "composite_6": 0.9461906850337982,
+      "abs_composite_7_minus_1": 0.03878376313618248,
+      "abs_composite_6_minus_1": 0.05380931496620178,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier3",
+      "workload": "bert",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.9040599465370178,
+        7.258952617645264,
+        1.2646048069000244,
+        0.8754590749740601,
+        0.773122251033783,
+        0.9189128875732422,
+        1.2025480270385742
+      ],
+      "stored_vr_smooth": 1.8853797912597656,
+      "composite_7": 1.8853799445288522,
+      "composite_6": 0.9897844990094503,
+      "abs_composite_7_minus_1": 0.8853799445288522,
+      "abs_composite_6_minus_1": 0.010215500990549686,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier3",
+      "workload": "gpt2",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        1.253539800643921,
+        0.5282264947891235,
+        0.6073613166809082,
+        1.0206701755523682,
+        0.9863386750221252,
+        1.3332563638687134,
+        0.7089057564735413
+      ],
+      "stored_vr_smooth": 0.9197569489479065,
+      "composite_7": 0.9197569404329572,
+      "composite_6": 0.9850120147069296,
+      "abs_composite_7_minus_1": 0.08024305956704281,
+      "abs_composite_6_minus_1": 0.014987985293070438,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier3",
+      "workload": "resnet152",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        1.1727337837219238,
+        1.524893045425415,
+        0.1835949420928955,
+        1.1323469877243042,
+        0.701807975769043,
+        0.9124936461448669,
+        1.822092056274414
+      ],
+      "stored_vr_smooth": 1.064280390739441,
+      "composite_7": 1.0642803481646947,
+      "composite_6": 0.987511565287908,
+      "abs_composite_7_minus_1": 0.06428034816469474,
+      "abs_composite_6_minus_1": 0.012488434712092045,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier3",
+      "workload": "whisper",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.7984422445297241,
+        0.35400599241256714,
+        0.8330608606338501,
+        0.8852946758270264,
+        0.7456386685371399,
+        1.02901029586792,
+        0.6669555306434631
+      ],
+      "stored_vr_smooth": 0.7589154243469238,
+      "composite_7": 0.7589154669216701,
+      "composite_6": 0.8264003793398539,
+      "abs_composite_7_minus_1": 0.2410845330783299,
+      "abs_composite_6_minus_1": 0.17359962066014611,
+      "pass_c7_one_sided": false,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier3",
+      "workload": "yolo",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.833507776260376,
+        0.4321075975894928,
+        1.0637720823287964,
+        1.0368597507476807,
+        0.8744706511497498,
+        0.6387872695922852,
+        2.6051948070526123
+      ],
+      "stored_vr_smooth": 1.0692428350448608,
+      "composite_7": 1.0692428478172846,
+      "composite_6": 1.1754320561885834,
+      "abs_composite_7_minus_1": 0.06924284781728463,
+      "abs_composite_6_minus_1": 0.17543205618858337,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier2",
+      "workload": "bert",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.8286240100860596,
+        0.8325117230415344,
+        1.7974293231964111,
+        1.056755781173706,
+        0.9002487659454346,
+        0.9328868389129639,
+        1.6423473358154297
+      ],
+      "stored_vr_smooth": 1.1415433883666992,
+      "composite_7": 1.1415433968816484,
+      "composite_6": 1.1930486758550007,
+      "abs_composite_7_minus_1": 0.1415433968816484,
+      "abs_composite_6_minus_1": 0.19304867585500074,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier2",
+      "workload": "gpt2",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.8595183491706848,
+        0.11262568831443787,
+        0.25873732566833496,
+        1.0525091886520386,
+        1.06160569190979,
+        0.7817010879516602,
+        0.1559026837348938
+      ],
+      "stored_vr_smooth": 0.6118000745773315,
+      "composite_7": 0.6118000022002629,
+      "composite_6": 0.6949957211812338,
+      "abs_composite_7_minus_1": 0.38819999779973713,
+      "abs_composite_6_minus_1": 0.30500427881876624,
+      "pass_c7_one_sided": false,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": false,
+      "pass_c6_two_sided": false
+    },
+    {
+      "tier": "Tier2",
+      "workload": "resnet152",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.8486197590827942,
+        0.11914477497339249,
+        0.25170838832855225,
+        0.05355922132730484,
+        0.6231811046600342,
+        0.6117337346076965,
+        0.07234375178813934
+      ],
+      "stored_vr_smooth": 0.36861297488212585,
+      "composite_7": 0.36861296210970196,
+      "composite_6": 0.41019099329908687,
+      "abs_composite_7_minus_1": 0.631387037890298,
+      "abs_composite_6_minus_1": 0.5898090067009132,
+      "pass_c7_one_sided": false,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": false,
+      "pass_c6_two_sided": false
+    },
+    {
+      "tier": "Tier2",
+      "workload": "whisper",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.5361186861991882,
+        1.4190342426300049,
+        1.3263603448867798,
+        1.3411097526550293,
+        0.8110681772232056,
+        0.707008421421051,
+        1.6006593704223633
+      ],
+      "stored_vr_smooth": 1.1059083938598633,
+      "composite_7": 1.1059084279196603,
+      "composite_6": 1.0537207921346028,
+      "abs_composite_7_minus_1": 0.10590842791966026,
+      "abs_composite_6_minus_1": 0.05372079213460279,
+      "pass_c7_one_sided": true,
+      "pass_c7_two_sided": true,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    },
+    {
+      "tier": "Tier2",
+      "workload": "yolo",
+      "metric_names": [
+        "pod_cpu_usage",
+        "pod_memory_bytes",
+        "pod_psi_cpu",
+        "pod_latency_avg",
+        "pod_throughput",
+        "gpu_utilization",
+        "gpu_power_watts"
+      ],
+      "vr_per_metric_smooth": [
+        0.9282854199409485,
+        0.35147809982299805,
+        0.20922191441059113,
+        0.7684043645858765,
+        0.8611863851547241,
+        0.7499524354934692,
+        1.5516347885131836
+      ],
+      "stored_vr_smooth": 0.7743090391159058,
+      "composite_7": 0.7743090582745416,
+      "composite_6": 0.8447808846831322,
+      "abs_composite_7_minus_1": 0.22569094172545845,
+      "abs_composite_6_minus_1": 0.15521911531686783,
+      "pass_c7_one_sided": false,
+      "pass_c7_two_sided": false,
+      "pass_c6_one_sided": true,
+      "pass_c6_two_sided": true
+    }
+  ],
+  "spot_checks": {
+    "bert_A16_composite_6": 0.9824420909086863,
+    "bert_Tier3_composite_6": 0.9897844990094503
+  },
+  "tier_summary": {
+    "A16": {
+      "mean_composite_7": 1.1159913437707083,
+      "mean_composite_6": 1.0376670201619467,
+      "mean_abs_vr_minus_1_c7": 0.12182157720838271,
+      "mean_abs_vr_minus_1_c6": 0.10642010370890301,
+      "pass_count_c7_one_sided": 5,
+      "pass_count_c7_two_sided": 4,
+      "pass_count_c6_one_sided": 5,
+      "pass_count_c6_two_sided": 4,
+      "n_workloads": 5
+    },
+    "Tier3": {
+      "mean_composite_7": 1.1395151095730918,
+      "mean_composite_6": 0.9928281029065449,
+      "mean_abs_vr_minus_1_c7": 0.2680461466312408,
+      "mean_abs_vr_minus_1_c6": 0.07734471956888833,
+      "pass_count_c7_one_sided": 4,
+      "pass_count_c7_two_sided": 3,
+      "pass_count_c6_one_sided": 5,
+      "pass_count_c6_two_sided": 5,
+      "n_workloads": 5
+    },
+    "Tier2": {
+      "mean_composite_7": 0.800434769477163,
+      "mean_composite_6": 0.8393474134306113,
+      "mean_abs_vr_minus_1_c7": 0.29854596044336046,
+      "mean_abs_vr_minus_1_c6": 0.25936037376523013,
+      "pass_count_c7_one_sided": 2,
+      "pass_count_c7_two_sided": 2,
+      "pass_count_c6_one_sided": 3,
+      "pass_count_c6_two_sided": 3,
+      "n_workloads": 5
+    }
+  },
+  "tier_step_deltas_mean_abs_vr_minus_1_c6": {
+    "A16_to_Tier3_hardware_step": -0.029075384140014676,
+    "Tier3_to_Tier2_sharing_step": 0.1820156541963418
+  },
+  "flips_composite_axis_c7_vs_c6": [
+    {
+      "tier": "A16",
+      "workload": "gpt2",
+      "one_sided_c7_vs_c6": "same",
+      "two_sided_c7_vs_c6": "True->False"
+    },
+    {
+      "tier": "A16",
+      "workload": "whisper",
+      "one_sided_c7_vs_c6": "same",
+      "two_sided_c7_vs_c6": "False->True"
+    },
+    {
+      "tier": "Tier3",
+      "workload": "bert",
+      "one_sided_c7_vs_c6": "same",
+      "two_sided_c7_vs_c6": "False->True"
+    },
+    {
+      "tier": "Tier3",
+      "workload": "whisper",
+      "one_sided_c7_vs_c6": "False->True",
+      "two_sided_c7_vs_c6": "False->True"
+    },
+    {
+      "tier": "Tier2",
+      "workload": "yolo",
+      "one_sided_c7_vs_c6": "False->True",
+      "two_sided_c7_vs_c6": "False->True"
+    }
+  ],
+  "flips_threshold_axis_one_sided_vs_two_sided": [
+    {
+      "tier": "A16",
+      "workload": "gpt2",
+      "c7_one_sided_vs_two_sided": "same",
+      "c6_one_sided_vs_two_sided": "True->False"
+    },
+    {
+      "tier": "A16",
+      "workload": "whisper",
+      "c7_one_sided_vs_two_sided": "True->False",
+      "c6_one_sided_vs_two_sided": "same"
+    },
+    {
+      "tier": "Tier3",
+      "workload": "bert",
+      "c7_one_sided_vs_two_sided": "True->False",
+      "c6_one_sided_vs_two_sided": "same"
+    }
+  ]
+}

@@ -1,0 +1,840 @@
+{
+  "config": {
+    "K": 30,
+    "gaussian_seed": 42,
+    "excluded_metric_c6": "pod_memory_bytes",
+    "contention_metrics": [
+      "gpu_utilization",
+      "pod_throughput",
+      "pod_cpu_usage"
+    ],
+    "tier_replica_ranges": {
+      "tier3": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "tier3_matched": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "tier2": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  "q1_composite6_vr_headline": {
+    "tier3": {
+      "bert": {
+        "c6": 0.9897844990094503,
+        "c7": 1.8853799445288522
+      },
+      "gpt2": {
+        "c6": 0.9850120147069296,
+        "c7": 0.9197569404329572
+      },
+      "resnet152": {
+        "c6": 0.987511565287908,
+        "c7": 1.0642803481646947
+      },
+      "whisper": {
+        "c6": 0.8264003793398539,
+        "c7": 0.7589154669216701
+      },
+      "yolo": {
+        "c6": 1.1754320561885834,
+        "c7": 1.0692428478172846
+      }
+    },
+    "tier3_matched": {
+      "bert": {
+        "c6": 1.1794765094916027,
+        "c7": 1.051691404410771
+      },
+      "gpt2": {
+        "c6": 0.680179330209891,
+        "c7": 0.608292926635061
+      },
+      "resnet152": {
+        "c6": 0.5368647218371431,
+        "c7": 0.4692907612770796
+      },
+      "whisper": {
+        "c6": 0.2640097935218364,
+        "c7": 1.5058860778143364
+      },
+      "yolo": {
+        "c6": 0.7880518039067587,
+        "c7": 1.5412140233176095
+      }
+    },
+    "tier2": {
+      "bert": {
+        "c6": 1.1930486758550007,
+        "c7": 1.1415433968816484
+      },
+      "gpt2": {
+        "c6": 0.6949957211812338,
+        "c7": 0.6118000022002629
+      },
+      "resnet152": {
+        "c6": 0.41019099329908687,
+        "c7": 0.36861296210970196
+      },
+      "whisper": {
+        "c6": 1.0537207921346028,
+        "c7": 1.1059084279196603
+      },
+      "yolo": {
+        "c6": 0.8447808846831322,
+        "c7": 0.7743090582745416
+      }
+    }
+  },
+  "q3_resampler_floor_per_workload": {
+    "tier3": {
+      "bert": {
+        "n_traces": 55,
+        "mean_c6": 0.9516538734610911,
+        "sd_c6": 0.11220862253892858
+      },
+      "gpt2": {
+        "n_traces": 55,
+        "mean_c6": 0.9653285130482512,
+        "sd_c6": 0.13874413433298197
+      },
+      "resnet152": {
+        "n_traces": 55,
+        "mean_c6": 0.9649181840446385,
+        "sd_c6": 0.11629469659735657
+      },
+      "whisper": {
+        "n_traces": 55,
+        "mean_c6": 1.0030545643616915,
+        "sd_c6": 0.11611758486075519
+      },
+      "yolo": {
+        "n_traces": 55,
+        "mean_c6": 0.893053417397035,
+        "sd_c6": 0.10077908187866023
+      }
+    },
+    "tier3_matched": {
+      "bert": {
+        "n_traces": 28,
+        "mean_c6": 0.8780354375233322,
+        "sd_c6": 0.10793516669757465
+      },
+      "gpt2": {
+        "n_traces": 28,
+        "mean_c6": 0.8950033025829869,
+        "sd_c6": 0.16337180960135897
+      },
+      "resnet152": {
+        "n_traces": 28,
+        "mean_c6": 0.8582233816399112,
+        "sd_c6": 0.11141681132068527
+      },
+      "whisper": {
+        "n_traces": 28,
+        "mean_c6": 0.970437079341604,
+        "sd_c6": 0.15270195222869373
+      },
+      "yolo": {
+        "n_traces": 28,
+        "mean_c6": 0.8522291522436284,
+        "sd_c6": 0.10447921883256764
+      }
+    },
+    "tier2": {
+      "bert": {
+        "n_traces": 28,
+        "mean_c6": 0.8221017039455241,
+        "sd_c6": 0.1076217175708069
+      },
+      "gpt2": {
+        "n_traces": 28,
+        "mean_c6": 0.9905485277378501,
+        "sd_c6": 0.10527183155493068
+      },
+      "resnet152": {
+        "n_traces": 28,
+        "mean_c6": 0.8871565749158152,
+        "sd_c6": 0.18797133142363978
+      },
+      "whisper": {
+        "n_traces": 28,
+        "mean_c6": 1.0071145266442005,
+        "sd_c6": 0.13150409274351033
+      },
+      "yolo": {
+        "n_traces": 28,
+        "mean_c6": 0.8280196866094958,
+        "sd_c6": 0.10073895863527658
+      }
+    }
+  },
+  "q3_resampler_floor_tier_aggregate": {
+    "tier3": {
+      "mean_of_means_c6": 0.9556017104625415,
+      "mean_of_sds_c6": 0.11682882404173651
+    },
+    "tier3_matched": {
+      "mean_of_means_c6": 0.8907856706662927,
+      "mean_of_sds_c6": 0.12798099173617605
+    },
+    "tier2": {
+      "mean_of_means_c6": 0.9069882039705771,
+      "mean_of_sds_c6": 0.12662158638563287
+    }
+  },
+  "q2_per_metric_wasserstein": {
+    "tier3": {
+      "bert": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.05930241239408245,
+          "pod_memory_bytes": 0.046605376568533016,
+          "pod_psi_cpu": 0.017388413787427434,
+          "pod_latency_avg": 0.04655383773440381,
+          "pod_throughput": 0.10478975278529842,
+          "gpu_utilization": 0.05079514996357101,
+          "gpu_power_watts": 0.07853319052259422
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.031639772472260165,
+          "pod_memory_bytes": 0.02554405990108633,
+          "pod_psi_cpu": 0.005442721075322067,
+          "pod_latency_avg": 0.01624071620457068,
+          "pod_throughput": 0.08952741837065474,
+          "gpu_utilization": 0.030475608952218368,
+          "gpu_power_watts": 0.01598361878710372
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0004680014281720853,
+          "pod_memory_bytes": 0.00532089960610329,
+          "pod_psi_cpu": 0.00027964390456267167,
+          "pod_latency_avg": 0.00036317637240179505,
+          "pod_throughput": 0.0008723218780581817,
+          "gpu_utilization": 0.0005864482418560822,
+          "gpu_power_watts": 0.0005660224348627762
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      },
+      "gpt2": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.049915276388747654,
+          "pod_memory_bytes": 0.06525834464750588,
+          "pod_psi_cpu": 0.015527926348370863,
+          "pod_latency_avg": 0.04684065663210826,
+          "pod_throughput": 0.03218787191207963,
+          "gpu_utilization": 0.03565121442172872,
+          "gpu_power_watts": 0.07192088457637784
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.054467879762782806,
+          "pod_memory_bytes": 0.049870377976991793,
+          "pod_psi_cpu": 0.0032151129117955553,
+          "pod_latency_avg": 0.02516076312316691,
+          "pod_throughput": 0.0643979729174437,
+          "gpu_utilization": 0.046056109106482286,
+          "gpu_power_watts": 0.029857587527823536
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.002851074176547927,
+          "pod_memory_bytes": 0.0064115091464373615,
+          "pod_psi_cpu": 5.673166758706427e-05,
+          "pod_latency_avg": 0.001486350114924962,
+          "pod_throughput": 0.0008122958416230626,
+          "gpu_utilization": 0.0012004741902604007,
+          "gpu_power_watts": 0.0005752620911765749
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "resnet152": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.01198794438060677,
+          "pod_memory_bytes": 0.06672502167052069,
+          "pod_psi_cpu": 0.015783408010978245,
+          "pod_latency_avg": 0.0710714972950259,
+          "pod_throughput": 0.11204791079122539,
+          "gpu_utilization": 0.04286584204179099,
+          "gpu_power_watts": 0.07986188106677727
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.012305664687162397,
+          "pod_memory_bytes": 0.03884990105960165,
+          "pod_psi_cpu": 0.001759375480637032,
+          "pod_latency_avg": 0.01803852928524655,
+          "pod_throughput": 0.09753093281524165,
+          "gpu_utilization": 0.033678734815426006,
+          "gpu_power_watts": 0.020141580425200464
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.00024253456959450677,
+          "pod_memory_bytes": 0.007519764472640331,
+          "pod_psi_cpu": 3.780667663859619e-05,
+          "pod_latency_avg": 0.0004390170506064128,
+          "pod_throughput": 0.0009543631345725594,
+          "gpu_utilization": 0.0013614682679770305,
+          "gpu_power_watts": 0.0006670335027224348
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      },
+      "whisper": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.035284716427988444,
+          "pod_memory_bytes": 0.0489861413494549,
+          "pod_psi_cpu": 0.08882298837876854,
+          "pod_latency_avg": 0.04402688190028015,
+          "pod_throughput": 0.05136866469248784,
+          "gpu_utilization": 0.0313552641495613,
+          "gpu_power_watts": 0.07178718502409807
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.05221519246317027,
+          "pod_memory_bytes": 0.036158525042373296,
+          "pod_psi_cpu": 0.020521090967915833,
+          "pod_latency_avg": 0.014988302409104615,
+          "pod_throughput": 0.06511147829227863,
+          "gpu_utilization": 0.021008424978184684,
+          "gpu_power_watts": 0.02467643815552618
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0008253388271541749,
+          "pod_memory_bytes": 0.004583395927438511,
+          "pod_psi_cpu": 0.0013219511894886975,
+          "pod_latency_avg": 0.0006087595129818711,
+          "pod_throughput": 0.0010433074414468262,
+          "gpu_utilization": 0.00028502047545628874,
+          "gpu_power_watts": 0.0009320756966130362
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      },
+      "yolo": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.07563308617502962,
+          "pod_memory_bytes": 0.05779415418057792,
+          "pod_psi_cpu": 0.011485268075009512,
+          "pod_latency_avg": 0.07989500631136849,
+          "pod_throughput": 0.11478734728549475,
+          "gpu_utilization": 0.16718324993434702,
+          "gpu_power_watts": 0.0811657287574933
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.027128967814216386,
+          "pod_memory_bytes": 0.013906215523607024,
+          "pod_psi_cpu": 0.008966901374015571,
+          "pod_latency_avg": 0.06998447357791301,
+          "pod_throughput": 0.0709480446948934,
+          "gpu_utilization": 0.06929223783249701,
+          "gpu_power_watts": 0.03166196182907078
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0018632056099731433,
+          "pod_memory_bytes": 0.00293427482097208,
+          "pod_psi_cpu": 0.0003582282864937457,
+          "pod_latency_avg": 0.001385648904750519,
+          "pod_throughput": 0.0018962420625377259,
+          "gpu_utilization": 0.0009950324552275337,
+          "gpu_power_watts": 0.0002727542204494577
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      }
+    },
+    "tier3_matched": {
+      "bert": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.08710543522004756,
+          "pod_memory_bytes": 0.08125825171907444,
+          "pod_psi_cpu": 0.006074012444836405,
+          "pod_latency_avg": 0.04417754833581718,
+          "pod_throughput": 0.1101430911226122,
+          "gpu_utilization": 0.061675116183706295,
+          "gpu_power_watts": 0.09722995098909078
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.06431268829254397,
+          "pod_memory_bytes": 0.04778457732811727,
+          "pod_psi_cpu": 0.017789982817837915,
+          "pod_latency_avg": 0.02446866518816828,
+          "pod_throughput": 0.12342588202050384,
+          "gpu_utilization": 0.029086015177874444,
+          "gpu_power_watts": 0.05843248341651606
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.002351087370751024,
+          "pod_memory_bytes": 0.0135535416734505,
+          "pod_psi_cpu": 0.0004904028138772358,
+          "pod_latency_avg": 0.0010681457784092357,
+          "pod_throughput": 0.001273823336837588,
+          "gpu_utilization": 0.001555231041168207,
+          "gpu_power_watts": 0.002105123783546969
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": false,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      },
+      "gpt2": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.04425298531226951,
+          "pod_memory_bytes": 0.07040709224865055,
+          "pod_psi_cpu": 0.008916411606947998,
+          "pod_latency_avg": 0.03252646510788776,
+          "pod_throughput": 0.02906550154568887,
+          "gpu_utilization": 0.041376849786677786,
+          "gpu_power_watts": 0.09044346757453907
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.028871042093017114,
+          "pod_memory_bytes": 0.05734093477556398,
+          "pod_psi_cpu": 0.002883241976075782,
+          "pod_latency_avg": 0.031143565821988583,
+          "pod_throughput": 0.049039047084311935,
+          "gpu_utilization": 0.04311506546098297,
+          "gpu_power_watts": 0.04362251229165241
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0011184879074955056,
+          "pod_memory_bytes": 0.011171852082177327,
+          "pod_psi_cpu": 0.00013481637692304782,
+          "pod_latency_avg": 0.001728966828208344,
+          "pod_throughput": 0.0009165750635756118,
+          "gpu_utilization": 0.001587099449345904,
+          "gpu_power_watts": 0.0006251353855197442
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "resnet152": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.08027704589507079,
+          "pod_memory_bytes": 0.07935345203775956,
+          "pod_psi_cpu": 0.020339528416309947,
+          "pod_latency_avg": 0.05861966888669115,
+          "pod_throughput": 0.12015241112625089,
+          "gpu_utilization": 0.044742785979449445,
+          "gpu_power_watts": 0.09915442977848138
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.13081836805002117,
+          "pod_memory_bytes": 0.05107690286285111,
+          "pod_psi_cpu": 0.08228414335767399,
+          "pod_latency_avg": 0.03726927522052777,
+          "pod_throughput": 0.10648359312235017,
+          "gpu_utilization": 0.05378753334374195,
+          "gpu_power_watts": 0.09368788173834819
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.001644395885710963,
+          "pod_memory_bytes": 0.01255056434535472,
+          "pod_psi_cpu": 0.0008478940838437828,
+          "pod_latency_avg": 0.000619562314330269,
+          "pod_throughput": 0.0013244022955854037,
+          "gpu_utilization": 0.0004966984779479314,
+          "gpu_power_watts": 0.0008344829946931576
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": false,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "whisper": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.0794435566874392,
+          "pod_memory_bytes": 0.050575889620208335,
+          "pod_psi_cpu": 0.11595377165852469,
+          "pod_latency_avg": 0.03928058404591653,
+          "pod_throughput": 0.04410915125301726,
+          "gpu_utilization": 0.033456939730234614,
+          "gpu_power_watts": 0.09012340664615234
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.206228665600618,
+          "pod_memory_bytes": 0.03639569351648464,
+          "pod_psi_cpu": 0.1952596910538929,
+          "pod_latency_avg": 0.053273236225184796,
+          "pod_throughput": 0.10213135677772751,
+          "gpu_utilization": 0.1326411570965311,
+          "gpu_power_watts": 0.0837847565414112
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0015825783561386972,
+          "pod_memory_bytes": 0.00857795181938428,
+          "pod_psi_cpu": 0.0003648518878277172,
+          "pod_latency_avg": 0.00017993312172251825,
+          "pod_throughput": 0.0008330047148024137,
+          "gpu_utilization": 0.0002476961548377931,
+          "gpu_power_watts": 0.00029018750444148253
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": false,
+          "pod_latency_avg": false,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "yolo": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.0691736347550588,
+          "pod_memory_bytes": 0.0748976846827492,
+          "pod_psi_cpu": 0.01839330306988105,
+          "pod_latency_avg": 0.09119993131819584,
+          "pod_throughput": 0.11910390268229756,
+          "gpu_utilization": 0.15417511137370307,
+          "gpu_power_watts": 0.10045079033947901
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.1580253971064804,
+          "pod_memory_bytes": 0.018057979000503998,
+          "pod_psi_cpu": 0.012874130759188999,
+          "pod_latency_avg": 0.06474831185019515,
+          "pod_throughput": 0.0818861046564881,
+          "gpu_utilization": 0.09844303683225544,
+          "gpu_power_watts": 0.10976344133779675
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0027273855276703034,
+          "pod_memory_bytes": 0.003700315250590382,
+          "pod_psi_cpu": 0.0003559542427845484,
+          "pod_latency_avg": 0.0032533933894828824,
+          "pod_throughput": 0.0018486036829487716,
+          "gpu_utilization": 0.0009199366639419685,
+          "gpu_power_watts": 0.003572413682162685
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": true,
+          "gpu_power_watts": false
+        }
+      }
+    },
+    "tier2": {
+      "bert": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.066458450995712,
+          "pod_memory_bytes": 0.07610838595695346,
+          "pod_psi_cpu": 0.0252348662693165,
+          "pod_latency_avg": 0.014563971688751804,
+          "pod_throughput": 0.11012291157287904,
+          "gpu_utilization": 0.11401476305432814,
+          "gpu_power_watts": 0.09817052397979512
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.05784814885005649,
+          "pod_memory_bytes": 0.04335539103926793,
+          "pod_psi_cpu": 0.011938046076478895,
+          "pod_latency_avg": 0.026894464646175075,
+          "pod_throughput": 0.07029867988989698,
+          "gpu_utilization": 0.09867909128962982,
+          "gpu_power_watts": 0.07547825964541012
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0020416621467604693,
+          "pod_memory_bytes": 0.010878585706050868,
+          "pod_psi_cpu": 0.0005462702603232627,
+          "pod_latency_avg": 0.001174125854351463,
+          "pod_throughput": 0.0019784743032149276,
+          "gpu_utilization": 0.003175211069437364,
+          "gpu_power_watts": 0.0014932655093567978
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": false,
+          "pod_throughput": true,
+          "gpu_utilization": true,
+          "gpu_power_watts": true
+        }
+      },
+      "gpt2": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.053518028525733764,
+          "pod_memory_bytes": 0.06667872863628653,
+          "pod_psi_cpu": 0.021095012484639075,
+          "pod_latency_avg": 0.0792839263581911,
+          "pod_throughput": 0.0534853194861437,
+          "gpu_utilization": 0.05371187491870391,
+          "gpu_power_watts": 0.08847692831597417
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.06864114530234808,
+          "pod_memory_bytes": 0.05107030668864297,
+          "pod_psi_cpu": 0.006383518684185113,
+          "pod_latency_avg": 0.03892405600126044,
+          "pod_throughput": 0.04034376510375237,
+          "gpu_utilization": 0.09166079109187447,
+          "gpu_power_watts": 0.035349711127247434
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0009415886125447067,
+          "pod_memory_bytes": 0.011309963140402344,
+          "pod_psi_cpu": 0.0001773825390859264,
+          "pod_latency_avg": 0.0009388471242261845,
+          "pod_throughput": 0.0006935581829944784,
+          "gpu_utilization": 0.0012211765141063376,
+          "gpu_power_watts": 0.0008760178840062824
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": true,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "resnet152": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.0711366318000034,
+          "pod_memory_bytes": 0.07930215481221388,
+          "pod_psi_cpu": 0.021015670848052892,
+          "pod_latency_avg": 0.0376887371887806,
+          "pod_throughput": 0.12098082829873301,
+          "gpu_utilization": 0.11785732122320455,
+          "gpu_power_watts": 0.09888336678746494
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.04270598215077791,
+          "pod_memory_bytes": 0.040642132679702826,
+          "pod_psi_cpu": 0.010824759916738121,
+          "pod_latency_avg": 0.022132050882674236,
+          "pod_throughput": 0.20846499371574165,
+          "gpu_utilization": 0.16684583912546871,
+          "gpu_power_watts": 0.09387147641659373
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.000807499751151476,
+          "pod_memory_bytes": 0.011696734065483496,
+          "pod_psi_cpu": 0.0002034134412413811,
+          "pod_latency_avg": 0.0005392858802803409,
+          "pod_throughput": 0.0024467016844289175,
+          "gpu_utilization": 0.0030124553470986977,
+          "gpu_power_watts": 0.002295274040281579
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "whisper": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.07630075569188087,
+          "pod_memory_bytes": 0.05549710827783538,
+          "pod_psi_cpu": 0.12267810457624548,
+          "pod_latency_avg": 0.08297460969116818,
+          "pod_throughput": 0.041707104152120145,
+          "gpu_utilization": 0.025543356391175602,
+          "gpu_power_watts": 0.0886861898971874
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.20305154132908587,
+          "pod_memory_bytes": 0.037223048407008935,
+          "pod_psi_cpu": 0.02807094379012969,
+          "pod_latency_avg": 0.06645878033746827,
+          "pod_throughput": 0.05089958121307854,
+          "gpu_utilization": 0.03966228793698678,
+          "gpu_power_watts": 0.03796393209263641
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.004846653365069621,
+          "pod_memory_bytes": 0.009367973341046809,
+          "pod_psi_cpu": 0.004976270576983969,
+          "pod_latency_avg": 0.002791589945562538,
+          "pod_throughput": 0.002109053167882703,
+          "gpu_utilization": 0.001218970532229566,
+          "gpu_power_watts": 0.0014454397162485995
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": false,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": true,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": true
+        }
+      },
+      "yolo": {
+        "gaussian_per_metric": {
+          "pod_cpu_usage": 0.08597290684146061,
+          "pod_memory_bytes": 0.0734887718222432,
+          "pod_psi_cpu": 0.008391055293631128,
+          "pod_latency_avg": 0.055995609623150006,
+          "pod_throughput": 0.12493929210196397,
+          "gpu_utilization": 0.11954684095158047,
+          "gpu_power_watts": 0.10039637014320776
+        },
+        "s36_per_metric_mean": {
+          "pod_cpu_usage": 0.0628489102691856,
+          "pod_memory_bytes": 0.019025047629817184,
+          "pod_psi_cpu": 0.017918892500134405,
+          "pod_latency_avg": 0.03344931789731206,
+          "pod_throughput": 0.19563860384146478,
+          "gpu_utilization": 0.20115781462528054,
+          "gpu_power_watts": 0.11619295041430323
+        },
+        "s36_per_metric_sd": {
+          "pod_cpu_usage": 0.0027260366522483684,
+          "pod_memory_bytes": 0.003374618447168324,
+          "pod_psi_cpu": 0.0007031264393573996,
+          "pod_latency_avg": 0.001322559186768572,
+          "pod_throughput": 0.006442634758103621,
+          "gpu_utilization": 0.005720715576029264,
+          "gpu_power_watts": 0.004151877922974103
+        },
+        "s36_beats_gaussian": {
+          "pod_cpu_usage": true,
+          "pod_memory_bytes": true,
+          "pod_psi_cpu": false,
+          "pod_latency_avg": true,
+          "pod_throughput": false,
+          "gpu_utilization": false,
+          "gpu_power_watts": false
+        }
+      }
+    }
+  },
+  "q2_contention_tier_aggregate": {
+    "tier3": {
+      "gpu_utilization": {
+        "gaussian": 0.06557014410219981,
+        "s36_mean": 0.04010222313696167,
+        "s36_beats_gaussian": true
+      },
+      "pod_throughput": {
+        "gaussian": 0.08303630949331722,
+        "s36_mean": 0.07750316941810244,
+        "s36_beats_gaussian": true
+      },
+      "pod_cpu_usage": {
+        "gaussian": 0.04642468715329099,
+        "s36_mean": 0.03555149543991841,
+        "s36_beats_gaussian": true
+      }
+    },
+    "tier3_matched": {
+      "gpu_utilization": {
+        "gaussian": 0.06708536061075424,
+        "s36_mean": 0.07141456158227717,
+        "s36_beats_gaussian": false
+      },
+      "pod_throughput": {
+        "gaussian": 0.08451481154597336,
+        "s36_mean": 0.09259319673227631,
+        "s36_beats_gaussian": false
+      },
+      "pod_cpu_usage": {
+        "gaussian": 0.07205053157397716,
+        "s36_mean": 0.11765123222853613,
+        "s36_beats_gaussian": false
+      }
+    },
+    "tier2": {
+      "gpu_utilization": {
+        "gaussian": 0.08613483130779853,
+        "s36_mean": 0.11960116481384805,
+        "s36_beats_gaussian": false
+      },
+      "pod_throughput": {
+        "gaussian": 0.09024709112236798,
+        "s36_mean": 0.11312912475278687,
+        "s36_beats_gaussian": false
+      },
+      "pod_cpu_usage": {
+        "gaussian": 0.07067735477095813,
+        "s36_mean": 0.0870191455802908,
+        "s36_beats_gaussian": false
+      }
+    }
+  }
+}

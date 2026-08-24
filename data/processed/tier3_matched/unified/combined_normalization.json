@@ -1,0 +1,287 @@
+{
+  "bert": {
+    "method": "minmax",
+    "metric_names": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_memory_total",
+      "gpu_power_watts",
+      "gpu_temperature"
+    ],
+    "params": {
+      "pod_cpu_usage": {
+        "min": 0.004997525,
+        "max": 0.1428994809918816
+      },
+      "pod_memory_bytes": {
+        "min": 879587328.0,
+        "max": 2107580416.0
+      },
+      "pod_psi_cpu": {
+        "min": 2.464061952888721e-05,
+        "max": 0.0013170918422223
+      },
+      "pod_latency_avg": {
+        "min": 0.0052407683454794,
+        "max": 0.0079649156994289
+      },
+      "pod_throughput": {
+        "min": 0.2099777777777778,
+        "max": 4.454545454545454
+      },
+      "gpu_utilization": {
+        "min": 0.0,
+        "max": 4.0
+      },
+      "gpu_memory_used": {
+        "min": 1190.0,
+        "max": 1192.0
+      },
+      "gpu_memory_total": {
+        "min": 13617.0,
+        "max": 95318.0
+      },
+      "gpu_power_watts": {
+        "min": 16.948428571428572,
+        "max": 123.089
+      },
+      "gpu_temperature": {
+        "min": 7.428571428571429,
+        "max": 56.0
+      }
+    }
+  },
+  "gpt2": {
+    "method": "minmax",
+    "metric_names": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_memory_total",
+      "gpu_power_watts",
+      "gpu_temperature"
+    ],
+    "params": {
+      "pod_cpu_usage": {
+        "min": 0.0297611508073908,
+        "max": 0.8412723947125721
+      },
+      "pod_memory_bytes": {
+        "min": 455012352.0,
+        "max": 2696142848.0
+      },
+      "pod_psi_cpu": {
+        "min": 4.698599450823152e-05,
+        "max": 0.010725099092952
+      },
+      "pod_latency_avg": {
+        "min": 0.2497150838195739,
+        "max": 1.03410046365526
+      },
+      "pod_throughput": {
+        "min": 0.03988,
+        "max": 1.9272727272727272
+      },
+      "gpu_utilization": {
+        "min": 0.0,
+        "max": 49.5
+      },
+      "gpu_memory_used": {
+        "min": 907.0,
+        "max": 1274.0
+      },
+      "gpu_memory_total": {
+        "min": 13617.0,
+        "max": 95318.0
+      },
+      "gpu_power_watts": {
+        "min": 17.196142857142856,
+        "max": 130.155
+      },
+      "gpu_temperature": {
+        "min": 7.571428571428571,
+        "max": 57.0
+      }
+    }
+  },
+  "resnet152": {
+    "method": "minmax",
+    "metric_names": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_memory_total",
+      "gpu_power_watts",
+      "gpu_temperature"
+    ],
+    "params": {
+      "pod_cpu_usage": {
+        "min": 0.0025672499999999,
+        "max": 0.0594075733870753
+      },
+      "pod_memory_bytes": {
+        "min": 676917248.0,
+        "max": 2001469440.0
+      },
+      "pod_psi_cpu": {
+        "min": 2.5059540722913177e-05,
+        "max": 0.0003717544346663
+      },
+      "pod_latency_avg": {
+        "min": 0.0087346939986196,
+        "max": 0.0130762347468623
+      },
+      "pod_throughput": {
+        "min": 0.3272727272727272,
+        "max": 4.8
+      },
+      "gpu_utilization": {
+        "min": 0.0,
+        "max": 4.5
+      },
+      "gpu_memory_used": {
+        "min": 994.0,
+        "max": 996.0
+      },
+      "gpu_memory_total": {
+        "min": 13617.0,
+        "max": 95318.0
+      },
+      "gpu_power_watts": {
+        "min": 17.202285714285715,
+        "max": 122.279
+      },
+      "gpu_temperature": {
+        "min": 7.714285714285714,
+        "max": 56.0
+      }
+    }
+  },
+  "whisper": {
+    "method": "minmax",
+    "metric_names": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_memory_total",
+      "gpu_power_watts",
+      "gpu_temperature"
+    ],
+    "params": {
+      "pod_cpu_usage": {
+        "min": 0.0284722163147501,
+        "max": 2.9873383516272902
+      },
+      "pod_memory_bytes": {
+        "min": 362770432.0,
+        "max": 3213066240.0
+      },
+      "pod_psi_cpu": {
+        "min": 0.0002425192067535,
+        "max": 0.2796614285142788
+      },
+      "pod_latency_avg": {
+        "min": 0.0717531235375146,
+        "max": 1.6360871791839602
+      },
+      "pod_throughput": {
+        "min": 0.0278466666666666,
+        "max": 3.2909090909090906
+      },
+      "gpu_utilization": {
+        "min": 0.0,
+        "max": 27.0
+      },
+      "gpu_memory_used": {
+        "min": 323.57142857142856,
+        "max": 2264.0
+      },
+      "gpu_memory_total": {
+        "min": 13616.857142857143,
+        "max": 95318.0
+      },
+      "gpu_power_watts": {
+        "min": 16.995714285714286,
+        "max": 130.1
+      },
+      "gpu_temperature": {
+        "min": 7.428571428571429,
+        "max": 57.0
+      }
+    }
+  },
+  "yolo": {
+    "method": "minmax",
+    "metric_names": [
+      "pod_cpu_usage",
+      "pod_memory_bytes",
+      "pod_psi_cpu",
+      "pod_latency_avg",
+      "pod_throughput",
+      "gpu_utilization",
+      "gpu_memory_used",
+      "gpu_memory_total",
+      "gpu_power_watts",
+      "gpu_temperature"
+    ],
+    "params": {
+      "pod_cpu_usage": {
+        "min": 0.0027777999999999,
+        "max": 0.0809909667650054
+      },
+      "pod_memory_bytes": {
+        "min": 988385280.0,
+        "max": 2664951808.0
+      },
+      "pod_psi_cpu": {
+        "min": 2.81012880396126e-05,
+        "max": 0.0005380571405071
+      },
+      "pod_latency_avg": {
+        "min": 0.0060953070798258,
+        "max": 0.0157610148191452
+      },
+      "pod_throughput": {
+        "min": 0.3272727272727272,
+        "max": 4.818181818181818
+      },
+      "gpu_utilization": {
+        "min": 0.0,
+        "max": 2.5
+      },
+      "gpu_memory_used": {
+        "min": 700.6666666666666,
+        "max": 710.0
+      },
+      "gpu_memory_total": {
+        "min": 13617.0,
+        "max": 95318.0
+      },
+      "gpu_power_watts": {
+        "min": 17.154,
+        "max": 121.138
+      },
+      "gpu_temperature": {
+        "min": 7.857142857142857,
+        "max": 56.0
+      }
+    }
+  }
+}

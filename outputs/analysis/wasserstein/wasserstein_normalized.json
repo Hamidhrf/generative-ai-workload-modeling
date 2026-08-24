@@ -1,0 +1,1151 @@
+{
+  "description": "E4 model-vs-real Wasserstein, recomputed scale-free (minmax primary, std-normalized secondary), plus retired raw_pooled_w for reconciliation with validation_report.json mean_wasserstein_all.",
+  "seed": {
+    "torch_manual_seed": 42,
+    "numpy_random_seed": 42,
+    "note": "deliberate exception - generation elsewhere in this codebase is unseeded; see module docstring"
+  },
+  "tier_replica_ranges": {
+    "a16": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tier3": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "tier2": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "cells": [
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.061882717441181886,
+      "std_w": 0.21068835584637363,
+      "raw_w_native_units": 0.011970266953109413,
+      "real_std_native_units": 0.05681503804528097
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.012802512770980027,
+      "std_w": 0.08048217246232203,
+      "raw_w_native_units": 4217623.755395697,
+      "real_std_native_units": 52404447.17580394
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.015389842126849192,
+      "std_w": 0.22467108397668245,
+      "raw_w_native_units": 1.644583373160847e-05,
+      "real_std_native_units": 7.31996011258632e-05
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.026447816762087805,
+      "std_w": 0.25359993184712615,
+      "raw_w_native_units": 6.157328893079192e-05,
+      "real_std_native_units": 0.0002427969458915676
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "pod_throughput",
+      "minmax_w": 0.05729981264726665,
+      "std_w": 0.1667173933820343,
+      "raw_w_native_units": 0.2250319914874472,
+      "real_std_native_units": 1.3497811291458024
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.029310469260572833,
+      "std_w": 0.1425266531194116,
+      "raw_w_native_units": 0.3590532484420172,
+      "real_std_native_units": 2.519200729011685
+    },
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.024386782963462555,
+      "std_w": 0.19440595293123408,
+      "raw_w_native_units": 0.9328212738137025,
+      "real_std_native_units": 4.798316408261753
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.07606083075559986,
+      "std_w": 0.3008998433899,
+      "raw_w_native_units": 0.06334088682490957,
+      "real_std_native_units": 0.21050488465304287
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.04212713946715495,
+      "std_w": 0.2245602926839868,
+      "raw_w_native_units": 18333903.648869094,
+      "real_std_native_units": 81643568.54784447
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.01907192749506037,
+      "std_w": 0.2107880717039356,
+      "raw_w_native_units": 3.8033406407142755e-05,
+      "real_std_native_units": 0.00018043433909563413
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.042438459667529876,
+      "std_w": 0.14757772488676066,
+      "raw_w_native_units": 0.0850652363782712,
+      "real_std_native_units": 0.5764097287957478
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "pod_throughput",
+      "minmax_w": 0.03613103974236448,
+      "std_w": 0.21263895901083488,
+      "raw_w_native_units": 0.044014175686153095,
+      "real_std_native_units": 0.2069901766397868
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.1336351746901304,
+      "std_w": 0.8454316870271471,
+      "raw_w_native_units": 6.68175873450652,
+      "real_std_native_units": 7.9033691746308605
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.024489760309740476,
+      "std_w": 0.17036146003323263,
+      "raw_w_native_units": 1.0053808510802544,
+      "real_std_native_units": 5.901457118788096
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.0517842221600023,
+      "std_w": 0.19140654189434667,
+      "raw_w_native_units": 0.004897034887612257,
+      "real_std_native_units": 0.025584469784294735
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.014305453986611798,
+      "std_w": 0.09095979317960191,
+      "raw_w_native_units": 13439146.821850462,
+      "real_std_native_units": 147748212.17232323
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.006393665176131137,
+      "std_w": 0.14777194890704756,
+      "raw_w_native_units": 9.400665245287635e-06,
+      "real_std_native_units": 6.361603345436623e-05
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.031669935028411256,
+      "std_w": 0.3207811177890886,
+      "raw_w_native_units": 0.00023912459062604046,
+      "real_std_native_units": 0.0007454447202944884
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "pod_throughput",
+      "minmax_w": 0.09432067406674795,
+      "std_w": 0.26469758905891044,
+      "raw_w_native_units": 0.4064363591603502,
+      "real_std_native_units": 1.5354743524690537
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.02026568208692535,
+      "std_w": 0.26096113784716984,
+      "raw_w_native_units": 0.8815571707812528,
+      "real_std_native_units": 3.378116673056242
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.01952877027756613,
+      "std_w": 0.14135113434714897,
+      "raw_w_native_units": 0.6727719946932366,
+      "real_std_native_units": 4.759579735957077
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.021748963546886477,
+      "std_w": 0.12371599518793137,
+      "raw_w_native_units": 0.13436422108157192,
+      "real_std_native_units": 1.0860699206878246
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.004834644121031503,
+      "std_w": 0.1724950475268246,
+      "raw_w_native_units": 32926269.990277186,
+      "real_std_native_units": 190882407.7117741
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.026728924719901837,
+      "std_w": 0.14185984002240215,
+      "raw_w_native_units": 0.016570821546117644,
+      "real_std_native_units": 0.1168112239764321
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.06032083403868012,
+      "std_w": 0.2706245440356449,
+      "raw_w_native_units": 0.12143517380612694,
+      "real_std_native_units": 0.44872195254445324
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "pod_throughput",
+      "minmax_w": 0.026276756288207,
+      "std_w": 0.1864948703222366,
+      "raw_w_native_units": 0.19397023732749166,
+      "real_std_native_units": 1.0400834993066495
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.03139928126457761,
+      "std_w": 0.2141085344887807,
+      "raw_w_native_units": 2.449143938637053,
+      "real_std_native_units": 11.438796423901486
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.008381141032852736,
+      "std_w": 0.05999508117939482,
+      "raw_w_native_units": 0.46206739119503054,
+      "real_std_native_units": 7.701754579069169
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.059343283099968516,
+      "std_w": 0.2381821477726783,
+      "raw_w_native_units": 0.01429246317569207,
+      "real_std_native_units": 0.06000644174782082
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.00947744593581671,
+      "std_w": 0.0601156110298061,
+      "raw_w_native_units": 8546760.138362968,
+      "real_std_native_units": 142172058.00545508
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.013084771541106297,
+      "std_w": 0.2276288820811397,
+      "raw_w_native_units": 1.9779921631410662e-05,
+      "real_std_native_units": 8.689548290431787e-05
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.03095271282780484,
+      "std_w": 0.13385847295055256,
+      "raw_w_native_units": 0.0016264595404191758,
+      "real_std_native_units": 0.012150590878322596
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "pod_throughput",
+      "minmax_w": 0.07181989465235532,
+      "std_w": 0.22576757775974615,
+      "raw_w_native_units": 0.3173133527367698,
+      "real_std_native_units": 1.4054868103091553
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.022633493089536903,
+      "std_w": 0.07717431727380646,
+      "raw_w_native_units": 0.15843445162675832,
+      "real_std_native_units": 2.052942704561277
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.011539718130507987,
+      "std_w": 0.07771495284179435,
+      "raw_w_native_units": 0.3629933735132592,
+      "real_std_native_units": 4.670830518963461
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.031981510871155895,
+      "std_w": 0.15083600601600874,
+      "raw_w_native_units": 0.0063687286047898976,
+      "real_std_native_units": 0.042222866893690904
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.028608495860078707,
+      "std_w": 0.2095319478229611,
+      "raw_w_native_units": 50539788.92679614,
+      "real_std_native_units": 241203260.180154
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.005613415433221181,
+      "std_w": 0.16616233486368492,
+      "raw_w_native_units": 2.2266907819639215e-05,
+      "real_std_native_units": 0.00013400695072024826
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.016333952644007596,
+      "std_w": 0.17255189701812407,
+      "raw_w_native_units": 5.758304146246506e-05,
+      "real_std_native_units": 0.0003337143343977076
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "pod_throughput",
+      "minmax_w": 0.08928923830038052,
+      "std_w": 0.2656068307935253,
+      "raw_w_native_units": 0.395485441035758,
+      "real_std_native_units": 1.4889882156050285
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.03035633369195626,
+      "std_w": 0.13987476460299547,
+      "raw_w_native_units": 0.12142533476782504,
+      "real_std_native_units": 0.8681003690155605
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.016003424827454846,
+      "std_w": 0.10437815071659098,
+      "raw_w_native_units": 1.7855213121089304,
+      "real_std_native_units": 17.10627463555091
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.05573276050364714,
+      "std_w": 0.20435299349426245,
+      "raw_w_native_units": 0.049251004484389585,
+      "real_std_native_units": 0.24100945937830068
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.04973732449601813,
+      "std_w": 0.34620701146877375,
+      "raw_w_native_units": 115044414.68589227,
+      "real_std_native_units": 332299493.8716564
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.003281187749048846,
+      "std_w": 0.10786476742312476,
+      "raw_w_native_units": 4.2081663799355034e-05,
+      "real_std_native_units": 0.00039013354225555293
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.025064438363544973,
+      "std_w": 0.09732425948050952,
+      "raw_w_native_units": 0.03237990532999865,
+      "real_std_native_units": 0.33270127615492573
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "pod_throughput",
+      "minmax_w": 0.06447744200379113,
+      "std_w": 0.4197847753283398,
+      "raw_w_native_units": 0.1231589676686239,
+      "real_std_native_units": 0.2933859799281515
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.04687711428993181,
+      "std_w": 0.3061647763076361,
+      "raw_w_native_units": 2.320417157351625,
+      "real_std_native_units": 7.578981440438651
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.029974615393339683,
+      "std_w": 0.2072278744916083,
+      "raw_w_native_units": 3.7103867842337777,
+      "real_std_native_units": 17.904863394157093
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.012614413405022624,
+      "std_w": 0.3020891865108383,
+      "raw_w_native_units": 0.0051645344245034985,
+      "real_std_native_units": 0.01709605856520192
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.03142535530326613,
+      "std_w": 0.17414526591649687,
+      "raw_w_native_units": 44189234.48861437,
+      "real_std_native_units": 253749272.23001993
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.0017751006915729646,
+      "std_w": 0.07853886176133813,
+      "raw_w_native_units": 2.521907009076838e-05,
+      "real_std_native_units": 0.00032110307591932567
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.017611410589343224,
+      "std_w": 0.14312749625889956,
+      "raw_w_native_units": 7.64606567076666e-05,
+      "real_std_native_units": 0.0005342136116833828
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "pod_throughput",
+      "minmax_w": 0.09646614470179264,
+      "std_w": 0.2798348498427956,
+      "raw_w_native_units": 0.45651831250965746,
+      "real_std_native_units": 1.6313847712896314
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.03338145719933091,
+      "std_w": 0.16548739706157822,
+      "raw_w_native_units": 0.1502165573969891,
+      "real_std_native_units": 0.9077220384407473
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.02081588002018445,
+      "std_w": 0.13458839324740057,
+      "raw_w_native_units": 2.3008437478590498,
+      "real_std_native_units": 17.09540988151657
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.05317263207532308,
+      "std_w": 0.212291157653137,
+      "raw_w_native_units": 0.15837722938248788,
+      "real_std_native_units": 0.7460378054994679
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.035451593893634045,
+      "std_w": 0.2689827262884992,
+      "raw_w_native_units": 102261482.7929419,
+      "real_std_native_units": 380178624.12198424
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.02298480007752105,
+      "std_w": 0.08578215611935967,
+      "raw_w_native_units": 0.008824677804766442,
+      "real_std_native_units": 0.10287311725398393
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.015374822706216009,
+      "std_w": 0.11071275379141528,
+      "raw_w_native_units": 0.03211353098166417,
+      "real_std_native_units": 0.29006171269270936
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "pod_throughput",
+      "minmax_w": 0.06430953134501913,
+      "std_w": 0.3405898704615598,
+      "raw_w_native_units": 0.21013026338111726,
+      "real_std_native_units": 0.6169598147365728
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.020435039601207898,
+      "std_w": 0.16707399513562607,
+      "raw_w_native_units": 0.5517460692326133,
+      "real_std_native_units": 3.3024054329024755
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.025084853092221776,
+      "std_w": 0.17424888548393044,
+      "raw_w_native_units": 3.103731313703436,
+      "real_std_native_units": 17.8120583387586
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.025326910891114773,
+      "std_w": 0.0884475906653139,
+      "raw_w_native_units": 0.0025571967039532254,
+      "real_std_native_units": 0.028911999577576623
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.012832209619286102,
+      "std_w": 0.083084181843729,
+      "raw_w_native_units": 22092799.33261786,
+      "real_std_native_units": 265908610.3076957
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.009207385875342372,
+      "std_w": 0.18581446289493436,
+      "raw_w_native_units": 1.2155458341847487e-05,
+      "real_std_native_units": 6.541718094743026e-05
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.07053402435999209,
+      "std_w": 0.20957334980713133,
+      "raw_w_native_units": 0.001065910295288395,
+      "real_std_native_units": 0.00508609656842983
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "pod_throughput",
+      "minmax_w": 0.06871488003377627,
+      "std_w": 0.20104514143691407,
+      "raw_w_native_units": 0.3085922794244133,
+      "real_std_native_units": 1.5349402488358388
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.06840561872163223,
+      "std_w": 0.21514274563991356,
+      "raw_w_native_units": 0.17101404680408053,
+      "real_std_native_units": 0.7948864196904336
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.03204046415116859,
+      "std_w": 0.20438233993739022,
+      "raw_w_native_units": 3.4955761903355125,
+      "real_std_native_units": 17.10312246843996
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.05843956854464129,
+      "std_w": 0.24246623135131398,
+      "raw_w_native_units": 0.009645566640987651,
+      "real_std_native_units": 0.039781072140359225
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.03391461586574137,
+      "std_w": 0.15608279904440292,
+      "raw_w_native_units": 40637562.80429111,
+      "real_std_native_units": 260359008.50759608
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.012100122143502071,
+      "std_w": 0.22083442588095187,
+      "raw_w_native_units": 2.568249556429541e-05,
+      "real_std_native_units": 0.00011629751775269139
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.027419115855532236,
+      "std_w": 0.3742247746990146,
+      "raw_w_native_units": 3.216468565812284e-05,
+      "real_std_native_units": 8.595017709341288e-05
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "pod_throughput",
+      "minmax_w": 0.06954364884427294,
+      "std_w": 0.20005741458283552,
+      "raw_w_native_units": 0.29692794345222073,
+      "real_std_native_units": 1.4842136397262853
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.10353630439074661,
+      "std_w": 0.2917925330514536,
+      "raw_w_native_units": 0.3352712608781156,
+      "real_std_native_units": 1.1490056218093667
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.07703107499640932,
+      "std_w": 0.39003353902158877,
+      "raw_w_native_units": 6.543041519073578,
+      "real_std_native_units": 16.775586877700313
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.06869593432733023,
+      "std_w": 0.2568449473551746,
+      "raw_w_native_units": 0.04682991948449425,
+      "real_std_native_units": 0.18232758700032403
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.04694356070671338,
+      "std_w": 0.2643847681871634,
+      "raw_w_native_units": 95310143.72649002,
+      "real_std_native_units": 360497862.1878021
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.006418195737136913,
+      "std_w": 0.1571640757841109,
+      "raw_w_native_units": 4.9597338001476884e-05,
+      "real_std_native_units": 0.00031557681202927366
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.03931311469549297,
+      "std_w": 0.19093712041673708,
+      "raw_w_native_units": 0.006158532076540876,
+      "real_std_native_units": 0.03225424193629472
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "pod_throughput",
+      "minmax_w": 0.0405542235747016,
+      "std_w": 0.15456832081985364,
+      "raw_w_native_units": 0.07786564540825947,
+      "real_std_native_units": 0.5037619933712701
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.09262071382556969,
+      "std_w": 0.35420790902525856,
+      "raw_w_native_units": 2.438314388029182,
+      "real_std_native_units": 6.883850772104883
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.03452365363058038,
+      "std_w": 0.18337216611046583,
+      "raw_w_native_units": 3.064950785916702,
+      "real_std_native_units": 16.714373020332513
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.043195800904775,
+      "std_w": 0.18361610241205775,
+      "raw_w_native_units": 0.0026672801225773833,
+      "real_std_native_units": 0.014526395493308475
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.04571294293362142,
+      "std_w": 0.20943185063625475,
+      "raw_w_native_units": 61760997.43216473,
+      "real_std_native_units": 294897825.9254005
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.010574491045093722,
+      "std_w": 0.22352682331570037,
+      "raw_w_native_units": 2.3368512291605266e-05,
+      "real_std_native_units": 0.00010454455507829819
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.021707864461792917,
+      "std_w": 0.32971685511215537,
+      "raw_w_native_units": 0.00014365889545481608,
+      "real_std_native_units": 0.0004357038265633995
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "pod_throughput",
+      "minmax_w": 0.2078333195017183,
+      "std_w": 0.5760148082905268,
+      "raw_w_native_units": 0.9310932713676979,
+      "real_std_native_units": 1.616439817113311
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.1648076509375927,
+      "std_w": 0.46434694471788623,
+      "raw_w_native_units": 0.5828916998360779,
+      "real_std_native_units": 1.255293496525994
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.0945868020352925,
+      "std_w": 0.47539528609438436,
+      "raw_w_native_units": 7.912902147467628,
+      "real_std_native_units": 16.64488979786941
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.20583829517433233,
+      "std_w": 0.699868181026258,
+      "raw_w_native_units": 0.6246373903647207,
+      "real_std_native_units": 0.8925071996397635
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.028931379375990805,
+      "std_w": 0.18813325927126068,
+      "raw_w_native_units": 78511864.66551629,
+      "real_std_native_units": 417320493.8331167
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.032565746019483234,
+      "std_w": 0.12002976907076192,
+      "raw_w_native_units": 0.008819410748522332,
+      "real_std_native_units": 0.07347686175521148
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.07018969365776097,
+      "std_w": 0.35140663374764713,
+      "raw_w_native_units": 0.05151634613406085,
+      "real_std_native_units": 0.146600380262189
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "pod_throughput",
+      "minmax_w": 0.04954827951158218,
+      "std_w": 0.23220268226848118,
+      "raw_w_native_units": 0.15292908307392108,
+      "real_std_native_units": 0.6586017076973251
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.039306150075758106,
+      "std_w": 0.2739981300247519,
+      "raw_w_native_units": 1.0403001515950594,
+      "real_std_native_units": 3.7967417934607175
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.03687087267917368,
+      "std_w": 0.19409248843371624,
+      "raw_w_native_units": 3.31192087113925,
+      "real_std_native_units": 17.063622079688525
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "pod_cpu_usage",
+      "minmax_w": 0.061749122418124996,
+      "std_w": 0.2243110112166493,
+      "raw_w_native_units": 0.002802511984796599,
+      "real_std_native_units": 0.012493867196246606
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "pod_memory_bytes",
+      "minmax_w": 0.022278928969470042,
+      "std_w": 0.11285590585905465,
+      "raw_w_native_units": 36047806.120611444,
+      "real_std_native_units": 319414441.3286747
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "pod_psi_cpu",
+      "minmax_w": 0.018069009198878147,
+      "std_w": 0.3766947706360182,
+      "raw_w_native_units": 1.971763995679877e-05,
+      "real_std_native_units": 5.234381120690142e-05
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "pod_latency_avg",
+      "minmax_w": 0.032376197638315986,
+      "std_w": 0.23416404322449538,
+      "raw_w_native_units": 9.783552820212059e-05,
+      "real_std_native_units": 0.00041780764824053153
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "pod_throughput",
+      "minmax_w": 0.19124512776282945,
+      "std_w": 0.5343139227777386,
+      "raw_w_native_units": 0.8588644828621615,
+      "real_std_native_units": 1.6074155028511732
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "gpu_utilization",
+      "minmax_w": 0.19514946755312793,
+      "std_w": 0.5590487036714351,
+      "raw_w_native_units": 0.3292366667088821,
+      "real_std_native_units": 0.5889230482902282
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "metric": "gpu_power_watts",
+      "minmax_w": 0.11803022072921265,
+      "std_w": 0.5878344522992304,
+      "raw_w_native_units": 9.784233177568813,
+      "real_std_native_units": 16.64453850790675
+    }
+  ],
+  "pooled_per_tier_workload": [
+    {
+      "tier": "a16",
+      "workload": "bert",
+      "normalized_pooled_w": 0.03250285056748585,
+      "normalized_pooled_w_std": 0.18187022050931206,
+      "raw_pooled_w": 0.8209397936020909
+    },
+    {
+      "tier": "a16",
+      "workload": "gpt2",
+      "normalized_pooled_w": 0.0534220474467972,
+      "normalized_pooled_w_std": 0.3017511483908283,
+      "raw_pooled_w": 3.744785938107373
+    },
+    {
+      "tier": "a16",
+      "workload": "resnet152",
+      "normalized_pooled_w": 0.03403834325462799,
+      "normalized_pooled_w_std": 0.20256132328904486,
+      "raw_pooled_w": 2.2007225580898266
+    },
+    {
+      "tier": "a16",
+      "workload": "whisper",
+      "normalized_pooled_w": 0.025670077858876754,
+      "normalized_pooled_w_std": 0.16704198753760216,
+      "raw_pooled_w": 5.186260253410081
+    },
+    {
+      "tier": "a16",
+      "workload": "yolo",
+      "normalized_pooled_w": 0.031264474182442374,
+      "normalized_pooled_w_std": 0.14863456595850336,
+      "raw_pooled_w": 1.3430628598396428
+    },
+    {
+      "tier": "tier3",
+      "workload": "bert",
+      "normalized_pooled_w": 0.031169481661179284,
+      "normalized_pooled_w_std": 0.17270599026198438,
+      "raw_pooled_w": 7.549809941894677
+    },
+    {
+      "tier": "tier3",
+      "workload": "gpt2",
+      "normalized_pooled_w": 0.03930641182847453,
+      "normalized_pooled_w_std": 0.2412752082848935,
+      "raw_pooled_w": 17.325721512374926
+    },
+    {
+      "tier": "tier3",
+      "workload": "resnet152",
+      "normalized_pooled_w": 0.030584251701501846,
+      "normalized_pooled_w_std": 0.1825444929427639,
+      "raw_pooled_w": 6.728868474361624
+    },
+    {
+      "tier": "tier3",
+      "workload": "whisper",
+      "normalized_pooled_w": 0.03383046754159185,
+      "normalized_pooled_w_std": 0.19424022070478966,
+      "raw_pooled_w": 15.189486553918284
+    },
+    {
+      "tier": "tier3",
+      "workload": "yolo",
+      "normalized_pooled_w": 0.0410087848074732,
+      "normalized_pooled_w_std": 0.1696414017464752,
+      "raw_pooled_w": 3.7245167302342077
+    },
+    {
+      "tier": "tier2",
+      "workload": "bert",
+      "normalized_pooled_w": 0.05456920723440655,
+      "normalized_pooled_w_std": 0.2679273882330802,
+      "raw_pooled_w": 6.831786705931032
+    },
+    {
+      "tier": "tier2",
+      "workload": "gpt2",
+      "normalized_pooled_w": 0.04700991378536074,
+      "normalized_pooled_w_std": 0.22306847252839487,
+      "raw_pooled_w": 14.420616084963317
+    },
+    {
+      "tier": "tier2",
+      "workload": "resnet152",
+      "normalized_pooled_w": 0.08405983883141235,
+      "normalized_pooled_w_std": 0.3517212386541379,
+      "raw_pooled_w": 10.170102694052352
+    },
+    {
+      "tier": "tier2",
+      "workload": "whisper",
+      "normalized_pooled_w": 0.0661786309277259,
+      "normalized_pooled_w_std": 0.2942473062632681,
+      "raw_pooled_w": 11.95742684551026
+    },
+    {
+      "tier": "tier2",
+      "workload": "yolo",
+      "normalized_pooled_w": 0.09127115346713702,
+      "normalized_pooled_w_std": 0.3756032585263745,
+      "raw_pooled_w": 6.717580073272037
+    }
+  ],
+  "tier_aggregates": {
+    "a16": {
+      "mean_normalized_pooled_w": 0.035379558662046035,
+      "mean_normalized_pooled_w_std": 0.20037184913705813,
+      "mean_raw_pooled_w": 2.659154280609803
+    },
+    "tier3": {
+      "mean_normalized_pooled_w": 0.035179879508044146,
+      "mean_normalized_pooled_w_std": 0.19208146278818133,
+      "mean_raw_pooled_w": 10.103680642556743
+    },
+    "tier2": {
+      "mean_normalized_pooled_w": 0.0686177488492085,
+      "mean_normalized_pooled_w_std": 0.3025135328410511,
+      "mean_raw_pooled_w": 10.019502480745802
+    }
+  },
+  "c6_ratios_vs_a16": {
+    "raw_pooled_w": {
+      "tier2_over_a16": 3.7679282295903898,
+      "tier3_over_a16": 3.7995842197767273
+    },
+    "normalized_pooled_w_minmax": {
+      "tier2_over_a16": 1.9394744152876968,
+      "tier3_over_a16": 0.9943560869170451
+    },
+    "normalized_pooled_w_std": {
+      "tier2_over_a16": 1.5097606482342043,
+      "tier3_over_a16": 0.9586249945559667
+    }
+  },
+  "c6_outcome": {
+    "minmax_space": "intermediate",
+    "std_space": "intermediate"
+  },
+  "tier2_vs_tier3": {
+    "raw_pooled_w": {
+      "tier2": 10.019502480745802,
+      "tier3": 10.103680642556743,
+      "relative_gap": 0.008366286913471785
+    },
+    "normalized_pooled_w_minmax": {
+      "tier2": 0.0686177488492085,
+      "tier3": 0.035179879508044146,
+      "relative_gap": 0.6442896599925629
+    },
+    "normalized_pooled_w_std": {
+      "tier2": 0.3025135328410511,
+      "tier3": 0.19208146278818133,
+      "relative_gap": 0.4465555496063042
+    },
+    "separation_note": "raw relative gap ~0.8%; minmax relative gap ~64.4%; std relative gap ~44.7%. A markedly larger normalized gap than the raw gap would support outcome (c)."
+  },
+  "reconciliation_note": "raw_pooled_w is expected to reconcile with outputs/phase4/validation/s36{,_tier2,_tier3}/validation_report.json mean_wasserstein_all (~3.19 a16, ~16.93 tier2, ~16.56 tier3) only up to generation noise (unseeded elsewhere; this script seeds torch+numpy at 42 but n_samples and exact real-pod pairing differ from the original validation run) - small mismatches are expected, not errors."
+}

@@ -1,0 +1,175 @@
+{
+  "task_4a_reconciliation": {
+    "a16": {
+      "committed_reference": 3.1928,
+      "method_i_pooled": 2.4383265970326873,
+      "method_i_pct_gap": -23.630462383090478,
+      "method_ii_per_r_avg": 3.3724352014750907,
+      "method_ii_pct_gap": 5.62625912913714
+    },
+    "tier3": {
+      "committed_reference": 16.5622,
+      "method_i_pooled": 9.82182630343674,
+      "method_i_pct_gap": -40.69733306301856,
+      "method_ii_per_r_avg": 17.768393393023576,
+      "method_ii_pct_gap": 7.282809004984696
+    },
+    "tier2": {
+      "committed_reference": 16.9319,
+      "method_i_pooled": 11.086330508978929,
+      "method_i_pct_gap": -34.524001978638374,
+      "method_ii_per_r_avg": 19.577868411142965,
+      "method_ii_pct_gap": 15.627120471671619
+    }
+  },
+  "task_4a_ii_reproduces_within_15pct": false,
+  "task_4a_committed_function_reproduction": {
+    "a16": {
+      "tier_mean": 3.1457526565706875,
+      "per_workload": {
+        "bert": 1.6513046240346918,
+        "gpt2": 4.634659914803009,
+        "resnet152": 3.108389246437766,
+        "whisper": 5.42216703662289,
+        "yolo": 1.2374445152482518
+      },
+      "pct_gap_vs_committed": -1.4735449583222437
+    },
+    "tier3": {
+      "tier_mean": 14.289827743740195,
+      "per_workload": {
+        "bert": 12.605134082431352,
+        "gpt2": 18.363958336290874,
+        "resnet152": 14.687288686141763,
+        "whisper": 19.030078281126826,
+        "yolo": 7.439857980908256
+      },
+      "pct_gap_vs_committed": -13.720231951430398
+    },
+    "tier2": {
+      "tier_mean": 14.585799225570907,
+      "per_workload": {
+        "bert": 11.993907824761942,
+        "gpt2": 17.3440094151586,
+        "resnet152": 15.695738825797877,
+        "whisper": 20.840242076559292,
+        "yolo": 7.055097985576821
+      },
+      "pct_gap_vs_committed": -13.856098691990217
+    }
+  },
+  "task_4b_generation_variance_minmax7_separation": {
+    "tier3_mean": 0.03533579121751386,
+    "tier3_sd": 0.0007135872635553765,
+    "tier2_mean": 0.06891183607450903,
+    "tier2_sd": 0.0013293842027549052,
+    "separation_diff_mean": 0.03357604485699516,
+    "separation_diff_sd": 0.0011127794946793482,
+    "separation_ratio_mean": 1.9505633906926887,
+    "separation_ratio_sd": 0.03673455763358154
+  },
+  "task_4c_per_cell_minmax_with_without_memory": {
+    "a16/bert": {
+      "method_i_pooled_raw_MBconv": 0.8102042631011878,
+      "method_ii_per_r_avg_raw_MBconv": 1.7120683392397564,
+      "minmax_pooled_w_7": 0.032003529735479104,
+      "minmax_pooled_w_6_excl_memory": 0.03520369922956228
+    },
+    "a16/gpt2": {
+      "method_i_pooled_raw_MBconv": 4.037769257525092,
+      "method_ii_per_r_avg_raw_MBconv": 5.178588678899578,
+      "minmax_pooled_w_7": 0.05438031210381673,
+      "minmax_pooled_w_6_excl_memory": 0.05562595098603715
+    },
+    "a16/resnet152": {
+      "method_i_pooled_raw_MBconv": 1.850668938017763,
+      "method_ii_per_r_avg_raw_MBconv": 3.5779078245130163,
+      "minmax_pooled_w_7": 0.03375004434045556,
+      "minmax_pooled_w_6_excl_memory": 0.03743149558675305
+    },
+    "a16/whisper": {
+      "method_i_pooled_raw_MBconv": 4.299332866837969,
+      "method_ii_per_r_avg_raw_MBconv": 4.874158988759179,
+      "minmax_pooled_w_7": 0.02601524187467566,
+      "minmax_pooled_w_6_excl_memory": 0.02970382468298759
+    },
+    "a16/yolo": {
+      "method_i_pooled_raw_MBconv": 1.1936576596814261,
+      "method_ii_per_r_avg_raw_MBconv": 1.519452175963925,
+      "minmax_pooled_w_7": 0.030520570089021173,
+      "minmax_pooled_w_6_excl_memory": 0.03422264917809121
+    },
+    "tier3/bert": {
+      "method_i_pooled_raw_MBconv": 6.217116603826402,
+      "method_ii_per_r_avg_raw_MBconv": 15.464793941843682,
+      "minmax_pooled_w_7": 0.030476610497576738,
+      "minmax_pooled_w_6_excl_memory": 0.03167412579457838
+    },
+    "tier3/gpt2": {
+      "method_i_pooled_raw_MBconv": 15.841929457432755,
+      "method_ii_per_r_avg_raw_MBconv": 24.376995318141372,
+      "minmax_pooled_w_7": 0.03779110562041237,
+      "minmax_pooled_w_6_excl_memory": 0.03653618515182366
+    },
+    "tier3/resnet152": {
+      "method_i_pooled_raw_MBconv": 8.61960485841445,
+      "method_ii_per_r_avg_raw_MBconv": 15.362457521372562,
+      "minmax_pooled_w_7": 0.0323592247997067,
+      "minmax_pooled_w_6_excl_memory": 0.030942175419836692
+    },
+    "tier3/whisper": {
+      "method_i_pooled_raw_MBconv": 14.319223317155418,
+      "method_ii_per_r_avg_raw_MBconv": 24.480865738208877,
+      "minmax_pooled_w_7": 0.03294810457322969,
+      "minmax_pooled_w_6_excl_memory": 0.03288739813130099
+    },
+    "tier3/yolo": {
+      "method_i_pooled_raw_MBconv": 4.111257280354676,
+      "method_ii_per_r_avg_raw_MBconv": 9.15685444555138,
+      "minmax_pooled_w_7": 0.04120555705219061,
+      "minmax_pooled_w_6_excl_memory": 0.04566851170436456
+    },
+    "tier2/bert": {
+      "method_i_pooled_raw_MBconv": 9.293818554412454,
+      "method_ii_per_r_avg_raw_MBconv": 14.811801992407288,
+      "minmax_pooled_w_7": 0.05453369515129567,
+      "minmax_pooled_w_6_excl_memory": 0.055562732384819576
+    },
+    "tier2/gpt2": {
+      "method_i_pooled_raw_MBconv": 15.05250678574246,
+      "method_ii_per_r_avg_raw_MBconv": 24.50557865709812,
+      "minmax_pooled_w_7": 0.0473523761688163,
+      "minmax_pooled_w_6_excl_memory": 0.04706479583780449
+    },
+    "tier2/resnet152": {
+      "method_i_pooled_raw_MBconv": 9.589956693115074,
+      "method_ii_per_r_avg_raw_MBconv": 19.908600093736442,
+      "minmax_pooled_w_7": 0.08496838537690829,
+      "minmax_pooled_w_6_excl_memory": 0.09205618878483363
+    },
+    "tier2/whisper": {
+      "method_i_pooled_raw_MBconv": 15.95234128648769,
+      "method_ii_per_r_avg_raw_MBconv": 28.499636066927074,
+      "minmax_pooled_w_7": 0.06750535029314197,
+      "minmax_pooled_w_6_excl_memory": 0.07222049975352056
+    },
+    "tier2/yolo": {
+      "method_i_pooled_raw_MBconv": 5.54302922513696,
+      "method_ii_per_r_avg_raw_MBconv": 10.163725245545887,
+      "minmax_pooled_w_7": 0.08870583937335365,
+      "minmax_pooled_w_6_excl_memory": 0.10058284932245053
+    }
+  },
+  "task_4c_tier_means": {
+    "minmax7_with_memory": {
+      "a16": 0.03533393962868965,
+      "tier3": 0.03495612050862322,
+      "tier2": 0.06861312927270317
+    },
+    "minmax6_excl_memory": {
+      "a16": 0.038437523932686256,
+      "tier3": 0.03554167924038086,
+      "tier2": 0.07349741321668576
+    }
+  }
+}

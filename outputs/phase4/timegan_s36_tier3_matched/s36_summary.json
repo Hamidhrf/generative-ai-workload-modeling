@@ -1,0 +1,40 @@
+{
+  "stage": "s36",
+  "description": "S34 architecture + Spectral Normalization in discriminator",
+  "workloads": [
+    "bert",
+    "gpt2",
+    "resnet152",
+    "whisper",
+    "yolo"
+  ],
+  "improvement": "spectral_normalization",
+  "baseline": "s34",
+  "results": {
+    "bert": {
+      "best_val": 0.3498189449310303,
+      "elapsed_s": 385.71221947669983,
+      "model_path": "models/phase4/timegan_s36_tier3_matched/s36_bert_vr05_fm15"
+    },
+    "gpt2": {
+      "best_val": 0.08771491795778275,
+      "elapsed_s": 381.4093599319458,
+      "model_path": "models/phase4/timegan_s36_tier3_matched/s36_gpt2_vr03_fm20"
+    },
+    "resnet152": {
+      "best_val": 0.10909377038478851,
+      "elapsed_s": 381.2217650413513,
+      "model_path": "models/phase4/timegan_s36_tier3_matched/s36_resnet152_vr04_fm10"
+    },
+    "whisper": {
+      "best_val": 0.4907616972923279,
+      "elapsed_s": 202.88178515434265,
+      "model_path": "models/phase4/timegan_s36_tier3_matched/s36_whisper_vr05_fm05"
+    },
+    "yolo": {
+      "best_val": 0.33908939361572266,
+      "elapsed_s": 384.1881983280182,
+      "model_path": "models/phase4/timegan_s36_tier3_matched/s36_yolo_vr03_fm12"
+    }
+  }
+}
