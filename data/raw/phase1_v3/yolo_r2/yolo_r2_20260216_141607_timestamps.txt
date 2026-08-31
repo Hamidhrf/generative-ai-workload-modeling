@@ -1,0 +1,7 @@
+Workload: yolo
+Replicas: 2
+Start: 2026-02-16T14:16:07.236144
+End: 2026-02-16T15:16:07.236144
+Duration: 3600s
+Version: Phase 1 v3
+Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)

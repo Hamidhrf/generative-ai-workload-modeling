@@ -60,6 +60,10 @@ data/raw/*
 !data/raw/extension_tier2/**
 !data/raw/extension_tier3/
 !data/raw/extension_tier3/**
+!data/raw/phase1_v3/
+!data/raw/phase1_v3/**
+!data/raw/extension_tier2_rerun_jan/
+!data/raw/extension_tier2_rerun_jan/**
 
 # ==============================================================================
 # Tier 2 batch runner state — machine-local resume checkpoint, not for git
@@ -125,6 +129,28 @@ models/**/*.pth
 !models/phase4/lstm/**/*.json
 !models/phase4/timevae/**/*.pt
 !models/phase4/timevae/**/*.json
+!models/phase4/timegan_s36_tier2_e6_fm0p125/**/*.pt
+!models/phase4/timegan_s36_tier2_e6_fm0p125/**/*.json
+!models/phase4/timegan_s36_tier2_e6_fm0p25/**/*.pt
+!models/phase4/timegan_s36_tier2_e6_fm0p25/**/*.json
+!models/phase4/timegan_s36_tier2_e6_fm0p5/**/*.pt
+!models/phase4/timegan_s36_tier2_e6_fm0p5/**/*.json
+!models/phase4/timegan_s36_tier2_e6_fm2p0/**/*.pt
+!models/phase4/timegan_s36_tier2_e6_fm2p0/**/*.json
+!models/phase4/timegan_s36_tier2_e6_fm4p0/**/*.pt
+!models/phase4/timegan_s36_tier2_e6_fm4p0/**/*.json
+!models/phase4/timegan_s36_tier3_matched/**/*.pt
+!models/phase4/timegan_s36_tier3_matched/**/*.json
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p125/**/*.pt
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p125/**/*.json
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p25/**/*.pt
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p25/**/*.json
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p5/**/*.pt
+!models/phase4/timegan_s36_tier3_matched_e6_fm0p5/**/*.json
+!models/phase4/timegan_s36_tier3_matched_e6_fm2p0/**/*.pt
+!models/phase4/timegan_s36_tier3_matched_e6_fm2p0/**/*.json
+!models/phase4/timegan_s36_tier3_matched_e6_fm4p0/**/*.pt
+!models/phase4/timegan_s36_tier3_matched_e6_fm4p0/**/*.json
 
 # Keep model configs for all stages (tiny JSON/YAML files)
 !models/**/*.yaml

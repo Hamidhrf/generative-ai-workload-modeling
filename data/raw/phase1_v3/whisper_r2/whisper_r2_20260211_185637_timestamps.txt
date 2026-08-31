@@ -1,0 +1,7 @@
+Workload: whisper
+Replicas: 2
+Start: 2026-02-11T18:56:37.603768
+End: 2026-02-11T19:56:37.603768
+Duration: 3600s
+Version: Phase 1 v3
+Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)
