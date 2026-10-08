@@ -1,3 +1,4 @@
 
 ## Tier 2 batch started 2026-10-08T16:41:43Z — 35 experiments (index 0 onward)
 - 2026-10-08T17:47:43Z Tier 2 bert r=1: 33 csv files, mean rows=1767
+- 2026-10-08T18:53:41Z Tier 2 bert r=2: 33 csv files, mean rows=1920
