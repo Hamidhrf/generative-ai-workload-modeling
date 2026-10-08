@@ -5,3 +5,4 @@
 - 2026-10-08T19:59:39Z Tier 2 bert r=3: 33 csv files, mean rows=2072
 - 2026-10-08T21:05:38Z Tier 2 bert r=4: 33 csv files, mean rows=2225
 - 2026-10-08T22:11:36Z Tier 2 bert r=5: 33 csv files, mean rows=2378
+- 2026-10-08T23:17:34Z Tier 2 bert r=6: 33 csv files, mean rows=2530
