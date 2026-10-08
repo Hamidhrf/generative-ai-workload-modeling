@@ -11,7 +11,8 @@ WORKLOADS=(bert yolo resnet152 gpt2 whisper)
 REPLICAS=(1 2 3 4 5 6 7 8 9 10)
 PROM_URL="${PROM_URL:-http://172.22.174.66:30090}"
 DATA_DIR="${DATA_DIR:-data/raw/extension_tier3}"
-STATE_FILE=".tier3_state.json"
+STATE_FILE="${STATE_FILE:-.tier3_state.json}"
+GIT_BRANCH="${GIT_BRANCH:-extension-h100}"
 JOURNAL="EXTENSION_JOURNAL.md"
 POD_READY_TIMEOUT_DEFAULT=180
 POD_READY_TIMEOUT_WHISPER=300
@@ -213,8 +214,8 @@ fi
 # commits from extension-h100 to the real remote (bit us during dry-run
 # testing on a throwaway branch).
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$CURRENT_BRANCH" != "extension-h100" ]; then
-  echo "HALT: must be run from the extension-h100 branch (currently on $CURRENT_BRANCH)."
+if [ "$CURRENT_BRANCH" != "$GIT_BRANCH" ]; then
+  echo "HALT: must be run from the $GIT_BRANCH branch (currently on $CURRENT_BRANCH)."
   exit 1
 fi
 
@@ -347,7 +348,7 @@ for workload in "${WORKLOADS[@]}"; do
     fi
 
     git commit -m "data: H100 Tier 3 $workload r=$r collected on devLab (time-slicing 10)" || halt "git commit failed"
-    git push origin extension-h100 || halt "git push failed"
+    git push origin "$GIT_BRANCH" || halt "git push failed"
 
     echo "[OK] $workload r=$r complete ($FILE_COUNT csv files, mean rows=$MEAN_ROWS)"
   done

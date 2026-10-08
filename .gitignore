@@ -70,6 +70,8 @@ data/raw/*
 # ==============================================================================
 .tier2_state.json
 .tier3_state.json
+.tier2_sweep2_state.json
+.tier3_sweep2_state.json
 
 # ==============================================================================
 # Downloaded monitoring stack binaries — not code

@@ -11,7 +11,8 @@ WORKLOADS=(bert gpt2 resnet152 whisper yolo)
 REPLICAS=(1 2 3 4 5 6 7)
 PROM_URL="${PROM_URL:-http://172.22.174.66:30090}"
 DATA_DIR="${DATA_DIR:-data/raw/extension_tier2}"
-STATE_FILE=".tier2_state.json"
+STATE_FILE="${STATE_FILE:-.tier2_state.json}"
+GIT_BRANCH="${GIT_BRANCH:-extension-h100}"
 JOURNAL="EXTENSION_JOURNAL.md"
 POD_READY_TIMEOUT_DEFAULT=180
 POD_READY_TIMEOUT_WHISPER=300
@@ -181,8 +182,8 @@ fi
 # commits from extension-h100 to the real remote (bit us during dry-run
 # testing on a throwaway branch).
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$CURRENT_BRANCH" != "extension-h100" ]; then
-  echo "HALT: must be run from the extension-h100 branch (currently on $CURRENT_BRANCH)."
+if [ "$CURRENT_BRANCH" != "$GIT_BRANCH" ]; then
+  echo "HALT: must be run from the $GIT_BRANCH branch (currently on $CURRENT_BRANCH)."
   exit 1
 fi
 
@@ -312,7 +313,7 @@ for workload in "${WORKLOADS[@]}"; do
     # resume checkpoint). Committing $DIR and $JOURNAL only.
     git add "$DIR" "$JOURNAL"
     git commit -m "data: H100 Tier 2 $workload r=$r collected on devLab (MIG 1g.12gb)" || halt "git commit failed"
-    git push origin extension-h100 || halt "git push failed"
+    git push origin "$GIT_BRANCH" || halt "git push failed"
 
     echo "[OK] $workload r=$r complete ($FILE_COUNT csv files, mean rows=$MEAN_ROWS)"
   done
