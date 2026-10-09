@@ -14,3 +14,4 @@
 - 2026-10-09T05:53:22Z Tier 2 gpt2 r=5: 33 csv files, mean rows=2378
 - 2026-10-09T06:59:20Z Tier 2 gpt2 r=6: 33 csv files, mean rows=2530
 - 2026-10-09T08:05:19Z Tier 2 gpt2 r=7: 33 csv files, mean rows=2683
+- 2026-10-09T09:11:18Z Tier 2 resnet152 r=1: 33 csv files, mean rows=1767
