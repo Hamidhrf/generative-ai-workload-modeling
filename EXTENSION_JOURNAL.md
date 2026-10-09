@@ -23,3 +23,4 @@
 - 2026-10-09T15:47:05Z Tier 2 resnet152 r=7: 33 csv files, mean rows=2683
 - 2026-10-09T16:53:03Z Tier 2 whisper r=1: 33 csv files, mean rows=1767
 - 2026-10-09T17:59:01Z Tier 2 whisper r=2: 33 csv files, mean rows=1920
+- 2026-10-09T19:05:00Z Tier 2 whisper r=3: 33 csv files, mean rows=2072
