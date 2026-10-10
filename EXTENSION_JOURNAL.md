@@ -34,3 +34,4 @@
 - 2026-10-10T03:52:47Z Tier 2 yolo r=4: 33 csv files, mean rows=2225
 - 2026-10-10T04:58:45Z Tier 2 yolo r=5: 33 csv files, mean rows=2378
 - 2026-10-10T06:04:43Z Tier 2 yolo r=6: 33 csv files, mean rows=2530
+- 2026-10-10T07:10:41Z Tier 2 yolo r=7: 33 csv files, mean rows=2683
