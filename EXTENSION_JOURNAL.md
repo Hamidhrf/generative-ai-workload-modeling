@@ -46,3 +46,4 @@
 - 2026-10-10T16:36:24Z Tier 3 bert r=7: 22 CSV files, mean rows=2080
 - 2026-10-10T17:42:23Z Tier 3 bert r=8: 22 CSV files, mean rows=2307
 - 2026-10-10T18:48:23Z Tier 3 bert r=9: 22 CSV files, mean rows=2535
+- 2026-10-10T19:54:23Z Tier 3 bert r=10: 22 CSV files, mean rows=2762
