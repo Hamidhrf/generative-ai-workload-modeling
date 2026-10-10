@@ -64,6 +64,10 @@ data/raw/*
 !data/raw/phase1_v3/**
 !data/raw/extension_tier2_rerun_jan/
 !data/raw/extension_tier2_rerun_jan/**
+!data/raw/extension_tier2_sweep2/
+!data/raw/extension_tier2_sweep2/**
+!data/raw/extension_tier3_sweep2/
+!data/raw/extension_tier3_sweep2/**
 
 # ==============================================================================
 # Tier 2 batch runner state — machine-local resume checkpoint, not for git

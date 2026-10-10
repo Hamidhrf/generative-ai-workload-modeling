@@ -428,3 +428,73 @@ layers, fabricmanager, MPS, imex, sandboxutils), the same as on the
 
 These satisfy `check_mig_state` in `run_tier2_batch.sh` (mig.config,
 state, capacity 7).
+
+## 10. Tier 2 sweep 2 data committed after collection
+
+**What happened.** The Tier 2 MIG sweep (2026-10-08 16:41:43 → 2026-10-10
+07:10:41 UTC, 35/35 `success`, no halts) wrote its data to
+`data/raw/extension_tier2_sweep2/`, but `.gitignore` line 56 (`data/raw/*`)
+ignores every directory under `data/raw/` that is not explicitly exempted. Only
+the August directories (`extension_tier1/2/3`, `phase1_v3`,
+`extension_tier2_rerun_jan`) had `!` exemptions. `git add "$DIR"` in
+`run_tier2_batch.sh` skipped the ignored data without failing, so each of the
+35 per-experiment commits contained only `EXTENSION_JOURNAL.md`.
+(`run_tier3_batch.sh` halts when `git add` stages nothing from `$DIR`;
+`run_tier2_batch.sh` has no such guard.) The read-only review before the sweep
+checked the scripts' `git add` paths but not `.gitignore`.
+
+**Fix.** Exemptions for `extension_tier2_sweep2/` and `extension_tier3_sweep2/`
+were added to `.gitignore`, and all 35 directories (1190 files, 294,718,998
+bytes) were committed in one commit after collection. File contents are
+unchanged from collection: before the commit they were checked against
+`docs/SWEEP2_TIER2_SHA256.txt` (sha256 of every file, kept outside the data
+directory so the preprocessor never sees it).
+
+**Backup.** `~/sweep2_backup/extension_tier2_sweep2.20261010_084525.tgz`
+(17,406,402 bytes, 1190 files),
+sha256 `32f8020c33b81f68717b17cf852dacdc11656014b4651aae2cf8e8a3732b6fb0`.
+
+**Collection times.** The 35 journal-only commits `844b3fb..3c28621` on
+`sweep2-collection` record when each run finished and was committed. File
+modification times (UTC) are below. Each experiment's files are exported
+together at the end of its run, so first and last mtime agree to within a
+second. The `YYYYMMDD_HHMMSS` stamp in each file name is the start of
+collection, about 60 minutes earlier.
+
+| Experiment | Files | First file mtime | Last file mtime | Journal-only commit (commit time) |
+|---|---|---|---|---|
+| bert_r1 | 34 | 2026-10-08 17:46:57 | 2026-10-08 17:46:57 | `844b3fb` (2026-10-08 17:47:43) |
+| bert_r2 | 34 | 2026-10-08 18:52:55 | 2026-10-08 18:52:55 | `a1cb701` (2026-10-08 18:53:41) |
+| bert_r3 | 34 | 2026-10-08 19:58:53 | 2026-10-08 19:58:53 | `83ec2e2` (2026-10-08 19:59:39) |
+| bert_r4 | 34 | 2026-10-08 21:04:51 | 2026-10-08 21:04:52 | `bdcf3f9` (2026-10-08 21:05:38) |
+| bert_r5 | 34 | 2026-10-08 22:10:49 | 2026-10-08 22:10:50 | `007268b` (2026-10-08 22:11:36) |
+| bert_r6 | 34 | 2026-10-08 23:16:47 | 2026-10-08 23:16:48 | `7e7c25e` (2026-10-08 23:17:34) |
+| bert_r7 | 34 | 2026-10-09 00:22:45 | 2026-10-09 00:22:45 | `5c65778` (2026-10-09 00:23:32) |
+| gpt2_r1 | 34 | 2026-10-09 01:28:43 | 2026-10-09 01:28:43 | `0dabc96` (2026-10-09 01:29:30) |
+| gpt2_r2 | 34 | 2026-10-09 02:34:41 | 2026-10-09 02:34:41 | `3a430d5` (2026-10-09 02:35:28) |
+| gpt2_r3 | 34 | 2026-10-09 03:40:39 | 2026-10-09 03:40:39 | `a2e6965` (2026-10-09 03:41:25) |
+| gpt2_r4 | 34 | 2026-10-09 04:46:37 | 2026-10-09 04:46:37 | `73edd96` (2026-10-09 04:47:24) |
+| gpt2_r5 | 34 | 2026-10-09 05:52:35 | 2026-10-09 05:52:35 | `5bb0f9a` (2026-10-09 05:53:22) |
+| gpt2_r6 | 34 | 2026-10-09 06:58:33 | 2026-10-09 06:58:34 | `cbc3541` (2026-10-09 06:59:20) |
+| gpt2_r7 | 34 | 2026-10-09 08:04:33 | 2026-10-09 08:04:33 | `6adaf02` (2026-10-09 08:05:19) |
+| resnet152_r1 | 34 | 2026-10-09 09:10:31 | 2026-10-09 09:10:31 | `e3be342` (2026-10-09 09:11:18) |
+| resnet152_r2 | 34 | 2026-10-09 10:16:29 | 2026-10-09 10:16:29 | `e6fda97` (2026-10-09 10:17:15) |
+| resnet152_r3 | 34 | 2026-10-09 11:22:26 | 2026-10-09 11:22:27 | `ef1039c` (2026-10-09 11:23:13) |
+| resnet152_r4 | 34 | 2026-10-09 12:28:24 | 2026-10-09 12:28:25 | `e453928` (2026-10-09 12:29:11) |
+| resnet152_r5 | 34 | 2026-10-09 13:34:22 | 2026-10-09 13:34:23 | `ca41fc3` (2026-10-09 13:35:09) |
+| resnet152_r6 | 34 | 2026-10-09 14:40:20 | 2026-10-09 14:40:20 | `1c03ad4` (2026-10-09 14:41:07) |
+| resnet152_r7 | 34 | 2026-10-09 15:46:18 | 2026-10-09 15:46:19 | `73345ba` (2026-10-09 15:47:05) |
+| whisper_r1 | 34 | 2026-10-09 16:52:16 | 2026-10-09 16:52:17 | `04b202e` (2026-10-09 16:53:03) |
+| whisper_r2 | 34 | 2026-10-09 17:58:14 | 2026-10-09 17:58:15 | `f137300` (2026-10-09 17:59:01) |
+| whisper_r3 | 34 | 2026-10-09 19:04:13 | 2026-10-09 19:04:13 | `3d78fd1` (2026-10-09 19:05:00) |
+| whisper_r4 | 34 | 2026-10-09 20:10:11 | 2026-10-09 20:10:11 | `069ca86` (2026-10-09 20:10:58) |
+| whisper_r5 | 34 | 2026-10-09 21:16:10 | 2026-10-09 21:16:10 | `c2686a1` (2026-10-09 21:16:57) |
+| whisper_r6 | 34 | 2026-10-09 22:22:08 | 2026-10-09 22:22:09 | `080a911` (2026-10-09 22:22:56) |
+| whisper_r7 | 34 | 2026-10-09 23:28:07 | 2026-10-09 23:28:08 | `003e328` (2026-10-09 23:28:55) |
+| yolo_r1 | 34 | 2026-10-10 00:34:06 | 2026-10-10 00:34:07 | `be2ad3a` (2026-10-10 00:34:53) |
+| yolo_r2 | 34 | 2026-10-10 01:40:05 | 2026-10-10 01:40:05 | `d13f39f` (2026-10-10 01:40:51) |
+| yolo_r3 | 34 | 2026-10-10 02:46:02 | 2026-10-10 02:46:03 | `a44dc12` (2026-10-10 02:46:49) |
+| yolo_r4 | 34 | 2026-10-10 03:52:00 | 2026-10-10 03:52:01 | `c86ee6d` (2026-10-10 03:52:47) |
+| yolo_r5 | 34 | 2026-10-10 04:57:58 | 2026-10-10 04:57:59 | `7802dd3` (2026-10-10 04:58:45) |
+| yolo_r6 | 34 | 2026-10-10 06:03:56 | 2026-10-10 06:03:57 | `2a38f3c` (2026-10-10 06:04:43) |
+| yolo_r7 | 34 | 2026-10-10 07:09:54 | 2026-10-10 07:09:55 | `3c28621` (2026-10-10 07:10:41) |
