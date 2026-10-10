@@ -498,3 +498,63 @@ collection, about 60 minutes earlier.
 | yolo_r5 | 34 | 2026-10-10 04:57:58 | 2026-10-10 04:57:59 | `7802dd3` (2026-10-10 04:58:45) |
 | yolo_r6 | 34 | 2026-10-10 06:03:56 | 2026-10-10 06:03:57 | `2a38f3c` (2026-10-10 06:04:43) |
 | yolo_r7 | 34 | 2026-10-10 07:09:54 | 2026-10-10 07:09:55 | `3c28621` (2026-10-10 07:10:41) |
+
+## 11. Time-slicing switch record (2026-10-10)
+
+Checklist B, all times UTC. Changes were run by the operator; checks by the
+agent. Preconditions before step 2 (08:47:08): MIG sweep complete (35/35,
+data commit `6a25019` pushed), no pods requesting `nvidia.com/gpu`, no GPU
+processes, gpu-gatekeeper DaemonSet still 0/0, kubelet active.
+
+| Time | Event |
+|------|-------|
+| 08:47:08 | Step 1: node `devlab`, `all-1g.12gb` / `success`, mig.strategy `single`, capacity 7 |
+| ~08:48:20 | Step 2: label `all-disabled`; kubelet stopped by mig-manager 08:48:34 |
+| 08:49:14 | `success`, MIG mode Disabled, kubelet active (restarted by mig-manager) |
+| ~08:50:45 | Step 3: `kubectl apply -f ~/sweep2_backup/time-slicing-config.replicas10.yaml` (content identical to Checklist B step 3 / `TIER3_NOTES.md`; checked with `diff` and a server dry run first) |
+| ~08:51:40 | Step 4: ClusterPolicy `devicePlugin.config` -> `time-slicing-config` / `any`; device plugin restarted 08:51:42 |
+| **08:51:55** | **allocatable 10, gpu.replicas 10**: switch complete |
+
+Checks at 2026-10-10T08:52:04Z:
+
+```
+kubelet active
+mig.config=all-disabled state=success mig.strategy=single
+capacity=10 allocatable=10
+gpu.replicas=10 sharing-strategy=time-slicing product=NVIDIA-H100-NVL-SHARED count=1 memory=95830
+nvidia-smi -L:
+GPU 0: NVIDIA H100 NVL (UUID: GPU-d59cb1c4-ad97-d91a-6731-e7b5f38951a6)
+MIG devices: 0   (MIG mode: Disabled)
+time-slicing-config data.any:
+  version: v1
+  flags:
+    migStrategy: none
+  sharing:
+    timeSlicing:
+      resources:
+        - name: nvidia.com/gpu
+          replicas: 10
+ClusterPolicy spec.devicePlugin.config = {"default":"any","name":"time-slicing-config"}
+ClusterPolicy spec.mig = {"strategy":"single"}
+gpu-operator pods: all Running/Completed
+  (nvidia-device-plugin-daemonset-7tjq7, gpu-feature-discovery-pbss8 started 08:51:42-43)
+gpu-gatekeeper DaemonSet: DESIRED 0 CURRENT 0 (nodeSelector sweep2-gatekeeper-paused=true)
+```
+
+Device-plugin log (`nvidia-device-plugin-daemonset-7tjq7`): effective config has
+`sharing.timeSlicing.resources[0].replicas: 10` (`devices: all`, name
+`nvidia.com/gpu`); `Registered device plugin for 'nvidia.com/gpu' with Kubelet`
+at 08:51:45. No errors; the only warnings are missing optional files, the same
+as on the MIG starts.
+
+**Effective MIG strategy.** The device plugin's effective config shows
+`"migStrategy": "single"`, not the `none` in the ConfigMap file. The container
+env `MIG_STRATEGY=single` (set by the GPU operator from ClusterPolicy
+`spec.mig.strategy`) overrides the file's flag. August was the same: its
+ClusterPolicy strategy was `single` from the Helm install, so its device plugin
+also got `MIG_STRATEGY=single`. `TIER3_NOTES.md` does not record the effective
+value. With MIG disabled, `single` and `none` expose the GPU identically (one
+full GPU, time-sliced 10 ways), so this does not affect comparability.
+
+These satisfy `check_timeslicing_state` in `run_tier3_batch.sh` (mig.config
+all-disabled, capacity 10, gpu.replicas 10).
