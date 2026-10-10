@@ -35,3 +35,6 @@
 - 2026-10-10T04:58:45Z Tier 2 yolo r=5: 33 csv files, mean rows=2378
 - 2026-10-10T06:04:43Z Tier 2 yolo r=6: 33 csv files, mean rows=2530
 - 2026-10-10T07:10:41Z Tier 2 yolo r=7: 33 csv files, mean rows=2683
+
+## Tier 3 batch started 2026-10-10T08:54:34Z — 50 experiments (index 0 onward)
+- 2026-10-10T10:00:31Z Tier 3 bert r=1: 22 CSV files, mean rows=715
