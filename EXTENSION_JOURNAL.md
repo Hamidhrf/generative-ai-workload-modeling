@@ -49,3 +49,4 @@
 - 2026-10-10T19:54:23Z Tier 3 bert r=10: 22 CSV files, mean rows=2762
 - 2026-10-10T21:00:22Z Tier 3 yolo r=1: 22 CSV files, mean rows=715
 - 2026-10-10T22:06:20Z Tier 3 yolo r=2: 22 CSV files, mean rows=942
+- 2026-10-10T23:12:19Z Tier 3 yolo r=3: 22 CSV files, mean rows=1170
