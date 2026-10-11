@@ -61,3 +61,4 @@
 - 2026-10-11T09:06:12Z Tier 3 resnet152 r=2: 22 CSV files, mean rows=942
 - 2026-10-11T10:12:11Z Tier 3 resnet152 r=3: 22 CSV files, mean rows=1170
 - 2026-10-11T11:18:09Z Tier 3 resnet152 r=4: 22 CSV files, mean rows=1397
+- 2026-10-11T12:24:08Z Tier 3 resnet152 r=5: 22 CSV files, mean rows=1625
