@@ -1,0 +1,7 @@
+Workload: resnet152
+Replicas: 10
+Start: 2026-10-11T16:53:22.590002
+End: 2026-10-11T17:53:22.590002
+Duration: 3600s
+Version: Phase 1 v3
+Load Profile: NIGHT->RAMP->MORNING->LUNCH->PEAK->EVENING (Business Day)
