@@ -68,3 +68,4 @@
 - 2026-10-11T16:48:05Z Tier 3 resnet152 r=9: 22 CSV files, mean rows=2535
 - 2026-10-11T17:54:05Z Tier 3 resnet152 r=10: 22 CSV files, mean rows=2762
 - 2026-10-11T19:00:04Z Tier 3 gpt2 r=1: 22 CSV files, mean rows=715
+- 2026-10-11T20:06:03Z Tier 3 gpt2 r=2: 22 CSV files, mean rows=942
