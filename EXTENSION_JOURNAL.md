@@ -54,3 +54,4 @@
 - 2026-10-11T01:24:18Z Tier 3 yolo r=5: 22 CSV files, mean rows=1625
 - 2026-10-11T02:30:17Z Tier 3 yolo r=6: 22 CSV files, mean rows=1852
 - 2026-10-11T03:36:16Z Tier 3 yolo r=7: 22 CSV files, mean rows=2080
+- 2026-10-11T04:42:16Z Tier 3 yolo r=8: 22 CSV files, mean rows=2307
