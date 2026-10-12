@@ -631,3 +631,89 @@ rotates between the time-sliced pods, as in August.
 Attempt 2 was committed by hand, with the batch's pending journal line, and
 state entry 49 set to `success`. Attempt 1 stays in
 `~/sweep2_backup/whisper_r10_attempt1/`.
+
+## 13. Handback to Kostya's configuration (2026-10-12)
+
+Handback completed **2026-10-12 21:03:51 UTC**: the device plugin registered
+with the replicas-5 config. Sweep 2 data collection was finished by then:
+Tier 2 35/35, Tier 3 50/50, with whisper r=10 accepted as in section 12.
+Section 5 restore, one command at a time (run by the operator):
+
+1. ~20:34 UTC, restore the replicas-5 ConfigMap from the backup:
+   ```bash
+   grep -v -E '^\s+(resourceVersion|uid|creationTimestamp):' \
+     ~/sweep2_backup/time-slicing-config.20261008_151744.yaml | kubectl apply -f -
+   ```
+   `configmap/time-slicing-config configured`. The live ConfigMap then
+   matched the backup (`kubectl diff` exit 0), including Kostya's
+   `renameByDefault: false` and `failRequestsGreaterThanOne: true`, which
+   the August replicas-10 form does not have. The node stayed at
+   replicas 10 / allocatable 10 for 3+ minutes. The device plugin's
+   `config-manager` reloads only when the `nvidia.com/device-plugin.config`
+   node label changes, not when the ConfigMap's content changes, so the
+   running pods kept the old config.
+2. Device-plugin binding: already
+   `{"default":"any","name":"time-slicing-config"}`, so nothing was run. A
+   re-patch would be a no-op and would not roll the pods.
+3. ~21:03 UTC, MIG strategy back to Kostya's value:
+   ```bash
+   kubectl patch clusterpolicy cluster-policy --type merge -p '{"spec":{"mig":{"strategy":"none"}}}'
+   ```
+   This changed `MIG_STRATEGY` on the device-plugin and gpu-feature-discovery
+   DaemonSets. The operator rolled both pods (`nvidia-device-plugin-daemonset-swlkk`,
+   `gpu-feature-discovery-lbkjb`), and they started with the replicas-5
+   ConfigMap. Replicas and allocatable reached 5 within about 40 s.
+
+Note for future restores: after re-applying a ConfigMap whose content
+changed, the device-plugin pods must be rolled. Here step 3 did that. If the
+strategy is already `none`, a separate pod restart is needed.
+
+Final checks:
+
+```
+### checks at 2026-10-12T21:04:09Z
+mig.config=all-disabled state=success
+allocatable nvidia.com/gpu=5 capacity=5
+gpu.replicas=5 sharing-strategy=time-slicing gpu.product=NVIDIA-H100-NVL-SHARED
+--- nvidia-smi -L
+GPU 0: NVIDIA H100 NVL (UUID: GPU-d59cb1c4-ad97-d91a-6731-e7b5f38951a6)
+--- nvidia-smi --query-gpu=mig.mode.current
+Disabled
+ClusterPolicy mig={"strategy":"none"} devicePlugin.config={"default":"any","name":"time-slicing-config"} status=ready
+--- live ConfigMap vs replicas-5 backup (kubectl diff, metadata stripped):
+identical (exit 0)
+--- device-plugin DS env MIG_STRATEGY:
+nvidia-device-plugin: none
+config-manager: 
+--- gpu-operator pods:
+gpu-feature-discovery-lbkjb 2/2 Running 0 55s
+gpu-operator-1786444857-node-feature-discovery-gc-7dc77649qrc6r 1/1 Running 3 62d
+gpu-operator-1786444857-node-feature-discovery-master-5d5f4j9s7 1/1 Running 3 62d
+gpu-operator-1786444857-node-feature-discovery-worker-pfwhs 1/1 Running 3 62d
+gpu-operator-c5f9d98f7-phfg4 1/1 Running 3 62d
+nvidia-container-toolkit-daemonset-c7fhp 1/1 Running 3 62d
+nvidia-cuda-validator-mlpj6 0/1 Completed 0 23s
+nvidia-dcgm-exporter-48msf 1/1 Running 0 2d12h
+nvidia-device-plugin-daemonset-swlkk 2/2 Running 0 55s
+nvidia-mig-manager-ghkbb 1/1 Running 3 62d
+nvidia-node-status-exporter-smhdl 1/1 Running 3 62d
+nvidia-operator-validator-ndxpm 1/1 Running 0 26s
+--- gatekeeper:
+NAMESPACE        NAME                                                    DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                                                          AGE
+gpu-gatekeeper   gpu-gatekeeper                                          0         0         0       0            0           nvidia.com/gpu.present=true,sweep2-gatekeeper-paused=true              26d
+```
+
+Device-plugin log (`nvidia-device-plugin-daemonset-swlkk`, 21:03:51): effective
+config `"migStrategy": "none"`, `"failRequestsGreaterThanOne": true`,
+`"replicas": 5`; `Registered device plugin for 'nvidia.com/gpu' with Kubelet`.
+No errors. The only warnings are the optional `libnvidia-sandboxutils.so.1`
+not found and `nvsandboxutils: ERROR_LIBRARY_LOAD; ignoring`, the same as on
+earlier starts. The config-manager log has no errors.
+
+**Still paused: gpu-gatekeeper** (DaemonSet 0/0, nodeSelector
+`sweep2-gatekeeper-paused=true`, section 6 step 2a). Kostya re-enables it
+himself by removing that nodeSelector key:
+```bash
+kubectl patch ds gpu-gatekeeper -n gpu-gatekeeper --type json \
+  -p '[{"op":"remove","path":"/spec/template/spec/nodeSelector/sweep2-gatekeeper-paused"}]'
+```
