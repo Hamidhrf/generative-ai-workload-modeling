@@ -84,3 +84,4 @@
 - 2026-10-12T10:24:00Z Tier 3 whisper r=5: 22 CSV files, mean rows=1625
 - 2026-10-12T11:30:00Z Tier 3 whisper r=6: 22 CSV files, mean rows=1852
 - 2026-10-12T12:36:01Z Tier 3 whisper r=7: 22 CSV files, mean rows=2079
+- 2026-10-12T13:42:02Z Tier 3 whisper r=8: 22 CSV files, mean rows=2304
