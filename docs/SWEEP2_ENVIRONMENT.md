@@ -558,3 +558,76 @@ full GPU, time-sliced 10 ways), so this does not affect comparability.
 
 These satisfy `check_timeslicing_state` in `run_tier3_batch.sh` (mig.config
 all-disabled, capacity 10, gpu.replicas 10).
+
+## 12. Tier 3 whisper r=10, first attempt rejected (2026-10-12)
+
+The Tier 3 batch ran 49 of 50 entries successfully. The last entry,
+whisper r=10 (state index 49), halted the batch:
+
+```
+BATCH HALTED AT whisper r=10: row count out of range in data/raw/extension_tier3_sweep2/whisper_r10/whisper_r10_app_latency_p50_20261012_145323.csv: 697 (expected 700-720)
+```
+
+- Attempt 1: started 2026-10-12 14:48:08Z, collection window from 14:53:23,
+  halted 15:53:55Z. Nothing was committed or pushed; the last pushed commit
+  was whisper r=9 (`d1bb122`).
+- Cause: the four app-level series (latency p50/p95/p99, throughput) start at
+  14:54:53, **90 s (18 samples) after the window start**. They have no gaps
+  after that and end at 15:52:53 like the other series. So they have 697 rows
+  against 715 for the GPU and node series, 3 below the batch's 700 minimum.
+  Pods were 10/10 ready and the 300 s warm-up completed normally. The late
+  start is the time until whisper at 10 replicas produced its first latency
+  sample.
+- The same pattern at smaller size: app_latency_p50 rows for whisper r=9 /
+  r=10 were 702 / 706 in August and 705 / 697 in sweep 2. Every other sweep 2
+  Tier 3 run has 715.
+- Attempt 1 kept, not deleted: the 23 files (22 CSV + timestamps) were moved
+  to `~/sweep2_backup/whisper_r10_attempt1/`, with sha256 in
+  `~/sweep2_backup/whisper_r10_attempt1.sha256`. Its runner log was copied
+  there as `runner_attempt1.log`.
+- Re-run: once, as decided by the operator. The state file was not edited:
+  `find_start_index` resumes at the first non-success entry (index 49), so
+  only whisper r=10 runs. The output directory had to be moved out first,
+  because the runner reuses an existing directory and the batch would count
+  44 CSVs.
+
+**Attempt 2 (re-run) and acceptance.** The re-run (state entry 49 resumed
+2026-10-12 19:12:26Z, collection window 19:17:40 → 20:17:10, halted
+20:18:13Z) failed the same check, at 699 app rows:
+
+```
+BATCH HALTED AT whisper r=10: row count out of range in data/raw/extension_tier3_sweep2/whisper_r10/whisper_r10_app_latency_p50_20261012_191740.csv: 699 (expected 700-720)
+```
+
+| Series | Attempt 1 (14:53) | Attempt 2 (19:17) | August (2026-08-18) |
+|---|---|---|---|
+| app_latency_p50 / p95 / p99, app_throughput rows | 697 | **699** | 706 |
+| app series late start (window to first sample) | 90 s | **80 s** | 45 s |
+| per-pod latency_avg / throughput: late start per pod | 90–135 s | **80–180 s** | 45–165 s |
+| pod_latency_avg / pod_throughput rows | 6917 | 6871 | — |
+| gpu_* (5 files), node_* (6 files) rows | 715 | 715 | 715 |
+| pod_cpu / memory / psi_* rows | 7150 (715 per pod) | 7150 (715 per pod) | — |
+| internal gaps, trailing gaps, duplicate timestamps (all series) | 0 | 0 | 0 |
+
+Checked per series and, for per-pod files, per pod. Timestamps are on the
+5 s grid. Every series ends at the window end, with no gaps after the first
+sample. So nothing was truncated, and the only missing data is at the start.
+The GPU files have 715 unique timestamps in both attempts. Their `pod` label
+rotates between the time-sliced pods, as in August.
+
+**Accepted at 699 app rows** (operator decision, 2026-10-12). Reasons:
+
+- Whisper r=10 has a consistent warm-up delay before the first latency
+  sample: in both sweep 2 attempts (90 s, 80 s) and in August (45 s, 706
+  rows). Whisper r=9 shows the same at smaller size (August 702, sweep 2
+  705 rows).
+- All non-app series are complete (715 rows, or 715 per pod).
+- The preprocessor (`scripts/phase4/preprocess_tier3.py`,
+  `align_timestamps`) fills leading NaN per (metric, pod) with the first
+  observed value (bfill). It logs `LEFT_FILL` and warns above
+  `MAX_FRONT_GAP_S = 180`. Attempt 2's largest leading gap is 180 s, so
+  there's no warning.
+
+Attempt 2 was committed by hand, with the batch's pending journal line, and
+state entry 49 set to `success`. Attempt 1 stays in
+`~/sweep2_backup/whisper_r10_attempt1/`.
