@@ -77,3 +77,4 @@
 - 2026-10-12T02:42:00Z Tier 3 gpt2 r=8: 22 CSV files, mean rows=2307
 - 2026-10-12T03:48:00Z Tier 3 gpt2 r=9: 22 CSV files, mean rows=2535
 - 2026-10-12T04:54:01Z Tier 3 gpt2 r=10: 22 CSV files, mean rows=2762
+- 2026-10-12T06:00:01Z Tier 3 whisper r=1: 22 CSV files, mean rows=715
